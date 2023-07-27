@@ -1,0 +1,13 @@
+.search_input{
+    width: 160px;
+    height: 20px;
+    border: 1px solid black;
+    padding: 0 15px;
+
+    &::placeholder{
+        font-size: 18px;
+        line-height: 24px;
+        position: relative;
+        top: -2px;
+    }
+}
