@@ -1,0 +1,29 @@
+.categories {
+    &__list {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+
+    &__li {
+        margin-right: 66px;
+    }
+
+    &__link {
+        color: #C2C2C2;
+        font-size: 24px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: normal;
+        transition: all .3s;
+
+        &:hover {
+            color: #7AC751;
+            font-size: 24px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: normal;
+            transition: all .3s;
+        }
+    }
+}

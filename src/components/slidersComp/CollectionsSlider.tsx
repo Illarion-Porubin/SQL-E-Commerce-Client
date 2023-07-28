@@ -1,9 +1,9 @@
 import * as React from 'react';
-import s from './sliders.module.scss';
+import s from './CollectionsSlider.module.scss';
 
 
 
-export const HeaderSlider: React.FC = () => {
+export const CollectionsSlider: React.FC = () => {
     const [sliderId, setSliderId] = React.useState<string>("0")
 
     const sliderHeader = [
@@ -53,7 +53,7 @@ export const HeaderSlider: React.FC = () => {
             collection: '2023',
         },
     ]
-
+ 
     // const sliderScroll = () => {
     //     const maxSlides = sliderHeader.length - 1;
     //     if (Number(sliderId) < maxSlides) {

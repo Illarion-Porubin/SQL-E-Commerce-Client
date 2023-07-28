@@ -2,6 +2,7 @@
     width: 100%;
     height: 50px;
     background-color: #7AC751;
+    margin-bottom: 92px;
 
     &__wrap {
         display: flex;
@@ -49,79 +50,6 @@
         align-items: center;
         width: 100%;
         height: 60px;
-        padding: 0;
-        margin-bottom: 25px;
-    }
-
-    &__search {
-        max-width: 500px;
-        height: 46px;
-        border: 2px solid #7AC751;
-        border-radius: 8px 0 0 8px;
-        display: flex;
-    }
-
-    &__search_input {
-        background-color: transparent;
-        border: none;
-        position: relative;
-        padding: 0 25px;
-        width: 100%;
-        height: auto;
-
-        &::placeholder {
-            position: relative;
-            bottom: 5px;
-            font-size: 14px;
-            line-height: 18px;
-        }
-    }
-
-    &__search_input_wall {
-        width: 50px;
-        position: relative;
-
-        &::before {
-            content: "";
-            position: absolute;
-            width: 2px;
-            height: 43.22px;
-            background-color: #E3E3E3;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            opacity: 73%;
-            z-index: 555;
-        }
-    }
-
-    &__search_wrap {
-        display: flex;
-    }
-
-    &__search_select {
-        border: none;
-        background-color: transparent;
-        margin: 0;
-        padding: 0;
-        font-size: 14px;
-        line-height: 22px;
-        color: #555555;
-        right: 25px;
-        cursor: pointer;
-        position: relative;
-    }
-
-    &__search_btn {
-        width: 55px;
-        height: 46px;
-        background-color: #7AC751;
-        border-radius: 0 8px 8px 0;
-        border: none;
-        display: flex;
-        justify-content: center;
-        align-items: center;
     }
 
     &__logo {
@@ -140,6 +68,10 @@
         position: relative;
         top: 4px;
         left: 6px;
+    }
+
+    &__search{
+        margin-top: 25px;
     }
 
     &__icons {
@@ -168,117 +100,3 @@
         left: 20px;
     }
 }
-
-.menu {
-    background-color: #F7F8FA;
-    width: 100%;
-    margin-bottom: 25px;
-
-    &__list {
-        display: flex;
-    }
-
-    /////////////////////////////////////////////
-    &__dropdown {
-        position: relative;
-        display: inline-block;
-    }
-
-    &__dropdown_btn {
-        width: 260px;
-        height: 67px;
-        flex-shrink: 0;
-        background: #7AC751;
-        color: #fff;
-        color: #FFF;
-        font-family: Rubik;
-        font-size: 16px;
-        font-style: normal;
-        font-weight: 500;
-        line-height: normal;
-        letter-spacing: 0.32px;
-        border: none;
-    }
-
-    &__dropdown_list {
-        position: absolute;
-        overflow: hidden;
-    }
-
-    &__dropdown_li {
-        position: relative;
-        top: -100vw;
-        background-color: #F7F8FA;
-        width: 260px;
-        height: 30px;
-        color: #555;
-        text-align: left;
-        border-top: 1px solid #E3E3E3;
-        border-bottom: 1px solid #E3E3E3;
-        cursor: pointer;
-        transition: all 1.3s;
-    }
-
-    &__dropdown_li.active {
-        top: 0vw;
-        transition: all .6s;
-    }
-
-    &__dropdown_link {
-        width: 100%;
-        height: 100%;
-        font-size: 14px;
-        font-style: normal;
-        font-weight: 400;
-        line-height: normal;
-        letter-spacing: 0.28px;
-        display: flex;
-        align-items: center;
-        padding-left: 30px;
-        &:hover {
-            font-size: 14px;
-            color: #000;
-            font-style: bold;
-            background-color: #d5d5d5;
-            transition: all .3s;
-        }
-    }
-
-    &__wrap {
-        display: flex;
-        align-items: center;
-        width: 100%;
-        height: 68px;
-    }
-
-    &__list {
-        display: flex;
-        position: relative;
-        margin-left: 82px;
-    }
-
-    &__list_li {
-        margin-right: 65px;
-        color: #555;
-        font-size: 14px;
-        font-style: normal;
-        font-weight: 400;
-        line-height: normal;
-        text-transform: uppercase;
-        cursor: pointer;
-        transition: all .3s;
-        border-bottom: 2px solid transparent;
-
-        &:hover {
-            font-size: 14px;
-            color: #000;
-            border-bottom: 2px solid #000;
-            font-style: bold;
-            transition: all .3s;
-        }
-    }
-}
-
-
-
-/// eCSStractor for VSCode

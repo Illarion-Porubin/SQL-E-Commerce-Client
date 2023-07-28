@@ -1,0 +1,112 @@
+
+.menu {
+    background-color: #F7F8FA;
+    width: 100%;
+    margin-bottom: 25px;
+
+    &__list {
+        display: flex;
+    }
+
+    ///dropdown
+    &__dropdown {
+        position: relative;
+        display: inline-block;
+        z-index: 1;
+    }
+
+    &__dropdown_btn {
+        width: 260px;
+        height: 67px;
+        flex-shrink: 0;
+        background: #7AC751;
+        color: #fff;
+        color: #FFF;
+        font-family: Rubik;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
+        letter-spacing: 0.32px;
+        border: none;
+    }
+
+    &__dropdown_list {
+        position: absolute;
+        overflow: hidden;
+    }
+
+    &__dropdown_li {
+        position: relative;
+        top: -100vw;
+        background-color: #F7F8FA;
+        width: 260px;
+        height: 30px;
+        color: #555;
+        text-align: left;
+        border-top: 1px solid #E3E3E3;
+        border-bottom: 1px solid #E3E3E3;
+        cursor: pointer;
+        transition: all 1.3s;
+    }
+
+    &__dropdown_li.active {
+        top: 0vw;
+        transition: all .6s;
+    }
+
+    &__dropdown_link {
+        width: 100%;
+        height: 100%;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+        letter-spacing: 0.28px;
+        display: flex;
+        align-items: center;
+        padding-left: 30px;
+
+        &:hover {
+            font-size: 14px;
+            color: #000;
+            font-style: bold;
+            background-color: #d5d5d5;
+            transition: all .3s;
+        }
+    }
+
+    &__wrap {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        height: 68px;
+    }
+
+    &__list {
+        display: flex;
+        position: relative;
+        margin-left: 82px;
+    }
+
+    &__list_li {
+        margin-right: 65px;
+        color: #555;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: all .3s;
+        border-bottom: 2px solid transparent;
+
+        &:hover {
+            font-size: 14px;
+            color: #000;
+            border-bottom: 2px solid #000;
+            font-style: bold;
+            transition: all .3s;
+        }
+    }
+}

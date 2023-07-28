@@ -1,11 +1,14 @@
 import * as React from 'react';
-import { Header } from '../../components/headerComp/Header';
+import { Welcome } from '../../section/welcomeSect/Welcome';
+import { Trending } from '../../section/trendungSect/Trending';
+
 
 
 export const Home: React.FC = () => {
     return (
-        <div className=''>
-            <h1><Header /></h1>
-        </div>
+        <>
+            <Welcome />
+            <Trending />
+        </>
     )
 }

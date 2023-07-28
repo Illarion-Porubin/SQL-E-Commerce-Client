@@ -1,0 +1,45 @@
+.feature {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 70px;
+
+    &__item {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    &__img {
+        width: 58px;
+        height: 58px;
+        flex-shrink: 0;
+        margin-right: 10px;
+    }
+
+
+    &__info {
+        display: block;
+    } 
+
+
+
+    &__title {
+        color: var(--primary, #555);
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 26px;
+
+    }
+
+
+    &__text {
+        color: var(--black-2nd, rgba(81, 81, 81, 0.71));
+        font-family: Rubik;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 26px;
+
+    }
+}

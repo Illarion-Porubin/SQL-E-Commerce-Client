@@ -1,12 +1,12 @@
 .slider {
     width: 100%;
-    height: auto;
+    height: 439px;
     position: relative;
+    margin-bottom: 68px;
 
     &__wrap {
         width: 900px;
         height: 439px;
-
         position: absolute;
         overflow: hidden;
         display: flex;
