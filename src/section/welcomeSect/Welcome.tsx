@@ -4,6 +4,7 @@ import { Feature } from '../../components/featureComp/Feature';
 import { Header } from '../../components/headerComp/Header';
 import { Menu } from '../../components/menuComp/Menu';
 import { Modern } from '../../components/modernComp/Modern';
+import { Container } from '../../components/containerComp/Container';
 
 
 
@@ -14,12 +15,7 @@ export const Welcome: React.FC = () => {
     return (
         <>
             <Header />
-            <div className='container'>
-                <Menu />
-                <CollectionsSlider />
-                <Feature />
-                <Modern />
-            </div>
+            <Container children={[ <Menu />, <CollectionsSlider />,  <Feature />, <Modern />]}/>
         </>
     )
 }

@@ -1,0 +1,14 @@
+.star{
+    margin: 0;
+    padding: 0;
+    margin-right: 4px;
+    cursor: pointer;
+}
+
+input[type="radio"] {
+    display: none;
+}
+
+.star.active path {
+    fill: #7AC751;
+}

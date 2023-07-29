@@ -1,0 +1,192 @@
+.card {
+    width: 100%;
+    height: auto;
+    margin-top: 73px;
+    margin-bottom: 500px;
+    // display: flex;
+    // justify-content: space-between;
+
+    &__item {
+        width: 100%;
+        height: auto;
+        display: flex;
+        flex-direction: column;
+
+        flex-wrap: wrap;
+
+    }
+
+    &__item_wrap {
+        width: 268px;
+        height: 288px;
+        background-color: #F7F7F7;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        cursor: pointer;
+        transition: all .3s;
+
+        &:hover {
+            background-color: #E2E2EA;
+            transition: all .3s;
+        }
+    }
+
+    &__news {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 44.676px;
+        height: 20.42px;
+        flex-shrink: 0;
+        border-radius: 0px 0px 5px 0px;
+        background: #00B7F1;
+        text-align: center;
+        color: #E2E2EA;
+    }
+
+    &__main_img {
+        width: 80%;
+        height: auto;
+    }
+
+    &__icons {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        z-index: 1;
+        bottom: 0;
+        right: 0;
+    }
+
+    &__icon {
+        width: 26px;
+        height: 26px;
+        position: relative;
+        z-index: 1;
+        transition: all .3s;
+    }
+
+    &__icon_circle {
+        width: 38px;
+        height: 38px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        margin-bottom: 8px;
+        margin-right: 8px;
+
+        &::after {
+            content: '';
+            position: absolute;
+            width: 38px;
+            height: 38px;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #fff;
+            border-radius: 100%;
+
+        }
+
+    }
+
+    &__item_desc {
+        display: block;
+        max-width: 268px;
+        margin-top: 15px;
+    }
+
+
+    &__item_title {
+        margin-bottom: 8px;
+        color: rgba(117, 117, 117, 0.71);
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 130%;
+        letter-spacing: 0.112px;
+        text-transform: uppercase;
+    }
+
+    &__item_text {
+        margin-bottom: 8px;
+        color: #555;
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 120%;
+        letter-spacing: 0.1px;
+    }
+
+    &__info_price {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    &__price_block {
+        display: flex;
+    }
+
+    &__price_new {
+        margin-right: 8px;
+        color: #7AC751;
+        text-align: center;
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 120%;
+        letter-spacing: 0.09px;
+    }
+
+    &__price_old {
+        color: #CCC;
+        text-align: center;
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 120%;
+        letter-spacing: 0.09px;
+        text-decoration-line: line-through;
+
+    }
+
+}
+
+///hovers///
+
+.card__item:hover {
+    .card__icon_circle {
+        opacity: 1;
+        transition: all .3s;
+    }
+}
+
+.card__icon_circle {
+    opacity: 0;
+    transition: all .3s;
+
+    &::after {
+        transition: all .3s;
+    }
+}
+
+.card__icon_circle:hover {
+    &::after {
+        transition: all .3s;
+        background-color: #7AC751;
+    }
+}
+
+.card__icon_circle:hover {
+    .card__icon g path {
+        fill: #fff;
+        transition: all .3s;
+    }
+}
+
+
+///hovers///
