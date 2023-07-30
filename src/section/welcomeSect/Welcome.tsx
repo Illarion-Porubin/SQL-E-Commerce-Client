@@ -15,7 +15,12 @@ export const Welcome: React.FC = () => {
     return (
         <>
             <Header />
-            <Container children={[ <Menu />, <CollectionsSlider />,  <Feature />, <Modern />]}/>
+            <Container children={[
+                <Menu key={'Menu'}/>,
+                <CollectionsSlider key={'CollectionsSlider'}/>,
+                <Feature key={'Feature'}/>,
+                <Modern key={'Modern'}/>
+            ]} />
         </>
     )
 }

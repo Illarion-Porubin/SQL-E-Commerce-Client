@@ -27,7 +27,7 @@ export const HeaderContent: React.FC = () => {
                     <span className={s.header__logo_text}>Furniking</span>
                 </a>
                 <div className={s.header__search}>
-                    <Search />
+                    <Search key={'Search'}/>
                 </div>
                 <div className={s.header__icons}>
                     <img className={s.header__icon} src={cart} alt="cart" />
@@ -44,7 +44,7 @@ export const HeaderContent: React.FC = () => {
 export const Header: React.FC = () => {
     return (
         <div className={s.header}>
-            <Container children={[<HeaderContent />]} />
+            <Container children={[<HeaderContent key={'HeaderContent'}/>]} />
         </div>
     )
 }

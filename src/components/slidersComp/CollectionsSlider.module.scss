@@ -27,8 +27,6 @@
         justify-content: space-between;
         align-items: center;
         transition: all 1.5s ease;
-
-
     }
 
     &__info {
@@ -39,8 +37,7 @@
     }
 
     &__info_title {
-        color: var(--main-color, #7AC751);
-        font-family: Rubik;
+        color: #7AC751;
         font-size: 22px;
         font-style: normal;
         font-weight: 400;
@@ -50,7 +47,6 @@
 
     &__info_text {
         color: #2F2F2F;
-        font-family: Rubik;
         font-size: 40px;
         font-style: normal;
         font-weight: 500;
@@ -60,7 +56,6 @@
 
     &__info_action {
         color: rgba(81, 81, 81, 0.71);
-        font-family: Mulish;
         font-size: 27px;
         font-style: normal;
         font-weight: 600;

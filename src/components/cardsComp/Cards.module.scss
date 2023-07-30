@@ -2,18 +2,16 @@
     width: 100%;
     height: auto;
     margin-top: 73px;
-    margin-bottom: 500px;
-    // display: flex;
-    // justify-content: space-between;
+    margin-bottom: 70px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
 
     &__item {
-        width: 100%;
-        height: auto;
         display: flex;
         flex-direction: column;
-
         flex-wrap: wrap;
-
+        margin-bottom: 45px;
     }
 
     &__item_wrap {

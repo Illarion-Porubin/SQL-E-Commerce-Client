@@ -6,7 +6,6 @@ export const Menu: React.FC = () => {
 
     return (
         <div className={s.menu}>
-            <div className='container'>
                 <div className={s.menu__wrap}>
                     <nav className={s.menu__dropdown}>
                         <button className={s.menu__dropdown_btn} onClick={() => setDrop(!drop)}>ALL COLLECTIONS</button>
@@ -72,7 +71,6 @@ export const Menu: React.FC = () => {
                         </a>
                     </ul>
                 </div>
-            </div>
         </div>
     )
 }

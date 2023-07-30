@@ -14,12 +14,11 @@
         border: none;
         position: relative;
         padding: 0 25px;
-        width: 100%;
+        width: 402px;
         height: auto;
 
         &::placeholder {
             position: relative;
-            bottom: 5px;
             font-size: 14px;
             line-height: 18px;
         }
@@ -52,7 +51,7 @@
         font-size: 14px;
         line-height: 22px;
         color: #555555;
-        right: 25px;
+        margin-right: 25px;
         cursor: pointer;
         position: relative;
     }

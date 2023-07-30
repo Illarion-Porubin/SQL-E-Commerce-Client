@@ -70,7 +70,6 @@ export const CollectionsSlider: React.FC = () => {
 
 
     return (
-        <div className='container'>
             <div className={s.slider}>
                 <div className={s.slider__wrap}>
                     {
@@ -126,6 +125,5 @@ export const CollectionsSlider: React.FC = () => {
                     </div>
                 </div>
             </div>
-        </div>
     )
 }
