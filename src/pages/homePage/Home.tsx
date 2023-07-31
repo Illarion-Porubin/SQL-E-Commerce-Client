@@ -6,7 +6,10 @@ import { Articles } from '../../section/articlesSect/Articles';
 
 
 
+
 export const Home: React.FC = () => {
+    
+
     return (
         <>
             <Welcome />

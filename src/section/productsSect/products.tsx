@@ -16,7 +16,7 @@ export const Products: React.FC = () => {
     ]
 
     return (
-        <>
+        <section>
             <Heading title={"OUR PRODUCTS"} />
             <Categories categorieList={productsCategories} key={'Categories'} />,
             <Container children={[
@@ -24,6 +24,6 @@ export const Products: React.FC = () => {
                 <Paginate key={'Paginate'} />,
                 <CustomerSlider key={'CustomerSlider'} />
             ]} />
-        </>
+        </section>
     )
 }

@@ -13,7 +13,7 @@ export const Welcome: React.FC = () => {
 
 
     return (
-        <>
+        <section>
             <Header />
             <Container children={[
                 <Menu key={'Menu'}/>,
@@ -21,6 +21,6 @@ export const Welcome: React.FC = () => {
                 <Feature key={'Feature'}/>,
                 <Modern key={'Modern'}/>
             ]} />
-        </>
+        </section>
     )
 }

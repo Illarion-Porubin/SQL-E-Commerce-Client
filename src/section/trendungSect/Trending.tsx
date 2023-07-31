@@ -14,10 +14,10 @@ export const Trending: React.FC = () => {
     ]
 
     return (
-        <>
+        <section>
             <Heading title={'TRENDING'} />
             <Categories categorieList={trendingCat} />           
             <Container children={[<Cards key={'Cards'}/>, <Heading title={'SPECIAL OFFER'} key={'SPECIAL OFFER'} />, <Ofer key={'Ofer'}/>]} />
-        </>
+        </section>
     )
 }

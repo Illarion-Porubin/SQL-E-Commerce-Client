@@ -21,7 +21,7 @@ export const Footer: React.FC = () => {
     return (
         <>
             <div className={s.footer}></div>
-            <Container children={[<FooterContent />]} />
+            <Container children={[<FooterContent key={'FooterContent'} />]} />
         </>
     )
 }

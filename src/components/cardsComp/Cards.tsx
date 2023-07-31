@@ -1,16 +1,24 @@
 import * as React from 'react';
 import s from './Cards.module.scss';
-import armchair from '../../asets/png/Container.png';
 import { StarRating } from '../ratingComp/StarRating';
+import { useCustomDispatch, useCustomSelector } from '../../hooks/store';
+import { fetchGetProducts } from '../../redux/slices/productSlice';
+import { selectProductData } from '../../redux/selectos';
 
 
-export const CardContetn: React.FC = () => {
+interface Props {
+    item: any
+}
+
+export const CardContetn: React.FC<Props> = ({ item }) => {
+
+
     return (
         <>
             <div className={s.card__item}>
                 <div className={s.card__item_wrap}>
-                    <span className={s.card__news}>new</span>
-                    <img className={s.card__main_img} src={armchair} alt="armchair" />
+                    <span className={s.card__news}>{item.label}</span>
+                    <img className={s.card__main_img} src={item.img} alt="armchair" />
                     <div className={s.card__icons}>
                         <a href="/#">
                             <span className={s.card__icon_circle}>
@@ -78,12 +86,12 @@ export const CardContetn: React.FC = () => {
                     </div>
                 </div>
                 <div className={s.card__item_desc}>
-                    <p className={s.card__item_title}>Chair</p>
-                    <p className={s.card__item_text}>Minimal LCD chair</p>
+                    <p className={s.card__item_title}>{item.type}</p>
+                    <p className={s.card__item_text}>{item.desc}</p>
                     <div className={s.card__info_price}>
                         <div className={s.card__price_block}>
-                            <p className={s.card__price_new}>$<span>180</span></p>
-                            <p className={s.card__price_old}>$<span>250</span></p>
+                            <p className={s.card__price_new}>$<span>{item.newprice}</span></p>
+                            <p className={s.card__price_old}>$<span>{item.oldprice}</span></p>
                         </div>
                         <div>
                             <StarRating />
@@ -96,11 +104,26 @@ export const CardContetn: React.FC = () => {
 }
 
 export const Cards: React.FC = () => {
+    const dispatch = useCustomDispatch();
+    const productsState = useCustomSelector(selectProductData)
+
+    React.useEffect(() => {
+        dispatch(fetchGetProducts())
+    }, [dispatch])
+    
+    console.log('render cards')
+
     return (
         <div className={s.card}>
-            {[...Array(8)].map((_, i) => (
-                <CardContetn key={i} />
-            ))}
+            {
+                productsState.isLoading === "loaded"
+                    ?
+                    productsState.data.map((item: any, i: number) => (
+                        <CardContetn item={item} key={item.desc + i} />
+                    ))
+                    :
+                    null
+            }
         </div>
     )
 }

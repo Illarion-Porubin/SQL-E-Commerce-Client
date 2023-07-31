@@ -6,6 +6,7 @@ import logo from '../../asets/icons/logo.svg';
 import ring from '../../asets/icons/ring.svg';
 import { Search } from '../searchComp/Search';
 import { Container } from '../containerComp/Container';
+import { Link } from 'react-router-dom';
 
 
 export const HeaderContent: React.FC = () => {
@@ -18,7 +19,9 @@ export const HeaderContent: React.FC = () => {
                         <option value="Eng">English (USD)</option>
                         <option value="Rus">Russian (RUS)</option>
                     </select>
-                    <a className={s.header__auth} href="/#">Login or Sign up</a>
+                    <Link className={s.header__auth} to={'/login'}>
+                        Login or Sign up
+                    </Link>
                 </div>
             </div>
             <div className={s.header__info}>
@@ -27,13 +30,19 @@ export const HeaderContent: React.FC = () => {
                     <span className={s.header__logo_text}>Furniking</span>
                 </a>
                 <div className={s.header__search}>
-                    <Search key={'Search'}/>
+                    <Search key={'Search'} />
                 </div>
                 <div className={s.header__icons}>
-                    <img className={s.header__icon} src={cart} alt="cart" />
-                    <span className={s.header__icon_cart}>4</span>
-                    <img className={s.header__icon} src={ring} alt="ring" />
-                    <img className={s.header__icon} src={user} alt="user" />
+                    <Link to='/cart'>
+                        <img className={s.header__icon} src={cart} alt="cart" />
+                        <span className={s.header__icon_cart}>4</span>
+                    </Link>
+                    <Link to='/'>
+                        <img className={s.header__icon} src={ring} alt="ring" />
+                    </Link>
+                    <Link to='/'>
+                        <img className={s.header__icon} src={user} alt="user" />
+                    </Link>
                 </div>
             </div>
         </>
@@ -44,7 +53,7 @@ export const HeaderContent: React.FC = () => {
 export const Header: React.FC = () => {
     return (
         <div className={s.header}>
-            <Container children={[<HeaderContent key={'HeaderContent'}/>]} />
+            <Container children={[<HeaderContent key={'HeaderContent'} />]} />
         </div>
     )
 }
