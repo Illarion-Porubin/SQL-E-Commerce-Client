@@ -7,6 +7,7 @@ import modern_3 from '../../asets/png/modern_3.png';
 
 
 export const Modern: React.FC = () => {
+  
   return (
     <div className={s.modern}>
       <div className={s.modern__main_content}>

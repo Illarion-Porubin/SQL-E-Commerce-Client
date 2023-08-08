@@ -7,7 +7,7 @@ import { fetchLogin } from '../../redux/slices/authSlice';
 
 export const Login: React.FC = () => {
     const dispatch = useCustomDispatch();
-    const [email, setEmail] = React.useState<string>('marquis.satterfield70@ethereal.email');
+    const [email, setEmail] = React.useState<string>('user@mail.ru1');
     const [pass, setPass] = React.useState<string>('123456');
     const auth = useCustomSelector(selectAuthData);
 

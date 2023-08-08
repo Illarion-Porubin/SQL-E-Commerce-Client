@@ -1,15 +1,20 @@
 import React from 'react';
 import s from './Header.module.scss';
 import user from '../../asets/icons/user.svg';
-import cart from '../../asets/icons/cart.svg';
+import cartIcon from '../../asets/icons/cart.svg';
 import logo from '../../asets/icons/logo.svg';
 import ring from '../../asets/icons/ring.svg';
 import { Search } from '../searchComp/Search';
 import { Container } from '../containerComp/Container';
 import { Link } from 'react-router-dom';
+import { useCustomSelector } from '../../hooks/store';
+import { selectCartData } from '../../redux/selectos';
 
 
 export const HeaderContent: React.FC = () => {
+    const cart = useCustomSelector(selectCartData);
+
+
     return (
         <>
             <div className={s.header__wrap}>
@@ -34,8 +39,8 @@ export const HeaderContent: React.FC = () => {
                 </div>
                 <div className={s.header__icons}>
                     <Link to='/cart'>
-                        <img className={s.header__icon} src={cart} alt="cart" />
-                        <span className={s.header__icon_cart}>4</span>
+                        <img  className={s.header__icon} src={cartIcon} alt="cart" />
+                        <span className={s.header__icon_cart}>{!cart.data ? 0 : cart.data.length}</span>
                     </Link>
                     <Link to='/'>
                         <img className={s.header__icon} src={ring} alt="ring" />

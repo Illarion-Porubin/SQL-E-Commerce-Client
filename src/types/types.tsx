@@ -25,3 +25,28 @@ export type AdminTypes = {
   admin?: boolean;
   id: string | null | undefined;
 };
+
+export interface ProductType {
+  id?: string,
+  productId: number,
+  type: string,
+  desc: string,
+  img: string,
+  newprice: number,
+  count: number
+}
+
+export interface ProductsType {
+  product: ProductType
+}
+
+export interface UserOrder {
+  userId: string,
+  email: string,
+  phone: string,
+  userCart: string,
+  amount: number,
+  totalsum: number
+}
+
+
