@@ -58,4 +58,11 @@ body {
     font-weight: 300;
 }
 
-// input {outline:none}
+input {
+    outline: none
+}
+
+select {
+    border:0px;
+    outline:0px;
+ }

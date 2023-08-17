@@ -7,7 +7,7 @@ interface Props {
 
 export const Container: React.FC<Props> = ({ children }) => {
     return (
-        <div className={s.container}>
+        <div className={`${s.container} ${s.mobile__container}`}>
             {children}
         </div>
     )

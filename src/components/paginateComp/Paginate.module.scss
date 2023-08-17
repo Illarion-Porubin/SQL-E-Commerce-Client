@@ -3,9 +3,13 @@
     justify-content: space-between;
     margin-bottom: 120px;
 
+    &__search{
+        width: 250px;
+    }
+
     &__wrap {
         display: flex;
-        justify-content: space-between;
+        justify-content: flex-end;
         align-items: center;
         width: 574px;
         height: 50px;
@@ -67,8 +71,25 @@
         background-color: #7AC751;
         color: #fff;
     }
+}
 
-    &__prev {}
+@media(max-width: 1160px) {
+    .paginate{
+        justify-content: space-around;
+    }
+}
 
-    &__next {}
+@media(max-width: 920px) {
+    .paginate{
+        padding: 0 20px;
+    }
+}
+
+@media(max-width: 440px) {
+    .paginate{
+        padding: 0 20px;
+    }
+    .paginate__search{
+        display: none;
+    }
 }

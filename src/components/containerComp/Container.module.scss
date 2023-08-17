@@ -2,3 +2,10 @@
     max-width: 1170px;
     margin: 0 auto;
 }
+
+@media(max-width: 980px) {
+    .mobile__container {
+        max-width: 100% !important;
+        margin: 0 auto !important;
+    }
+}

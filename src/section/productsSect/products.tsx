@@ -22,7 +22,7 @@ export const Products: React.FC = () => {
 
     React.useEffect(() => {
         if (debounce) {
-            dispatch(fetchSearchProduct(debounce));
+            dispatch(fetchSearchProduct(JSON.stringify({word: debounce, page: page - 1})));
         }
         else {
             dispatch(fetchGetProductsByLabel(JSON.stringify({ page: page - 1, label: label })));
@@ -31,7 +31,7 @@ export const Products: React.FC = () => {
 
     React.useEffect(() => {
         setPage(1)
-    },[label])
+    }, [label])
 
     const productsCategories = [
         { label: 'all', title: 'All Products' },
@@ -42,18 +42,18 @@ export const Products: React.FC = () => {
 
     return (
         <section>
-            <Heading title={"OUR PRODUCTS"} />
-            <Categories categorieList={productsCategories} key={'Categories'} setLabel={setLabel}/>,
+            {/* <Heading title={"OUR PRODUCTS"} />
+            <Categories categorieList={productsCategories} key={'Categories'} setLabel={setLabel} label={label} />, */}
             <Container children={[
-                <Cards products={products.data.length ? products : []} key={'Cards'} />,
-                <Paginate
-                    key={'Paginate'}
-                    page={page}
-                    search={search}
-                    setSearch={setSearch}
-                    setPage={setPage}
-                    checkPage={checkPage}
-                />,
+                // <Cards products={products.data.length ? products : []} key={'Cards'} />,
+                // <Paginate
+                //     key={'Paginate'}
+                //     page={page}
+                //     search={search}
+                //     setSearch={setSearch}
+                //     setPage={setPage}
+                //     checkPage={checkPage}
+                // />,
                 <CustomerSlider key={'CustomerSlider'} />
             ]} />
         </section>

@@ -5,30 +5,42 @@ import { Container } from '../../components/containerComp/Container';
 import { Cards } from '../../components/cardsComp/Cards';
 import { Ofer } from '../../components/oferComp/Ofer';
 import { useCustomDispatch, useCustomSelector } from '../../hooks/store';
-import { selectProductData } from '../../redux/selectos';
-import { fetchGetProducts } from '../../redux/slices/productSlice';
+import { selectTrendingData } from '../../redux/selectos';
+import { fetchGetTrendingByLabel } from '../../redux/slices/trendingSlice';
+import { TrendingPaginate } from '../../components/trendingPaginate/TrendingPaginate';
 
 export const Trending: React.FC = () => {
     const dispatch = useCustomDispatch();
-    const [label, setLabel] = React.useState<string>('all');
-    const productsState = useCustomSelector(selectProductData)
-
-    // React.useEffect(() => {
-    //     dispatch(fetchGetProducts(0))
-    // }, [dispatch])
+    const [label, setLabel] = React.useState<string>('top');
+    const products = useCustomSelector(selectTrendingData);
+    const [page, setPage] = React.useState<number>(1);
+    const checkPage = products.data.length < 8;
 
     const trendingCat = [
-        {label: 'all', title: 'All Products'},
-        {label: 'best', title: 'Best Sellers'},
-        {label: 'new', title: 'New Arrivals'},
-        {label: 'today', title: 'Today Deals'},
+        { label: 'top', title: 'Top Products' },
+        { label: 'hit', title: 'Hit of the season' },
+        { label: 'hot', title: 'Hot offer' },
     ]
 
+    React.useEffect(() => {
+        dispatch(fetchGetTrendingByLabel(JSON.stringify({ page: page - 1, label: label })))
+    }, [dispatch, label, page])
+
+    React.useEffect(() => {
+        setPage(1)
+    }, [label])
     return (
         <section>
             <Heading title={'TRENDING'} />
-            <Categories categorieList={trendingCat} setLabel={setLabel} />
-            <Container children={[<Cards products={productsState} key={'Cards'} />, <Heading title={'SPECIAL OFFER'} key={'SPECIAL OFFER'} />, <Ofer key={'Ofer'} />]} />
+            <Categories categorieList={trendingCat} setLabel={setLabel} label={label} />
+            <Container
+                children={[
+                    <Cards products={products} key={'Cards'} />,
+                    <TrendingPaginate setPage={setPage} checkPage={checkPage} key={'TrendingPaginate'}/>,
+                    <Heading title={'SPECIAL OFFER'} key={'Heading'} />,
+                    <Ofer key={'Ofer'} />
+                ]}
+            />
         </section>
     )
 }

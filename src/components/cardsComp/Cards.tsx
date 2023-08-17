@@ -4,6 +4,7 @@ import { StarRating } from '../ratingComp/StarRating';
 import { useCustomDispatch } from '../../hooks/store';
 import { cartSlice } from '../../redux/slices/cartSlice';
 import { ProductType } from '../../types/types';
+import ProductImage from '../../asets/png/Furniture1.png';
 
 interface Props {
     item: any
@@ -29,7 +30,7 @@ export const CardContetn: React.FC<Props> = ({ item }) => {
             <div className={s.card__item}>
                 <div className={s.card__item_wrap}>
                     <span className={s.card__news}>{item.label}</span>
-                    <img className={s.card__main_img} src={item.img} alt="armchair" />
+                    <img className={s.card__main_img} src={!item.img ? item.img : ProductImage} alt="armchair" />
                     <div className={s.card__icons}>
 
                         <span className={s.card__icon_circle}>
@@ -90,7 +91,7 @@ export const CardContetn: React.FC<Props> = ({ item }) => {
                             <p className={s.card__price_old}>$<span>{item.oldprice}</span></p>
                         </div>
                         <div>
-                            <StarRating />
+                            <StarRating starRating={item.Ratings} productId={item.id}/>
                         </div>
                     </div>
                 </div>

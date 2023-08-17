@@ -8,3 +8,9 @@
     margin-bottom: 45px;
     text-transform: uppercase;
 }
+
+@media(max-width: 360px) {
+    .heading{
+        font-size: 26px;
+    }
+}

@@ -1,43 +1,78 @@
 import * as React from 'react';
 import s from './CustomerSlider.module.scss';
 import avatar from '../../asets/png/customer_avatar.png';
+import { motion, AnimatePresence } from "framer-motion"
 
 interface Props {
-    sliderId: string
+    sliderId: string,
 }
 
 export const CustomerSliderContent: React.FC<Props> = ({ sliderId }) => {
     return (
-        <div className={s.customer__item}
-            style={{ transform: `translateX(${`-` + sliderId + `00`}%)` }}
-        >
-            <img className={s.customer__img} src={avatar} alt="" />
-            <p className={s.customer__content_text}>
-                I like Furniking.com and as compared to other company it's polices and customers support is very good easy to reach., also many time they unable to delivered. The ultricies are pregnant while the quis is suspended. Risus commodo viverra maecenas accumsan lacus vel facilisist amet.
-            </p>
-            <h1 className={s.customer__content_title}>Angelina Joly</h1>
-            <p className={s.customer__content_post}>Co-founder</p>
-        </div>
+        <>
+
+            <div
+                className={s.customer__item}
+                style={{ transform: `translateX(${`-` + sliderId + `00`}%)` }}
+            >
+                <img className={s.customer__img} src={avatar} alt="avatar" />
+                <p className={s.customer__content_text}>
+                    I like Furniking.com and as compared to other company it's polices and customers support is very good easy to reach., also many time they unable to delivered. The ultricies are pregnant while the quis is suspended. Risus commodo viverra maecenas accumsan lacus vel facilisist amet.
+                </p>
+                <h1 className={s.customer__content_title}>Angelina Joly</h1>
+                <p className={s.customer__content_post}>Co-founder</p>
+            </div>
+
+        </>
     )
 }
 
 export const CustomerSlider: React.FC = () => {
     const [sliderId, setSliderId] = React.useState<string>("0");
-    const DataArray = [...Array(3)]
+    const DataArray = [...Array(3)];
+    const swipeSpeed = 10000;
 
-    return (    
+    const swipePower = (offset: any, valocity: any) => {
+        return Math.abs(offset) * valocity;
+    }
+
+    return (
         <>
             <div className={s.customer}>
-                <div className={s.customer__wrap}>
-                    <div className={s.customer__items}>
+                <div className={s.customer__items}>
+                    <AnimatePresence>
                         {
                             DataArray.map((_, i) => (
-                                <CustomerSliderContent sliderId={sliderId} key={i}/>
+                                <motion.div
+                                    className={s.customer__slide_wrap}
+                                    key={i}
+                                    drag="x"
+                                    dragConstraints={{ left: 0, right: 0 }}
+                                    onDragEnd={
+                                        (e, { offset, velocity }) => {
+                                            const swipe = swipePower(offset.x, velocity.x);
+                                            if (swipe < swipeSpeed) {
+                                                console.log(swipe < swipeSpeed, 1)
+                                                setSliderId((prev: string) => Number(prev) === (DataArray.length - 1) ? prev = '0' : String(Number(prev) + 1))
+                                            } else if (swipe > swipeSpeed) {
+                                                console.log(swipe > swipeSpeed, 2)
+                                                setSliderId((prev: string) => Number(prev) <= 0 ? prev = String(DataArray.length - 1) : String(Number(prev) - 1))
+                                            }
+                                        }
+                                    }
+                                >
+                                    <CustomerSliderContent
+                                        key={i}
+                                        sliderId={sliderId}
+                                    />
+                                </motion.div>
                             ))
                         }
-                    </div>
+                    </AnimatePresence>
                 </div>
-                <button className={`${s.customer__btn} ${s.customer__btn_next}`} 
+
+
+                <button className={`${s.customer__btn} ${s.customer__btn_next}`}
                     onClick={() => { setSliderId((prev: string) => Number(prev) === (DataArray.length - 1) ? prev = '0' : String(Number(prev) + 1)) }}
                 >
                     <svg width="76" height="76" viewBox="0 0 76 76" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -52,6 +87,7 @@ export const CustomerSlider: React.FC = () => {
                     </svg>
                 </button>
             </div>
+
         </>
     )
 }

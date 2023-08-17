@@ -5,13 +5,12 @@
     margin-bottom: 70px;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
 
     &__item {
         display: flex;
         flex-direction: column;
         flex-wrap: wrap;
-        margin-bottom: 45px;
+        margin: 10px;
     }
 
     &__item_wrap {
@@ -186,5 +185,24 @@
     }
 }
 
+@media(max-width: 1151px) {
+    .card__item_wrap{
+        width: 100%;
+        height: auto;
+    }
+    .card__item{
+        margin: 4px;
+    }
+}
 
-///hovers///
+@media(max-width: 1146px) {
+    .card{
+        justify-content: space-around;
+    }
+}
+
+// @media(max-width: 864px) {
+//     .card{
+//         justify-content: space-around;
+//     }
+// }

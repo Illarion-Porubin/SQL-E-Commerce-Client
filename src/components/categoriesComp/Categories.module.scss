@@ -16,14 +16,37 @@
         font-weight: 600;
         line-height: normal;
         transition: all .3s;
+    }
+}
 
-        &:hover {
-            color: #7AC751;
-            font-size: 24px;
-            font-style: normal;
-            font-weight: 600;
-            line-height: normal;
-            transition: all .3s;
-        }
+.categories__link.active {
+    color: #7AC751;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    transition: all .3s;
+}
+
+@media(max-width:860px) {
+    .categories__list {
+        justify-content: space-around;
+    }
+
+    .categories__li {
+        margin: 0;
+    }
+}
+
+@media(max-width:660px) {
+    .categories__list {
+        justify-content: space-around;
+        flex-direction: column;
+    }
+
+    .categories__li {
+        margin: 0;
+        margin-bottom: 4px;
+        margin-left: 2%;
     }
 }
