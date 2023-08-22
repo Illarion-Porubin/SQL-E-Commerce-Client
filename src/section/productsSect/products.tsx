@@ -42,18 +42,18 @@ export const Products: React.FC = () => {
 
     return (
         <section>
-            {/* <Heading title={"OUR PRODUCTS"} />
-            <Categories categorieList={productsCategories} key={'Categories'} setLabel={setLabel} label={label} />, */}
+            <Heading title={"OUR PRODUCTS"} />
+            <Categories categorieList={productsCategories} key={'Categories'} setLabel={setLabel} label={label} />,
             <Container children={[
-                // <Cards products={products.data.length ? products : []} key={'Cards'} />,
-                // <Paginate
-                //     key={'Paginate'}
-                //     page={page}
-                //     search={search}
-                //     setSearch={setSearch}
-                //     setPage={setPage}
-                //     checkPage={checkPage}
-                // />,
+                <Cards products={products.data.length ? products : []} key={'Cards'} />,
+                <Paginate
+                    key={'Paginate'}
+                    page={page}
+                    search={search}
+                    setSearch={setSearch}
+                    setPage={setPage}
+                    checkPage={checkPage}
+                />,
                 <CustomerSlider key={'CustomerSlider'} />
             ]} />
         </section>

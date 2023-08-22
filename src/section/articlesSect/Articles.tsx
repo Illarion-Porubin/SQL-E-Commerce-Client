@@ -9,8 +9,11 @@ export const Articles: React.FC = () => {
     return (
         <section>
             <Heading title={'Our Latest Articles'} />
-            <Container children={[<Article key={'Article'} />, <FooterNav key={'FooterNav'}/>, ]}/>  
-            <Footer />      
+            <Container children={[
+                <Article key={'Article'} />,
+                <FooterNav key={'FooterNav'} />,
+            ]} />
+            <Footer />
         </section>
     )
 }

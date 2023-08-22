@@ -14,8 +14,8 @@
     }
 
     &__item_wrap {
-        width: 268px;
-        height: 288px;
+        max-width: 268px;
+        max-height: 288px;
         background-color: #F7F7F7;
         display: flex;
         justify-content: center;
@@ -44,8 +44,8 @@
     }
 
     &__main_img {
-        width: 80%;
-        height: auto;
+        min-width: 100%;
+        min-height: auto;
     }
 
     &__icons {
@@ -171,19 +171,19 @@
     }
 }
 
-.card__icon_circle:hover {
+.card__icon_circle.active{
     &::after {
-        transition: all .3s;
         background-color: #7AC751;
+        transition: all .3s;
     }
 }
-
-.card__icon_circle:hover {
+.card__icon_circle.active{
     .card__icon g path {
         fill: #fff;
         transition: all .3s;
     }
 }
+
 
 @media(max-width: 1151px) {
     .card__item_wrap{

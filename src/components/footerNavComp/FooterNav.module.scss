@@ -78,11 +78,32 @@
 
 ///hover
 
-.footerNav__li a{
+.footerNav__li a {
     transition: all .3s;
 }
 
-.footerNav__li:hover a{
+.footerNav__li:hover a {
     transition: all .3s;
     color: #7AC751
+}
+
+@media(max-width: 1200px) {
+    .footerNav {
+        padding: 0 15px;
+    }
+}
+
+@media(max-width: 960px) {
+    .footerNav__menu {
+        display: none;
+    }
+    .footerNav{
+        justify-content: center;
+    }
+    .footerNav__info{
+        align-items: center;
+        text-align: center;
+        margin: 0 auto;
+        width: 100%;
+    }
 }

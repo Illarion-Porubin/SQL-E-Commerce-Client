@@ -43,14 +43,6 @@
         margin-right: 5px;
     }
 
-    &__categori_svg {
-
-    }
-
-    &__categori_text {
-
-    }
-
     &__categori_data {
         color: #FFF;
         font-family: Mulish;
@@ -79,9 +71,40 @@
         letter-spacing: 0.112px;
         transition: all .3s;
 
-        &:hover{
+        &:hover {
             color: #7AC751;
             transition: all .3s;
         }
+    }
+}
+
+@media(max-width: 1020px) {
+    .article {
+        flex-direction: column;
+    }
+    .article__img {
+        width: 100vw;
+    }
+}
+
+@media(max-width: 620px) {
+    .article__item {
+        width: 80%;
+        max-height: 320px;
+
+    }
+
+    .article__categori_title {
+        font-size: 26px;
+    }
+}
+
+@media(max-width: 420px) {
+    .article__item {
+        width: 100%;
+    }
+
+    .article__categori_title {
+        font-size: 22px;
     }
 }

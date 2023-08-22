@@ -1,7 +1,7 @@
 import * as React from 'react';
 import s from './CustomerSlider.module.scss';
 import avatar from '../../asets/png/customer_avatar.png';
-import { motion, AnimatePresence } from "framer-motion"
+import { motion, AnimatePresence } from "framer-motion";
 
 interface Props {
     sliderId: string,

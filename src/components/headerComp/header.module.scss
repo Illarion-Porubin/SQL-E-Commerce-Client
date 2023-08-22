@@ -99,13 +99,12 @@
 
 /////header mobile
 .header {
-    &__mobile{
+    &__mobile {
         width: 100%;
         height: auto;
         position: relative;
         display: none;
         z-index: 5;
-        position: fixed;
     }
 
     &__mobile_menu {
@@ -121,7 +120,7 @@
         transition: all .3s;
     }
 
-    &__mobile_menu.active{
+    &__mobile_menu.active {
         right: 0%;
         opacity: 1;
         transition: all .3s;
@@ -137,12 +136,14 @@
     }
 
     &__mobile_btn {
-        width: 50px;
-        height: 50px;
+        width: 40px;
+        height: 40px;
         border: none;
         outline: none;
         position: relative;
         background-color: transparent;
+        bottom: 4px;
+        left: 4px;
         transition: all .3s;
 
         &::before {
@@ -170,7 +171,7 @@
             height: 4px;
             background-color: #fff;
             transition: all .3s;
-        }   
+        }
     }
 
     &__mobile_logo_wrap {
@@ -235,7 +236,7 @@
 
 .header__mobile_btn.active {
     &::before {
-        top: 24px;
+        top: 25px;
         left: -2px;
         transform: translateX(5px) rotate(135deg);
         transition: all .3s;
@@ -252,6 +253,7 @@
 ///media
 
 @media(max-width: 1200px) {
+
     .header__wrap,
     .header__info {
         padding: 0 30px;
@@ -265,9 +267,15 @@
 }
 
 @media(max-width: 920px) {
-    .header__desc{
+    .header {
+        position: fixed;
+        z-index: 5;
+    }
+
+    .header__desc {
         display: none;
     }
+
     .header__mobile {
         display: block;
     }

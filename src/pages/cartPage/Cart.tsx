@@ -23,11 +23,11 @@ export const CartContent: React.FC = () => {
         return sum + product.count;
     }, 0)
 
-    const countSum = userProducts.data.reduce((sum: number, product: ProductType) => {
+    const totalAmount = userProducts.data.reduce((sum: number, product: ProductType) => {
         return sum + (product.count * product.newprice);
     }, 0)
 
-    
+
 
     const order = () => {
         const emailBody = userProducts.data.map((item) => {
@@ -41,7 +41,7 @@ export const CartContent: React.FC = () => {
                 `
             )
         })
-    
+
         const message = `<div>${emailBody}</div>`
 
         const userOrder = {
@@ -50,22 +50,18 @@ export const CartContent: React.FC = () => {
             phone: "8989778777",
             userCart: message,
             amount: countProducts,
-            totalsum: countSum
+            totalsum: totalAmount
         }
         dispatch(fetchOrder(userOrder));
         userProducts.isLoading === "loaded" ? alert('Заказ офрмлен') : alert("Произошла ошибка")
     }
 
-
-
     return (
         <>
-            <h1>Cart</h1>
             <div className={s.cart}>
                 <div className={s.cart__info}>
-                    <Link to='/'><h3>На главную</h3></Link>
-                    <button onClick={order}>приступить к оформлению</button>
-                    <span className={s.cart_count}>количество товара {countProducts}</span>
+                    <h1 className={s.cart__title}>Cart</h1>
+                    <Link className={s.cart__main} to='/'>На главную</Link>
                 </div>
                 <div className={s.cart__list}>
                     {
@@ -90,15 +86,16 @@ export const CartContent: React.FC = () => {
                             null
                     }
                 </div>
+                <div className={s.cart__action}>
+                    <button className={s.cart__btn_oder} onClick={order}>приступить к оформлению</button>
+                    <div className={s.cart__total_amount}>общая стоитмость <span className={s.cart__sum}>{totalAmount}</span>$</div>
+                    <div className={s.cart__count_info}>количество товара <span className={s.cart__count}>{countProducts}</span></div>
+                </div>
             </div>
         </>
     )
 }
 
 export const Cart: React.FC = () => {
-    return (
-        <>
-            <Container children={[<CartContent key={`CartContent`} />]} />
-        </>
-    )
+    return <Container children={[<CartContent key={`CartContent`} />]} />
 }
