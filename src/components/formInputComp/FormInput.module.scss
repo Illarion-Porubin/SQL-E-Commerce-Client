@@ -1,0 +1,14 @@
+.forminput{
+    &__input{
+        margin-bottom: 15px;
+        z-index: -1;
+        opacity: 0;
+        transition: all .3s;
+    }
+
+    &__input.active{
+        z-index: 1;
+        opacity: 1;
+        transition: all .3s;
+    }
+}

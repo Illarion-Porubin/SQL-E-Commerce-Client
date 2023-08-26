@@ -7,14 +7,25 @@ import ring from '../../asets/icons/ring.svg';
 import { Search } from '../searchComp/Search';
 import { Container } from '../containerComp/Container';
 import { Link } from 'react-router-dom';
-import { useCustomSelector } from '../../hooks/store';
-import { selectCartData } from '../../redux/selectos';
+import { useCustomDispatch, useCustomSelector } from '../../hooks/store';
+import { selectAuthData, selectCartData } from '../../redux/selectos';
+import { authSlice } from '../../redux/slices/authSlice';
 
 
 export const HeaderContent: React.FC = () => {
+    const dispatch = useCustomDispatch()
     const cart = useCustomSelector(selectCartData);
+    const auth = useCustomSelector(selectAuthData);
     const [mobMenu, setMobMenu] = React.useState<boolean>(false);
-    const [search, setSearch] = React.useState<string>(``)
+    const [search, setSearch] = React.useState<string>(``);
+    const checkUser = auth.isLoading === 'loaded';
+
+    const userLogout = () => {
+        if (window.confirm(`Вы точно хотите выйти?`)) {
+            dispatch(authSlice.actions.logout())
+            window.localStorage.removeItem('token')
+        }
+    }
 
     return (
         <>
@@ -51,8 +62,19 @@ export const HeaderContent: React.FC = () => {
                                 <li className={s.header__mobile_li}>
                                     <a className={s.header__mobile_link} href="/#">ALL COLLECTIONS</a>
                                 </li>
-                                <li className={`${s.header__mobile_li} ${s.header__mobile_auth}`} >
-                                    <a className={s.header__mobile_link} href="/#">Login or Sign up</a>
+                                <li className={`${s.header__mobile_li} ${s.header__mobile_auth}`} > 
+                                    {
+                                        checkUser ?
+
+                                            <Link className={s.header__mobile_link} to={'/'} onClick={() => userLogout()}>
+                                                Logout
+                                            </Link>
+                                            :
+                                            <Link className={s.header__mobile_link} to={'/login'}>
+                                                Login
+                                            </Link>
+
+                                    }
                                 </li>
                                 <li className={s.header__mobile_li}>
                                     <select className={`${s.header__lang} ${s.header__lang_mobile}`} id="selectLang">
@@ -71,11 +93,11 @@ export const HeaderContent: React.FC = () => {
                         <Link to='/'>
                             <img className={s.header__icon} src={ring} alt="ring" />
                         </Link>
-                        <Link to='/'>
+                        <Link to='/accaunt'>
                             <img className={s.header__icon} src={user} alt="user" />
                         </Link>
                     </div>
-                </div>
+                </div> 
             </div>
 
             <div className={s.header__desc}>
@@ -86,14 +108,23 @@ export const HeaderContent: React.FC = () => {
                             <option value="Eng">English (USD)</option>
                             <option value="Rus">Russian (RUS)</option>
                         </select>
-                        <Link className={s.header__auth} to={'/login'}>
-                            Login or Sign up
-                        </Link>
+                        {
+                            checkUser ?
+
+                                <Link className={s.header__auth} to={'/'} onClick={() => userLogout()}>
+                                    Logout
+                                </Link>
+                                :
+                                <Link className={s.header__auth} to={'/login'}>
+                                    Login
+                                </Link>
+
+                        }
                     </div>
                 </div>
                 <div className={s.header__info}>
                     <a className={s.header__logo} href="/#">
-                        <img className={s.header__logo_img} src={logo} alt="logo" />
+                        <img className={s.header__logo_img} src={logo} alt="logo" />userLogout
                         <span className={s.header__logo_text}>Furniking</span>
                     </a>
                     <div className={s.header__search}>
@@ -107,7 +138,7 @@ export const HeaderContent: React.FC = () => {
                         <Link to='/'>
                             <img className={s.header__icon} src={ring} alt="ring" />
                         </Link>
-                        <Link to='/'>
+                        <Link to='/accaunt'>
                             <img className={s.header__icon} src={user} alt="user" />
                         </Link>
                     </div>

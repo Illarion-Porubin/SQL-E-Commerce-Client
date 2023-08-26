@@ -6,6 +6,7 @@ export type UserTypes = {
   user: {
     username: string;
     email: string;
+    phone: string;
     password: string;
     isActivated?: boolean;
     admin?: boolean;
@@ -15,6 +16,7 @@ export type UserTypes = {
 
 export type MainUserTypes = {
   username?: string;
+  phone: string;
   email: string;
   password: string;
 };

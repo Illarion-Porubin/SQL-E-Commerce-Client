@@ -53,7 +53,7 @@ export const CartContent: React.FC = () => {
             totalsum: totalAmount
         }
         dispatch(fetchOrder(userOrder));
-        userProducts.isLoading === "loaded" ? alert('Заказ офрмлен') : alert("Произошла ошибка")
+        userProducts.isLoading === "loaded" && userProducts.data.length ? alert('Заказ офрмлен') : alert("Произошла ошибка или корзина пуста")
     }
 
     return (
