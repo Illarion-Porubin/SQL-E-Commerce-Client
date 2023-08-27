@@ -10,23 +10,18 @@ import { selectAuthData } from '../../redux/selectos';
 import { FormInput } from '../../components/formInputComp/FormInput';
 
 
-// type AccauntTypes = {
-//     username?: string | null
-//     phone?: string | null
-//     email?: string | null
-// }
-
-// type PassworTypes = {
-//     newPass?: string | null
-//     oldPass?: string | null
-// }
 
 interface InputsType {
     id: string,
     placeholder: string,
     label: string,
     name: 'username' | 'email' | 'phone',
-    type: string
+    errorMessage: string,
+    maxLength: number | undefined,
+    minLength: number | undefined,
+    type: string,
+    pattern: string | undefined,
+    required: boolean,
 }
 
 interface InputsPassType {
@@ -41,7 +36,7 @@ interface InputsPassType {
 
 export const AccauntComponent: React.FC = () => {
     const dispatch = useCustomDispatch();
-    const [inputValue, setInputValue] = React.useState({ username: 'sss', email: '', phone: '' });
+    const [inputValue, setInputValue] = React.useState({ username: '', email: '', phone: '' });
     const [passValue, setPassValue] = React.useState({ oldpass: '', newpass: '', confirmpass: '' });
     const auth = useCustomSelector(selectAuthData);
 
@@ -56,29 +51,42 @@ export const AccauntComponent: React.FC = () => {
         }
     }, [auth.data, auth.isLoading])
 
-    console.log(inputValue.email)
-
     const inputs: InputsType[] = [
         {
             id: `1`,
             placeholder: 'Name',
             label: 'Username',
             name: 'username',
-            type: 'text'
+            errorMessage: 'Только кириллица от 2 до 16 символов, без специальных символов и чисел!',
+            maxLength: 12,
+            minLength: 2,
+            type: 'text',
+            pattern: '^[А-Яа-я]{2,12}',
+            required: false,
         },
         {
             id: `2`,
             placeholder: 'Email',
             label: 'Email',
             name: 'email',
-            type: 'text'
+            errorMessage: 'Введите правильный почтовый адрес!',
+            maxLength: undefined,
+            minLength: undefined,
+            type: 'email',
+            pattern: '([^ ]+@[^ ]+\.[a-z0-9]{2,6}|)$',
+            required: false,
         },
         {
             id: `3`,
-            placeholder: 'Phone',
+            placeholder: '8 (989) 999-99-99',
             label: 'Phone',
             name: 'phone',
-            type: 'text'
+            errorMessage: 'Длинна телефона должна быть 11 цифр и не должна содержать прочерков!',
+            maxLength: undefined,
+            minLength: 11,
+            type: 'text',
+            pattern: '[0-9() -]+',
+            required: false,
         },
     ]
 
@@ -123,49 +131,56 @@ export const AccauntComponent: React.FC = () => {
     // }
 
     const clearValue = (value: 'username' | 'email' | 'phone') => {
-        if(auth.data) {
-            setInputValue({ ...inputValue, [value]: auth.data.user[value]})
+        if (auth.data) {
+            setInputValue({ ...inputValue, [value]: auth.data.user[value] })
+        }
+        else {
+            setInputValue({ ...inputValue, [value]: '' })
         }
     }
 
 
     return (
-        <div className={s.accaunt}>
-            {/* <p>Данные пользователя</p> */}
-            {/* <form onSubmit={handleSubmit}>
-                {
-                    inputs.map((input) => (
-                        <FormInput
-                            key={input.id}
-                            {...input}
-                            value={inputValue[input.name]}
-                            label={input.label}
-                            onChange={onChange}
-                        />
-                    ))
-                }
-                <button>Submit</button>
-            </form> */}
-            <p>Данные пользователя</p>
-            {
-                inputs.map((input) => (
-                    <FormInput
-                        key={input.id}
-                        {...input}
-                        value={inputValue[input.name]}
-                        label={input.label}
-                        onChange={onChange}
-                        handleSubmit={handleSubmit}
-                        clearValue={clearValue}
-                    />
-                ))
-            }
-        </div >
+        <>
+
+            <div className={s.accaunt__wrap}>
+                <div className={s.accaunt__info}>
+                    <h1 className={s.accaunt__title}>User Account</h1>
+                    <Link className={s.accaunt__main} to='/'>На главную</Link>
+                </div>
+
+                <div className={s.accaunt__wrap_content}>
+                    <div className={s.accaunt__form_wrap}>
+                        {
+                            inputs.map((input) => (
+                                <FormInput
+                                    key={input.id}
+                                    {...input}
+                                    value={inputValue[input.name]}
+                                    label={input.label}
+                                    onChange={onChange}
+                                    handleSubmit={handleSubmit}
+                                    clearValue={clearValue}
+                                    focused=''
+                                />
+                            ))
+                        }
+                    </div>
+                </div>
+
+            </div >
+        </>
     )
 }
 
 export const Accaunt: React.FC = () => {
-    return <Container children={[<AccauntComponent key={`AccauntComponent`} />]} />
+    return (
+        <>
+            <div className={s.accaunt}>
+                <Container children={[<AccauntComponent key={`AccauntComponent`} />]} />
+            </div>
+        </>
+    )
 }
 
 
