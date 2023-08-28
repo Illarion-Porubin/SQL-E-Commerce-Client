@@ -5,17 +5,14 @@ import { useCustomDispatch, useCustomSelector } from '../../hooks/store';
 import { Link } from 'react-router-dom';
 import { fetchUpdateInfo } from '../../redux/slices/authSlice';
 import { selectAuthData } from '../../redux/selectos';
-
-
 import { FormInput } from '../../components/formInputComp/FormInput';
-
 
 
 interface InputsType {
     id: string,
     placeholder: string,
     label: string,
-    name: 'username' | 'email' | 'phone',
+    name: 'oldpass' | 'newpass' | 'confirmpass' | 'username' | 'email' | 'phone',
     errorMessage: string,
     maxLength: number | undefined,
     minLength: number | undefined,
@@ -24,20 +21,20 @@ interface InputsType {
     required: boolean,
 }
 
-interface InputsPassType {
-    id: string,
-    placeholder: string,
-    label: string,
-    name: 'oldpass' | 'newpass' | 'confirmpass',
-    type: string
-}
-
 
 
 export const AccauntComponent: React.FC = () => {
     const dispatch = useCustomDispatch();
-    const [inputValue, setInputValue] = React.useState({ username: '', email: '', phone: '' });
-    const [passValue, setPassValue] = React.useState({ oldpass: '', newpass: '', confirmpass: '' });
+    const [inputValue, setInputValue] = React.useState({
+        username: '',
+        email: '',
+        phone: '',
+        oldpass: '',
+        newpass: '',
+        confirmpass: ''
+    }
+    );
+    const [changeForm, setChangeForm] = React.useState<boolean>(true);
     const auth = useCustomSelector(selectAuthData);
 
     React.useEffect(() => {
@@ -46,7 +43,10 @@ export const AccauntComponent: React.FC = () => {
                 // id: auth.data.user.id,
                 username: auth.data.user.username,
                 email: auth.data.user.email,
-                phone: auth.data.user.phone
+                phone: auth.data.user.phone,
+                oldpass: '',
+                newpass: '',
+                confirmpass: '',
             })
         }
     }, [auth.data, auth.isLoading])
@@ -62,7 +62,7 @@ export const AccauntComponent: React.FC = () => {
             minLength: 2,
             type: 'text',
             pattern: '^[А-Яа-я]{2,12}',
-            required: false,
+            required: true,
         },
         {
             id: `2`,
@@ -74,7 +74,7 @@ export const AccauntComponent: React.FC = () => {
             minLength: undefined,
             type: 'email',
             pattern: '([^ ]+@[^ ]+\.[a-z0-9]{2,6}|)$',
-            required: false,
+            required: true,
         },
         {
             id: `3`,
@@ -86,31 +86,46 @@ export const AccauntComponent: React.FC = () => {
             minLength: 11,
             type: 'text',
             pattern: '[0-9() -]+',
-            required: false,
+            required: true,
         },
     ]
-
-    const inputsPass: InputsPassType[] = [
+    
+    const inputsPass: InputsType[] = [
         {
             id: `1`,
             placeholder: 'Old Password',
             label: 'Old Password',
             name: 'oldpass',
-            type: 'text'
+            errorMessage: 'Пароль должен быть от 8 до 20 символов и содержать хотя бы 1 букву, 1 цифру и 1 специальный символ.',
+            maxLength: 20,
+            minLength: 8,
+            type: 'password',
+            pattern: `^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$`,
+            required: true,
         },
         {
             id: `2`,
             placeholder: 'New Password',
             label: 'New Password',
             name: 'newpass',
-            type: 'text'
+            errorMessage: 'Пароль должен быть от 8 до 20 символов и содержать хотя бы 1 букву, 1 цифру и 1 специальный символ.',
+            maxLength: 20,
+            minLength: 8,
+            type: 'password',
+            pattern: `^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$`,
+            required: true,
         },
         {
             id: `3`,
             placeholder: 'Confirm Password',
-            label: 'Confirm Password',
+            label: 'Confirm',
             name: 'confirmpass',
-            type: 'text'
+            errorMessage: 'Новый пароль не совпадает',
+            maxLength: 20,
+            minLength: 8,
+            type: 'password',
+            pattern: inputValue.newpass,
+            required: true,
         },
     ]
 
@@ -126,19 +141,9 @@ export const AccauntComponent: React.FC = () => {
         setInputValue({ ...inputValue, [e.target.name]: e.target.value })
     }
 
-    // const onChangePass = (e: React.ChangeEvent<HTMLInputElement>) => {
-    //     setPassValue({ ...passValue, [e.target.name]: e.target.value })
-    // }
-
-    const clearValue = (value: 'username' | 'email' | 'phone') => {
-        if (auth.data) {
-            setInputValue({ ...inputValue, [value]: auth.data.user[value] })
-        }
-        else {
-            setInputValue({ ...inputValue, [value]: '' })
-        }
+    const clearValue = (value: 'username' | 'email' | 'phone' | 'oldpass' | 'newpass' | 'confirmpass') => {       
+        setInputValue({ ...inputValue, [value]: '' })
     }
-
 
     return (
         <>
@@ -148,24 +153,46 @@ export const AccauntComponent: React.FC = () => {
                     <h1 className={s.accaunt__title}>User Account</h1>
                     <Link className={s.accaunt__main} to='/'>На главную</Link>
                 </div>
-
                 <div className={s.accaunt__wrap_content}>
-                    <div className={s.accaunt__form_wrap}>
+                    <p className={s.accaunt__change_form} onClick={() => setChangeForm(!changeForm)}>{changeForm ? `Сменить пароль?` : `Сменить данные?`}</p>
+                    <form className={s.accaunt__form} onSubmit={(e) => handleSubmit(e)}>
                         {
-                            inputs.map((input) => (
-                                <FormInput
-                                    key={input.id}
-                                    {...input}
-                                    value={inputValue[input.name]}
-                                    label={input.label}
-                                    onChange={onChange}
-                                    handleSubmit={handleSubmit}
-                                    clearValue={clearValue}
-                                    focused=''
-                                />
-                            ))
+                            changeForm ?
+                                <>
+                                    {
+                                        inputs.map((input) => (
+                                            <FormInput
+                                                key={input.id}
+                                                {...input}
+                                                value={inputValue[input.name]}
+                                                label={input.label}
+                                                onChange={onChange}
+                                                clearValue={clearValue}
+                                                focused=''
+                                            />
+                                        ))
+                                    }
+                                </>
+                                :
+                                <>
+
+                                    {
+                                        inputsPass.map((input) => (
+                                            <FormInput
+                                                key={input.id}
+                                                {...input}
+                                                value={inputValue[input.name]}
+                                                label={input.label}
+                                                onChange={onChange}
+                                                clearValue={clearValue}
+                                                focused=''
+                                            />
+                                        ))
+                                    }
+                                </>
                         }
-                    </div>
+                        <input className={s.accaunt__form_btn} type="submit" value='Обновить'/>
+                    </form>
                 </div>
 
             </div >

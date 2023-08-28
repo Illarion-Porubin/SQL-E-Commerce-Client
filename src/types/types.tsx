@@ -7,7 +7,10 @@ export type UserTypes = {
     username: string;
     email: string;
     phone: string;
-    password: string;
+    password?: string;
+    oldpass?: string;
+    newpass?: string;
+    confirmpass?: string;
     isActivated?: boolean;
     admin?: boolean;
     id?: string;
