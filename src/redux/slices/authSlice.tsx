@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk, AnyAction, PayloadAction } from "@reduxjs/toolkit";
-import { AdminTypes, UserTypes } from "../../types/types";
+import { AdminTypes, MainUserTypes, UpdateTypes, UserTypes } from "../../types/types";
 import axios from "../../http/index";
 
 export const fetchRegistration = createAsyncThunk<UserTypes, { username: string, email: string, password: string, phone: string }, { rejectValue: string }>(
@@ -35,7 +35,8 @@ export const fetchAuthMe = createAsyncThunk<UserTypes, void, { rejectValue: stri
   }
 );
 
-export const fetchUpdateInfo = createAsyncThunk<UserTypes, { username: string, email: string, phone: string, password: string }, { rejectValue: string }>(
+
+export const fetchUpdateInfo = createAsyncThunk<UserTypes, UpdateTypes, { rejectValue: string }>(
   "api/fetchUpdateInfo",
   async (params, { rejectWithValue }) => {
     const { data }: { data: UserTypes } = await axios.put("/api/update", params);

@@ -6,6 +6,7 @@ import { useCustomSelector } from '../../hooks/store';
 import { selectAuthData } from '../../redux/selectos';
 import InputMask from 'react-input-mask';
 
+
 interface Props {
     name: 'username' | 'phone' | 'email' | 'oldpass' | 'newpass' | 'confirmpass';
     placeholder: string;
@@ -17,16 +18,21 @@ interface Props {
     minLength: number | undefined;
     pattern: string | undefined,
     required: boolean;
-    focused: string;
     onChange: React.ChangeEventHandler<HTMLInputElement>;
     clearValue: (value: 'username' | 'email' | 'phone' | 'oldpass' | 'newpass' | 'confirmpass') => void;
 }
+
 
 const checkClass = (curenValue: string, dataValue: string | number | readonly string[] | undefined) => {
     return curenValue === dataValue || dataValue === '' ? `${s.forminput__input_btn}` : `${s.forminput__input_btn} ${s.active}`
 }
 
 
+declare module 'react' {
+    interface HTMLAttributes<T> extends DOMAttributes<T> {
+        action?: string | undefined
+    }
+}
 
 export const FormInput: React.FC<Props> = (props) => {
     const auth = useCustomSelector(selectAuthData);
@@ -47,8 +53,8 @@ export const FormInput: React.FC<Props> = (props) => {
                             mask="9 (999) 999-99-99"
                             onChange={onChange}
                             onFocus={() => setFocused(true)}
-                            onBlur={() => setFocused(!focused)}
-                            type={focused.toString()}
+                            onBlur={() => setFocused(false)}
+                            action={focused.toString()}
                         />
                         :
                         <input
@@ -57,19 +63,18 @@ export const FormInput: React.FC<Props> = (props) => {
                             {...inputProps}
                             onChange={onChange}
                             maxLength={inputProps.maxLength}
-                            onFocus={() => setFocused(!focused)}
-                            onBlur={() => setFocused(!focused)}
-                            // type={focused.toString()} 
+                            onFocus={() => setFocused(true)}
+                            onBlur={() => setFocused(false)}
+                            action={focused.toString()}
                         />
                 }
-                <span className={s.forminput__error}>{errorMessage}</span>
                 <input
                     className={checkClass(auth.data?.user[inputProps.name] ?? '', inputProps.value)}
                     type='image'
                     onClick={() => clearValue(inputProps.name)}
                     src={cancel} alt="check"
                 />
-                
+                <span className={s.forminput__error}>{errorMessage}</span>
             </div>
         </>
     )

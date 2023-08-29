@@ -40,7 +40,6 @@ export const AccauntComponent: React.FC = () => {
     React.useEffect(() => {
         if (auth.isLoading === "loaded" && auth.data) {
             setInputValue({
-                // id: auth.data.user.id,
                 username: auth.data.user.username,
                 email: auth.data.user.email,
                 phone: auth.data.user.phone,
@@ -89,7 +88,7 @@ export const AccauntComponent: React.FC = () => {
             required: true,
         },
     ]
-    
+
     const inputsPass: InputsType[] = [
         {
             id: `1`,
@@ -111,7 +110,7 @@ export const AccauntComponent: React.FC = () => {
             errorMessage: 'Пароль должен быть от 8 до 20 символов и содержать хотя бы 1 букву, 1 цифру и 1 специальный символ.',
             maxLength: 20,
             minLength: 8,
-            type: 'password',
+            type: 'text',
             pattern: `^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$`,
             required: true,
         },
@@ -123,25 +122,40 @@ export const AccauntComponent: React.FC = () => {
             errorMessage: 'Новый пароль не совпадает',
             maxLength: 20,
             minLength: 8,
-            type: 'password',
+            type: 'text',
             pattern: inputValue.newpass,
             required: true,
         },
     ]
 
+    console.log(inputValue.newpass)
+
     const handleSubmit = (e: any) => {
         e.preventDefault();
         const data = new FormData(e.target)
         const value = Object.fromEntries(data.entries())
-        console.log(value)
-        // dispatch(fetchUpdateInfo(value))
+        const userData = {
+            id: auth.data?.user.id,
+            username: value.username,
+            email: value.email,
+            phone: value.phone,
+            oldpass: value.oldpass,
+            newpass: value.newpass,
+            confirmpass: value.confirmpass,
+        }
+        if (auth.data?.user.id) {
+            dispatch(fetchUpdateInfo(userData))
+        }
+        else{
+            window.alert(`Пользователь не найден`)
+        }
     }
 
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setInputValue({ ...inputValue, [e.target.name]: e.target.value })
     }
 
-    const clearValue = (value: 'username' | 'email' | 'phone' | 'oldpass' | 'newpass' | 'confirmpass') => {       
+    const clearValue = (value: 'username' | 'email' | 'phone' | 'oldpass' | 'newpass' | 'confirmpass') => {
         setInputValue({ ...inputValue, [value]: '' })
     }
 
@@ -168,7 +182,6 @@ export const AccauntComponent: React.FC = () => {
                                                 label={input.label}
                                                 onChange={onChange}
                                                 clearValue={clearValue}
-                                                focused=''
                                             />
                                         ))
                                     }
@@ -185,13 +198,12 @@ export const AccauntComponent: React.FC = () => {
                                                 label={input.label}
                                                 onChange={onChange}
                                                 clearValue={clearValue}
-                                                focused=''
                                             />
                                         ))
                                     }
                                 </>
                         }
-                        <input className={s.accaunt__form_btn} type="submit" value='Обновить'/>
+                        <input className={s.accaunt__form_btn} type="submit" value='Обновить' />
                     </form>
                 </div>
 

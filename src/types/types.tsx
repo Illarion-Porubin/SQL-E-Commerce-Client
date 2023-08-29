@@ -55,3 +55,13 @@ export interface UserOrder {
 }
 
 
+export interface UpdateTypes {
+  id: string | undefined,
+  username: FormDataEntryValue,
+  email: FormDataEntryValue,
+  phone: FormDataEntryValue,
+  oldpass: FormDataEntryValue,
+  newpass: FormDataEntryValue,
+  confirmpass: FormDataEntryValue,
+}
+

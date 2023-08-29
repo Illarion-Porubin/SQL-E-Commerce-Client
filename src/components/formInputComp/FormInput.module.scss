@@ -22,7 +22,7 @@
         position: relative;
     }
 
-    &__input_btn { 
+    &__input_btn {
         width: 25px;
         height: 25px;
         z-index: -1;
@@ -46,13 +46,14 @@
     color: red;
     opacity: 0;
     transition: all .3s;
+    margin-bottom: 20px;
 }
 
-.forminput__input:invalid[type="true"] {
+.forminput__input:invalid[action="true"] {
     border: 1px solid red;
 }
 
-.forminput__input:invalid[type="true"]~.forminput__error {
+.forminput__input:invalid[action="true"]~ .forminput__error {
     opacity: 1;
     transition: all .3s;
 }
