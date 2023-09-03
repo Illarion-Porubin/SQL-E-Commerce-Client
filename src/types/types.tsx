@@ -4,6 +4,7 @@ export type UserTypes = {
   refreshToken?: string;
   isLoading?: string;
   user: {
+    avatar: string | null;
     username: string;
     email: string;
     phone: string;

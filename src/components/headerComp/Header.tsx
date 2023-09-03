@@ -12,13 +12,16 @@ import { selectAuthData, selectCartData } from '../../redux/selectos';
 import { authSlice } from '../../redux/slices/authSlice';
 
 
+
+
 export const HeaderContent: React.FC = () => {
     const dispatch = useCustomDispatch()
     const cart = useCustomSelector(selectCartData);
     const auth = useCustomSelector(selectAuthData);
     const [mobMenu, setMobMenu] = React.useState<boolean>(false);
     const [search, setSearch] = React.useState<string>(``);
-    const checkUser = auth.isLoading === 'loaded';
+    const avatar = auth.data?.user.avatar ? `${'http://localhost:5000/' + auth.data?.user.avatar}` : user;
+    const isActivatedUser = auth.data?.user.isActivated;
 
     const userLogout = () => {
         if (window.confirm(`Вы точно хотите выйти?`)) {
@@ -62,9 +65,9 @@ export const HeaderContent: React.FC = () => {
                                 <li className={s.header__mobile_li}>
                                     <a className={s.header__mobile_link} href="/#">ALL COLLECTIONS</a>
                                 </li>
-                                <li className={`${s.header__mobile_li} ${s.header__mobile_auth}`} > 
+                                <li className={`${s.header__mobile_li} ${s.header__mobile_auth}`} >
                                     {
-                                        checkUser ?
+                                        !!auth.data && isActivatedUser ?
 
                                             <Link className={s.header__mobile_link} to={'/'} onClick={() => userLogout()}>
                                                 Logout
@@ -93,11 +96,16 @@ export const HeaderContent: React.FC = () => {
                         <Link to='/'>
                             <img className={s.header__icon} src={ring} alt="ring" />
                         </Link>
-                        <Link to='/accaunt'>
-                            <img className={s.header__icon} src={user} alt="user" />
-                        </Link>
+                        {
+                            isActivatedUser ?
+                                <Link to='/accaunt'>
+                                    <img className={s.header__icon} src={avatar} alt="user" />
+                                </Link>
+                                :
+                                <img className={s.header__icon} src={avatar} alt="user" onClick={() => window.alert('Авторизируйтесь')} />
+                        }
                     </div>
-                </div> 
+                </div>
             </div>
 
             <div className={s.header__desc}>
@@ -109,8 +117,7 @@ export const HeaderContent: React.FC = () => {
                             <option value="Rus">Russian (RUS)</option>
                         </select>
                         {
-                            checkUser ?
-
+                            !!auth.data ?
                                 <Link className={s.header__auth} to={'/'} onClick={() => userLogout()}>
                                     Logout
                                 </Link>
@@ -138,9 +145,14 @@ export const HeaderContent: React.FC = () => {
                         <Link to='/'>
                             <img className={s.header__icon} src={ring} alt="ring" />
                         </Link>
-                        <Link to='/accaunt'>
-                            <img className={s.header__icon} src={user} alt="user" />
-                        </Link>
+                        {
+                            isActivatedUser ?
+                                <Link to='/accaunt'>
+                                    <img className={s.header__icon} src={avatar} alt="user" />
+                                </Link>
+                                :
+                                <img className={s.header__icon} src={avatar} alt="user" onClick={() => window.alert('Авторизируйтесь')} />
+                        }
                     </div>
                 </div>
             </div>

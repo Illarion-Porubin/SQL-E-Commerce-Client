@@ -5,7 +5,6 @@ import axios from "../../http/index";
 export const fetchRegistration = createAsyncThunk<UserTypes, { username: string, email: string, password: string, phone: string }, { rejectValue: string }>(
   "api/fetchRegistration", async (params, { rejectWithValue }) => {
     const { data }: { data: UserTypes } = await axios.post("/api/registration", params);
-    console.log(params)
     if (!data) {
       return rejectWithValue("Server Error!");
     }
@@ -48,10 +47,21 @@ export const fetchUpdateInfo = createAsyncThunk<UserTypes, UpdateTypes, { reject
   }
 );
 
-export const fetchDeleteAvatar = createAsyncThunk<UserTypes, string, { rejectValue: string }>(
+export const fetchUploadAvatar = createAsyncThunk<any, any, { rejectValue: string }>(
+  "api/fetchUploadAvatar", async (params, { rejectWithValue }) => {
+    console.log(params, 'params')
+    const { data }: { data: any } = await axios.post("/api/avatar", params);
+    if (!data) {
+      return rejectWithValue("Server Error!");
+    }
+    const auth: any = data
+    return auth;
+  });
+
+export const fetchDeleteAvatar = createAsyncThunk<UserTypes, undefined, { rejectValue: string }>(
   "api/fetchDeleteAvatar",
-  async (id, { rejectWithValue }) => {
-    const { data }: { data: UserTypes } = await axios.delete("/api/avatar/" + id);
+  async (_, { rejectWithValue }) => {
+    const { data }: { data: UserTypes } = await axios.delete("/api/avatar/");
     if (!data) {
       return rejectWithValue("Server Error!");
     }
@@ -59,6 +69,8 @@ export const fetchDeleteAvatar = createAsyncThunk<UserTypes, string, { rejectVal
     return auth;
   }
 );
+
+
 
 
 

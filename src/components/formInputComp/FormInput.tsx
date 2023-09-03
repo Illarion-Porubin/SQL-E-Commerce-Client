@@ -1,6 +1,5 @@
 import * as React from 'react';
 import s from './FormInput.module.scss';
-import check from '../../asets/svg/check.svg';
 import cancel from '../../asets/svg/cancel.svg';
 import { useCustomSelector } from '../../hooks/store';
 import { selectAuthData } from '../../redux/selectos';
@@ -79,38 +78,3 @@ export const FormInput: React.FC<Props> = (props) => {
         </>
     )
 }
-
-
-
-
-
-
-
-
-
-
-
-
-// import * as React from 'react';
-// import s from './FormInput.module.scss';
-
-// interface Props {
-//     name: string;
-//     placeholder: string;
-//     value: string | number | readonly string[] | undefined;
-//     id: string;
-//     label: string;
-//     onChange: React.ChangeEventHandler<HTMLInputElement>;
-// }
-
-
-
-// export const FormInput: React.FC<Props> = (props) => {
-//     const { label, onChange, id, ...unputProps } = props;
-//     return (
-//         <div className={s.forminput}>
-//             <label htmlFor="">{label}</label>
-//             <input {...unputProps} onChange={onChange}/>
-//         </div>
-//     )
-// }
