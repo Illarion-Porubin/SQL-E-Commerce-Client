@@ -3,64 +3,81 @@ import s from './Auth.module.scss';
 import { Link, Navigate } from 'react-router-dom';
 import { useCustomDispatch, useCustomSelector } from '../../hooks/store';
 import { selectAuthData } from '../../redux/selectos';
-import { useForm, SubmitHandler } from "react-hook-form"
 import { Container } from '../../components/containerComp/Container';
 import { fetchLogin } from '../../redux/slices/authSlice';
-import { yupResolver } from "@hookform/resolvers/yup"
-import * as yup from "yup"
+import { FormInput } from '../../components/formInputComp/FormInput';
 
-type LoginTipes = {
-    email: string
-    password: string
+
+interface InputsType {
+    id: string,
+    placeholder: string,
+    label: string,
+    name: 'email' | 'password',
+    errorMessage: string,
+    maxLength: number | undefined,
+    minLength: number | undefined,
+    type: string,
+    pattern: string | undefined,
+    required: boolean,
 }
 
 
-const schema = yup
-    .object({
-        email: yup.string()
-            .required('Почта обязательна')
-            .matches(/^\S+@\S+\.\S+$/, "Введите почтовый адрес"),
-        password: yup.string()
-            .required('Пароль обязателен')
-            .min(6, 'Минимальная длина 6 символов'),
-    })
-    .required()
+const inputs: InputsType[] = [
+    {
+        id: '1',
+        placeholder: 'Email',
+        label: 'Email',
+        name: 'email',
+        errorMessage: 'Введите правильный почтовый адрес!',
+        maxLength: undefined,
+        minLength: undefined,
+        type: 'email',
+        pattern: '([^ ]+@[^ ]+\.[a-z0-9]{2,6}|)$',
+        required: true,
+    },
+    {
+        id: `2`,
+        placeholder: 'New Password',
+        label: 'New Password',
+        name: 'password',
+        errorMessage: 'Пароль должен быть от 8 до 20 символов и содержать хотя бы 1 букву, 1 цифру и 1 специальный символ.',
+        maxLength: 20,
+        minLength: 8,
+        type: 'text',
+        pattern: '^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$',
+        required: true,
+    },
+]
+
 
 export const LoginContent: React.FC = () => {
     const dispatch = useCustomDispatch();
     const auth = useCustomSelector(selectAuthData);
-
-    const { register, handleSubmit, formState: { errors }, } = useForm(
-        {
-            resolver: yupResolver(schema),
-            defaultValues: {
-                email: "",
-                password: "",
-            },
-        })
-
-    const Login: SubmitHandler<LoginTipes> = async (data) => {
-        const userData = { ...data };
-        const { payload } = await dispatch(fetchLogin(userData));
-
-        const _payload = payload as any
-        if (!payload) {
-            return alert("Не удалось авторизоваться");
-        }
-
-        if (!_payload.user?.isActivated) {
-            return alert("Пожалуйста, подтвердите аккаунт");
-        }
-
-        else {
-            if (_payload.accessToken && "accessToken" in _payload) {
-                window.localStorage.setItem('token', _payload.accessToken);
-            }
-        }
-    }
+    const [inputValue, setInputValue] = React.useState({ email: '', password: '' });
 
     if (auth.data?.user.isActivated) {
         return <Navigate to="/" />
+    }
+
+    const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setInputValue({ ...inputValue, [e.target.name]: e.target.value })
+    }
+
+    const clearValue = (value: 'username' | 'email' | 'phone' | 'oldpass' | 'newpass' | 'confirmpass' | 'password') => {
+        setInputValue({ ...inputValue, [value]: '' })
+    }
+
+    const handleSubmit = (e: any) => {
+        e.preventDefault();
+        const data = new FormData(e.target)
+        const value = Object.fromEntries(data.entries())
+        const userData = { email: value.email, password: value.password }
+        if (auth.data?.user.id) {
+            dispatch(fetchLogin(userData))
+        }
+        else {
+            window.alert(`Пользователь не найден`)
+        }
     }
 
     return (
@@ -70,35 +87,31 @@ export const LoginContent: React.FC = () => {
                 <Link className={s.auth__main} to='/'>На главную</Link>
             </div>
             <div className={s.auth__form_wrap}>
-                <Link className={s.auth__form_change} to='/regist'>Нет аккаунта?</Link>
-
-                <form className={s.auth__form} onSubmit={handleSubmit(Login)} >
-                    <input
-                        className={!errors.email ? s.auth__input : s.auth__input_err}
-                        placeholder="Email"
-                        {...register("email", { required: true })}
-                        aria-invalid={errors.email ? "true" : "false"}
-                        type="text"
-                    />
-                    {errors.email && <p role="alert">{errors.email.message}</p>}
-                    <input
-                        className={!errors.password ? s.auth__input : s.auth__input_err}
-                        placeholder="Password"
-                        {...register("password", { required: true })}
-                        aria-invalid={errors.password ? "true" : "false"}
-                        type="text"
-                    />
-                    {errors.password && <p role="alert">{errors.password.message}</p>}
-
-                    <input type="submit" />
+                <form className={s.auth__form} onSubmit={(e) => handleSubmit(e)} >
+                    {
+                        inputs.map((input) => (
+                            <FormInput
+                                key={input.id}
+                                {...input}
+                                value={inputValue[input.name]}
+                                label={input.label}
+                                onChange={onChange}
+                                clearValue={clearValue}
+                            />
+                        ))
+                    }
+                    <input className={s.auth__form_btn} type="submit" />
                 </form>
-
+                <Link className={s.auth__form_change} to='/regist'>Нет аккаунта?</Link>
             </div>
-
         </div >
     )
 }
 
 export const Login: React.FC = () => {
-    return <Container children={[<LoginContent key={`LoginContent`} />]} />
+    return (
+        <div className={s.background}>
+            <Container children={[<LoginContent key={`LoginContent`} />]} />
+        </div>
+    )
 }

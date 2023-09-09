@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk, AnyAction, PayloadAction } from "@reduxj
 import { AdminTypes, MainUserTypes, UpdateTypes, UserTypes } from "../../types/types";
 import axios from "../../http/index";
 
-export const fetchRegistration = createAsyncThunk<UserTypes, { username: string, email: string, password: string, phone: string }, { rejectValue: string }>(
+export const fetchRegistration = createAsyncThunk<UserTypes, { username: FormDataEntryValue, email: FormDataEntryValue, password: FormDataEntryValue, phone: FormDataEntryValue }, { rejectValue: string }>(
   "api/fetchRegistration", async (params, { rejectWithValue }) => {
     const { data }: { data: UserTypes } = await axios.post("/api/registration", params);
     if (!data) {
@@ -12,7 +12,7 @@ export const fetchRegistration = createAsyncThunk<UserTypes, { username: string,
     return auth;
   });
 
-export const fetchLogin = createAsyncThunk<UserTypes, { email: string, password: string }, { rejectValue: string }>(
+export const fetchLogin = createAsyncThunk<UserTypes, { email: FormDataEntryValue, password: FormDataEntryValue }, { rejectValue: string }>(
   "api/fetchLogin", async (params, { rejectWithValue }) => {
     const { data }: { data: UserTypes } = await axios.post("/api/login", params);
     if (!data) {

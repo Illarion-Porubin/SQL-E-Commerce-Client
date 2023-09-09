@@ -113,7 +113,7 @@ export const AccauntComponent: React.FC = () => {
             maxLength: 20,
             minLength: 8,
             type: 'text',
-            pattern: `^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$`,
+            pattern: '^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$',
             required: true,
         },
         {
@@ -155,7 +155,7 @@ export const AccauntComponent: React.FC = () => {
         setInputValue({ ...inputValue, [e.target.name]: e.target.value })
     }
 
-    const clearValue = (value: 'username' | 'email' | 'phone' | 'oldpass' | 'newpass' | 'confirmpass') => {
+    const clearValue = (value: 'username' | 'email' | 'phone' | 'oldpass' | 'newpass' | 'confirmpass' | 'password') => {
         setInputValue({ ...inputValue, [value]: '' })
     }
 
@@ -193,7 +193,6 @@ export const AccauntComponent: React.FC = () => {
                         onChange={(e) => handleChange(e)}
                         accept='image/*,.png,.jpg,.svg,.web'
                     />
-
                         <img
                             className={s.accaunt__avatar}
                             onClick={upLoadAvatar}
@@ -219,7 +218,6 @@ export const AccauntComponent: React.FC = () => {
                                 </>
                                 :
                                 <>
-
                                     {
                                         inputsPass.map((input) => (
                                             <FormInput

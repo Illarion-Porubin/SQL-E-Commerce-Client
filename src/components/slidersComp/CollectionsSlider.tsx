@@ -20,7 +20,6 @@ export const CollectionsSlider: React.FC = () => {
                     {
                         sliderArray.map((_, i) => (
                             <motion.div
-                                className={s.slider__img_wrap}
                                 drag="x"
                                 key={i}
                                 dragConstraints={{ left: 0, right: 0 }}
@@ -37,15 +36,17 @@ export const CollectionsSlider: React.FC = () => {
                                     }
                                 }
                             >
-                                <div
-                                    className={s.slider__img}
-                                    key={i}
-                                    style={{
-                                        transform: `translateX(${!sliderId ? sliderId : `-` + sliderId + `00`}%)`,
-                                        backgroundImage: `url(${slide})`
-                                    }}
-                                >
-                                    <div className={s.slider__test}></div>
+                                <div className={s.slider__content}> 
+                                    <img
+                                        className={s.slider__img}
+                                        key={i}
+                                        src={slide}
+                                        style={{
+                                            transform: `translateX(${!sliderId ? sliderId : `-` + sliderId + `00`}%)`,
+                                        }}
+                                        alt='slide'
+                                    />
+                                    <div className={s.slider__plug}></div>
                                 </div>
                             </motion.div>
                         ))

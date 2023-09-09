@@ -2,57 +2,106 @@ import * as React from 'react';
 import s from './Auth.module.scss';
 import { Link } from 'react-router-dom';
 import { useCustomDispatch } from '../../hooks/store';
-import { useForm, SubmitHandler, Controller } from "react-hook-form"
 import { Container } from '../../components/containerComp/Container';
+import { FormInput } from '../../components/formInputComp/FormInput';
 import { fetchRegistration } from '../../redux/slices/authSlice';
-import { yupResolver } from "@hookform/resolvers/yup"
-import InputMask from 'react-input-mask';
-import * as yup from "yup"
 
-type Registation = {
-    username: string
-    phone?: string | null
-    email: string
-    password: string
+interface InputsType {
+    id: string,
+    placeholder: string,
+    label: string,
+    name: 'username' | 'email' | 'phone' | 'password' | 'confirmpass',
+    errorMessage: string,
+    maxLength: number | undefined,
+    minLength: number | undefined,
+    type: string,
+    pattern: string | undefined,
+    required: boolean,
 }
-
- 
-const schema = yup
-    .object({
-        username: yup.string()
-            .required('Имя обязательно')
-            .min(2, 'Минимальная длина 2 символов')
-            .max(10, 'Максимальная длина 12 символов'),
-        phone: yup.string()
-            // .required('Телефон обязателен')
-            // .matches(/\d{3}[\s-]?\d{2}[\s-]?\d{2}/, "Должны быть только числа")
-            .notRequired(),
-        email: yup.string()
-            .required('Почта обязательна')
-            .matches(/^\S+@\S+\.\S+$/, "Введите почтовый адрес"),
-        password: yup.string()
-            .required('Пароль обязателен')
-            .min(6, 'Минимальная длина 6 символов'),
-    })
-    .required()
 
 export const RegistContent: React.FC = () => {
     const dispatch = useCustomDispatch();
-    const { control, register, handleSubmit, formState: { errors }, } = useForm(
-        {
-            resolver: yupResolver(schema),
-            defaultValues: {
-                username: '',
-                phone: '',
-                email: '',
-                password: '',
-            },
-        })
+    const [inputValue, setInputValue] = React.useState({
+        username: '',
+        email: '',
+        phone: '',
+        password: '',
+        confirmpass: ''
+    });
 
-    const Registration: SubmitHandler<Registation> = async (data) => {
-        const { username, email, password, phone } = data
-        await dispatch(fetchRegistration({ username, email, password, phone: phone ? phone : "" }));
-        window.alert('Письмо отправленно вам на почту')
+    const inputs: InputsType[] = [
+        {
+            id: `1`,
+            placeholder: 'Name',
+            label: 'Username',
+            name: 'username',
+            errorMessage: 'Только кириллица от 2 до 16 символов, без специальных символов и чисел!',
+            maxLength: 12,
+            minLength: 2,
+            type: 'text',
+            pattern: '^[А-Яа-я]{2,12}',
+            required: true,
+        },
+        {
+            id: `2`,
+            placeholder: 'Email',
+            label: 'Email',
+            name: 'email',
+            errorMessage: 'Введите правильный почтовый адрес!',
+            maxLength: undefined,
+            minLength: undefined,
+            type: 'email',
+            pattern: '([^ ]+@[^ ]+\.[a-z0-9]{2,6}|)$',
+            required: true,
+        },
+        {
+            id: `3`,
+            placeholder: 'Password',
+            label: 'Password',
+            name: 'password',
+            errorMessage: 'Пароль должен быть от 8 до 20 символов и содержать как минимум 1 букву, 1 цифру и 1 специальный символ.',
+            maxLength: 20,
+            minLength: 8,
+            type: 'password',
+            pattern: '^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$',
+            required: true,
+        },
+        {
+            id: `4`,
+            placeholder: 'Confirm Password',
+            label: 'Confirm',
+            name: 'confirmpass',
+            errorMessage: 'Новый пароль не совпадает',
+            maxLength: 20,
+            minLength: 8,
+            type: 'password',
+            pattern: inputValue.password,
+            required: true,
+        },
+    ]
+
+    const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setInputValue({ ...inputValue, [e.target.name]: e.target.value })
+    }
+
+    const clearValue = (value: 'username' | 'email' | 'phone' | 'oldpass' | 'newpass' | 'confirmpass' | 'password') => {
+        setInputValue({ ...inputValue, [value]: '' })
+    }
+
+    const handleSubmit = (e: any) => {
+        e.preventDefault();
+        const data = new FormData(e.target)
+        const value = Object.fromEntries(data.entries())
+        if (value.password === value.confirmpass) {
+            const userData = {
+                username: value.username,
+                email: value.email,
+                password: value.password,
+                phone: value.phone ? value.phone : '',
+            }
+            dispatch(fetchRegistration(userData));
+            window.alert('Письмо отправленно вам на почту');
+        }
     }
 
     return (
@@ -62,56 +111,31 @@ export const RegistContent: React.FC = () => {
                 <Link className={s.auth__main} to='/'>На главную</Link>
             </div>
             <div className={s.auth__form_wrap}>
-                <Link className={s.auth__form_change} to='/login'>Есть аккаунт?</Link>
-                <form className={s.auth__form} onSubmit={handleSubmit(Registration)} >
-                    <input
-                        className={!errors.username ? s.auth__input : s.auth__input_err}
-                        placeholder="Name"
-                        {...register("username", { required: true })}
-                        aria-invalid={errors.username ? "true" : "false"}
-                        type="text"
-                    />
-                    {errors.username && <p role="alert">{errors.username.message}</p>}
-                    <input
-                        className={!errors.email ? s.auth__input : s.auth__input_err}
-                        placeholder="Email"
-                        {...register("email", { required: true })}
-                        aria-invalid={errors.email ? "true" : "false"}
-                        type="text"
-                    />
-                    {errors.email && <p role="alert">{errors.email.message}</p>}
-                    <Controller
-                        name="phone"
-                        control={control}
-                        render={({ field }) =>
-                            <InputMask
-                                {...field.onChange}
-                                className={!errors.phone ? s.auth__input : s.auth__input_err}
-                                placeholder="Телефон (необязателен)"
-                                id="phone"
-                                mask="+9 (999) 999-99-99"
-                                {...register("phone", { required: true })}
-                                aria-invalid={errors.phone ? "true" : "false"}
+                <form className={s.auth__form} onSubmit={(e) => handleSubmit(e)} >
+                    {
+                        inputs.map((input) => (
+                            <FormInput
+                                key={input.id}
+                                {...input}
+                                value={inputValue[input.name]}
+                                label={input.label}
+                                onChange={onChange}
+                                clearValue={clearValue}
                             />
-
-                        }
-                    />
-                    {errors.phone && <p role="alert">{errors.phone.message}</p>}
-                    <input
-                        className={!errors.password ? s.auth__input : s.auth__input_err}
-                        placeholder="Password"
-                        {...register("password", { required: true })}
-                        aria-invalid={errors.password ? "true" : "false"}
-                        type="password"
-                    />
-                    {errors.password && <p role="alert">{errors.password.message}</p>}
-                    <input type="submit" />
+                        ))
+                    }
+                    <input className={s.auth__form_btn} type="submit" />
                 </form>
+                <Link className={s.auth__form_change} to='/login'>Есть аккаунт?</Link>
             </div>
         </div >
     )
 }
 
 export const Regist: React.FC = () => {
-    return <Container children={[<RegistContent key={`RegistContent`} />]} />
+    return (
+        <div className={s.background}>
+            <Container children={[<RegistContent key={`RegistContent`} />]} />
+        </div>
+    )
 }

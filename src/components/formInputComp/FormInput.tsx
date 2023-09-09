@@ -7,7 +7,7 @@ import InputMask from 'react-input-mask';
 
 
 interface Props {
-    name: 'username' | 'phone' | 'email' | 'oldpass' | 'newpass' | 'confirmpass';
+    name: 'username' | 'phone' | 'email' | 'oldpass' | 'newpass' | 'confirmpass' | 'password';
     placeholder: string;
     value: string | number | readonly string[] | undefined;
     id: string;
@@ -18,7 +18,7 @@ interface Props {
     pattern: string | undefined,
     required: boolean;
     onChange: React.ChangeEventHandler<HTMLInputElement>;
-    clearValue: (value: 'username' | 'email' | 'phone' | 'oldpass' | 'newpass' | 'confirmpass') => void;
+    clearValue: (value: 'username' | 'email' | 'phone' | 'oldpass' | 'newpass' | 'confirmpass' | 'password') => void;
 }
 
 
@@ -67,12 +67,16 @@ export const FormInput: React.FC<Props> = (props) => {
                             action={focused.toString()}
                         />
                 }
-                <input
-                    className={checkClass(auth.data?.user[inputProps.name] ?? '', inputProps.value)}
-                    type='image'
-                    onClick={() => clearValue(inputProps.name)}
-                    src={cancel} alt="check"
-                />
+                {
+                   auth.data?.user &&
+                   <input
+                       className={checkClass(auth.data?.user[inputProps.name] ?? '', inputProps.value)}
+                       type='image'
+                       onClick={() => clearValue(inputProps.name)}
+                       src={cancel} alt="check"
+                   />
+
+                }
                 <span className={s.forminput__error}>{errorMessage}</span>
             </div>
         </>
