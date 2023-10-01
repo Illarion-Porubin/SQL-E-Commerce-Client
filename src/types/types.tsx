@@ -42,8 +42,19 @@ export interface ProductType {
   count: number
 }
 
-export interface ProductsType {
-  product: ProductType
+export interface ProductCardType {
+  Ratings: any,
+  collection: string,
+  createdAt: string
+  desc: string,
+  id: number,
+  img: string,
+  label: string
+  newprice: number,
+  oldprice: number,
+  rating: number,
+  type: string,
+  updatedAt: string
 }
 
 export interface UserOrder {

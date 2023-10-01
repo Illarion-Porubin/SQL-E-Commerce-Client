@@ -254,7 +254,6 @@
 ///media
 
 @media(max-width: 1200px) {
-
     .header__wrap,
     .header__info {
         padding: 0 30px;
@@ -279,5 +278,11 @@
 
     .header__mobile {
         display: block;
+    }
+}
+
+@media(max-width: 320px){
+    .header__text{
+        font-size: 14px;
     }
 }

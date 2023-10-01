@@ -6,6 +6,7 @@ import { selectAuthData } from '../../redux/selectos';
 import { Container } from '../../components/containerComp/Container';
 import { fetchLogin } from '../../redux/slices/authSlice';
 import { FormInput } from '../../components/formInputComp/FormInput';
+import { UserTypes } from '../../types/types';
 
 
 interface InputsType {
@@ -37,8 +38,8 @@ const inputs: InputsType[] = [
     },
     {
         id: `2`,
-        placeholder: 'New Password',
-        label: 'New Password',
+        placeholder: 'Password',
+        label: 'Password',
         name: 'password',
         errorMessage: 'Пароль должен быть от 8 до 20 символов и содержать хотя бы 1 букву, 1 цифру и 1 специальный символ.',
         maxLength: 20,
@@ -55,10 +56,6 @@ export const LoginContent: React.FC = () => {
     const auth = useCustomSelector(selectAuthData);
     const [inputValue, setInputValue] = React.useState({ email: '', password: '' });
 
-    if (auth.data?.user.isActivated) {
-        return <Navigate to="/" />
-    }
-
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setInputValue({ ...inputValue, [e.target.name]: e.target.value })
     }
@@ -67,17 +64,27 @@ export const LoginContent: React.FC = () => {
         setInputValue({ ...inputValue, [value]: '' })
     }
 
-    const handleSubmit = (e: any) => {
+    const handleSubmit = async (e: any) => {
         e.preventDefault();
         const data = new FormData(e.target)
         const value = Object.fromEntries(data.entries())
         const userData = { email: value.email, password: value.password }
-        if (auth.data?.user.id) {
-            dispatch(fetchLogin(userData))
+        const { payload }  = await dispatch(fetchLogin(userData));
+        const _payload = payload as UserTypes;
+        if (!_payload) {
+            return alert("Не удалось авторизоваться");
         }
-        else {
-            window.alert(`Пользователь не найден`)
+        if (!_payload?.user?.isActivated) {
+            return alert("Пожалуйста, подтвердите аккаунт");
+        } else {
+            if (_payload.accessToken && "accessToken" in _payload) {
+                window.localStorage.setItem("token", _payload.accessToken);
+            }
         }
+    }
+
+    if (auth.data && auth.data.user.isActivated) {
+        return <Navigate to="/" />
     }
 
     return (
