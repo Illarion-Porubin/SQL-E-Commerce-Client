@@ -6,7 +6,6 @@ import Feature_4 from '../../asets/icons/feature_4.svg';
 import s from "./Feature.module.scss";
 
 export const Feature: React.FC = () => {
-
     return (
         <div className={s.feature}>
             <div className={s.feature__item_wrap}>

@@ -16,7 +16,7 @@ export const Search: React.FC<Props> = ({ showSelect, value, setSearch }) => {
                 <div className={s.search__wrap}>
                     <input className={s.search__input}
                         type="text" 
-                        placeholder={`Looking for something?`}
+                        placeholder={showSelect ? `Just visually searching` : `Looking for something?`}
                         value={value}
                         onChange={(e) => setSearch(e.target?.value)}
                     />

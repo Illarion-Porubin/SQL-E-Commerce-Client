@@ -32,7 +32,7 @@ export const CustomerSlider: React.FC = () => {
     const DataArray = [...Array(3)];
     const swipeSpeed = 10000;
 
-    const swipePower = (offset: any, valocity: any) => {
+    const swipePower = (offset: number, valocity: number) => {
         return Math.abs(offset) * valocity;
     }
 

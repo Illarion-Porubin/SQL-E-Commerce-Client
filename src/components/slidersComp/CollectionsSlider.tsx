@@ -9,7 +9,7 @@ export const CollectionsSlider: React.FC = () => {
     const [sliderId, setSliderId] = React.useState<string>("0");
     const sliderArray = [...Array(3)];
     const swipeSpeed = 10000;
-    const swipePower = (offset: any, valocity: any) => {
+    const swipePower = (offset: number, valocity: number) => {
         return Math.abs(offset) * valocity;
     }
 

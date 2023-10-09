@@ -6,12 +6,11 @@ import axios from "../../http/index";
 
 export const fetchOrder = createAsyncThunk<UserOrder, UserOrder, { rejectValue: string }>(
     "api/fetchOrder", async (params, { rejectWithValue }) => {
-        const { data }: { data: any } = await axios.post("/api/cart", params);
+        const { data }: { data: UserOrder } = await axios.post("/api/cart", params);
         if (!data) {
             return rejectWithValue("Server Error!");
         }
-        const newData: any = data
-        return newData;
+        return data;
     });
 
 interface State {

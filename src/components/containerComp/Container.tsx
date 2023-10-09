@@ -2,7 +2,7 @@ import * as React from 'react';
 import s from './Container.module.scss';
 
 interface Props {
-    children: any[];
+    children: React.ReactNode[];
 }
 
 export const Container: React.FC<Props> = ({ children }) => {

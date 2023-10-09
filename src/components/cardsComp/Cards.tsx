@@ -32,8 +32,6 @@ export const CardContetn: React.FC<Props> = ({ item }) => {
         dispatch(cartSlice.actions.addOrder(product))
     }
 
-    
-
     return (
         <>
             <div className={s.card__item}>

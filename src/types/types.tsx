@@ -43,7 +43,7 @@ export interface ProductType {
 }
 
 export interface ProductCardType {
-  Ratings: any,
+  Ratings: number[],
   collection: string,
   createdAt: string
   desc: string,

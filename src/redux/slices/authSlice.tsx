@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk, AnyAction, PayloadAction } from "@reduxjs/toolkit";
-import { AdminTypes, MainUserTypes, UpdateTypes, UserTypes } from "../../types/types";
+import { UpdateTypes, UserTypes } from "../../types/types";
 import axios from "../../http/index";
 
 export const fetchRegistration = createAsyncThunk<UserTypes, { username: FormDataEntryValue, email: FormDataEntryValue, password: FormDataEntryValue, phone: FormDataEntryValue }, { rejectValue: string }>(
@@ -8,8 +8,7 @@ export const fetchRegistration = createAsyncThunk<UserTypes, { username: FormDat
     if (!data) {
       return rejectWithValue("Server Error!");
     }
-    const auth: UserTypes = data
-    return auth;
+    return data;
   });
 
 export const fetchLogin = createAsyncThunk<UserTypes, { email: FormDataEntryValue, password: FormDataEntryValue }, { rejectValue: string }>(
@@ -18,8 +17,7 @@ export const fetchLogin = createAsyncThunk<UserTypes, { email: FormDataEntryValu
     if (!data) {
       return rejectWithValue("Server Error!");
     }
-    const auth: UserTypes = data
-    return auth;
+    return data;
   }
 );
 
@@ -29,8 +27,7 @@ export const fetchAuthMe = createAsyncThunk<UserTypes, void, { rejectValue: stri
     if (!data) {
       return rejectWithValue("Server Error!");
     }
-    const auth: UserTypes = data
-    return auth;
+    return data;
   }
 );
 
@@ -42,20 +39,17 @@ export const fetchUpdateInfo = createAsyncThunk<UserTypes, UpdateTypes, { reject
     if (!data) {
       return rejectWithValue("Server Error!");
     }
-    const auth: UserTypes = data
-    return auth;
+    return data;
   }
 );
 
-export const fetchUploadAvatar = createAsyncThunk<any, any, { rejectValue: string }>(
+export const fetchUploadAvatar = createAsyncThunk<UserTypes, FormData, { rejectValue: string }>(
   "api/fetchUploadAvatar", async (params, { rejectWithValue }) => {
-    console.log(params, 'params')
-    const { data }: { data: any } = await axios.post("/api/avatar", params);
+    const { data }: { data: UserTypes } = await axios.post("/api/avatar", params);
     if (!data) {
       return rejectWithValue("Server Error!");
     }
-    const auth: any = data
-    return auth;
+    return data;
   });
 
 export const fetchDeleteAvatar = createAsyncThunk<UserTypes, undefined, { rejectValue: string }>(
@@ -65,14 +59,9 @@ export const fetchDeleteAvatar = createAsyncThunk<UserTypes, undefined, { reject
     if (!data) {
       return rejectWithValue("Server Error!");
     }
-    const auth: UserTypes = data
-    return auth;
+    return data;
   }
 );
-
-
-
-
 
 export type AuthState = {
   data: UserTypes | null;

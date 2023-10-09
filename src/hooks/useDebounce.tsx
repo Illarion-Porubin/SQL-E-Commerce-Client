@@ -4,7 +4,7 @@ import debounce from "lodash.debounce";
 function useDebounce(str: string, ms: number) {
     const [input, setInput] = React.useState<string>(``)
     const debounceInput = React.useMemo(() =>
-        debounce((str: any) => {
+        debounce((str: string) => {
             setInput(str)
             }, ms)
         ,[ms]

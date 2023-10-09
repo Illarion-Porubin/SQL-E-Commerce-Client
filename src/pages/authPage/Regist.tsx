@@ -88,9 +88,9 @@ export const RegistContent: React.FC = () => {
         setInputValue({ ...inputValue, [value]: '' })
     }
 
-    const handleSubmit = (e: any) => {
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const data = new FormData(e.target)
+        const data = new FormData(e.target as HTMLFormElement)
         const value = Object.fromEntries(data.entries())
         if (value.password === value.confirmpass) {
             const userData = {

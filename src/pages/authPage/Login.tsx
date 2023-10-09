@@ -44,7 +44,7 @@ const inputs: InputsType[] = [
         errorMessage: 'Пароль должен быть от 8 до 20 символов и содержать хотя бы 1 букву, 1 цифру и 1 специальный символ.',
         maxLength: 20,
         minLength: 8,
-        type: 'text',
+        type: 'password',
         pattern: '^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$',
         required: true,
     },
@@ -64,9 +64,9 @@ export const LoginContent: React.FC = () => {
         setInputValue({ ...inputValue, [value]: '' })
     }
 
-    const handleSubmit = async (e: any) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const data = new FormData(e.target)
+        const data = new FormData(e.target as HTMLFormElement)
         const value = Object.fromEntries(data.entries())
         const userData = { email: value.email, password: value.password }
         const { payload }  = await dispatch(fetchLogin(userData));

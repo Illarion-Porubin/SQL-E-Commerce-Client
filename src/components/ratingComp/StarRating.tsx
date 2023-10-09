@@ -9,17 +9,19 @@ interface Props {
     productId: number
 }
 
+
 export const StarRating: React.FC<Props> = ({ starRating, productId }) => {
     const dispatch = useCustomDispatch();
     const [hover, setHover] = React.useState<number>(0);
-    const user = useCustomSelector(selectAuthData)
-    const totalRating = starRating.reduce((sum: number, item: any) => {
+    const user = useCustomSelector(selectAuthData);
+    const totalRating = starRating.reduce((sum: number, item: { rating: number } | any) => {
         return sum + item.rating
     }, 0)
 
     const checkRating = totalRating >= 2500 ? 5 : Math.round((totalRating / 5) / 100)
+
     const addRating = (value: number) => {
-        if(user.data?.user.email && user.data?.user.isActivated) {
+        if (user.data?.user.email && user.data?.user.isActivated) {
             const newRating = {
                 ProductId: productId,
                 UserId: user.data?.user.id,

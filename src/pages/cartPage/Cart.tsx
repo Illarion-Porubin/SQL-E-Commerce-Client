@@ -66,7 +66,7 @@ export const CartContent: React.FC = () => {
                 <div className={s.cart__list}>
                     {
                         userProducts ?
-                            userProducts.data.map((product: any, index: number) => (
+                            userProducts.data.map((product: ProductType, index: number) => (
                                 <div className={s.cart__item} key={index}>
                                     <img className={s.cart__item_img} src={product.img} alt="" />
                                     <div className={s.cart__item_info}>
