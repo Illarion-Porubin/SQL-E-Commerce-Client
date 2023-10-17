@@ -52,10 +52,8 @@ export const CustomerSlider: React.FC = () => {
                                         (e, { offset, velocity }) => {
                                             const swipe = swipePower(offset.x, velocity.x);
                                             if (swipe < swipeSpeed) {
-                                                console.log(swipe < swipeSpeed, 1)
                                                 setSliderId((prev: string) => Number(prev) === (DataArray.length - 1) ? prev = '0' : String(Number(prev) + 1))
                                             } else if (swipe > swipeSpeed) {
-                                                console.log(swipe > swipeSpeed, 2)
                                                 setSliderId((prev: string) => Number(prev) <= 0 ? prev = String(DataArray.length - 1) : String(Number(prev) - 1))
                                             }
                                         }

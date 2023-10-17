@@ -9,9 +9,8 @@ import { Container } from '../../components/containerComp/Container';
 
 
 
+
 export const Welcome: React.FC = () => {
-
-
     return (
         <section>
             <Header />

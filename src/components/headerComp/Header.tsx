@@ -15,18 +15,44 @@ import { authSlice } from '../../redux/slices/authSlice';
 
 
 export const HeaderContent: React.FC = () => {
-    const dispatch = useCustomDispatch()
+    const dispatch = useCustomDispatch();
     const cart = useCustomSelector(selectCartData);
     const auth = useCustomSelector(selectAuthData);
     const [mobMenu, setMobMenu] = React.useState<boolean>(false);
     const [search, setSearch] = React.useState<string>(``);
     const avatar = auth.data?.user.avatar ? `${'http://localhost:5000/' + auth.data?.user.avatar}` : user;
+    const checkAvatar = auth.data?.provider !== 'default' && auth.data?.user.avatar ?  auth.data?.user.avatar : avatar;
     const isActivatedUser = auth.data?.user.isActivated;
 
     const userLogout = () => {
         if (window.confirm(`Вы точно хотите выйти?`)) {
-            dispatch(authSlice.actions.logout())
-            window.localStorage.removeItem('token')
+            if(auth.data?.provider === 'default'){
+                dispatch(authSlice.actions.logout())
+                window.localStorage.removeItem('token')
+            }
+            else{
+                window.open("http://localhost:5000/auth/logout", "_self");
+            }
+        }
+    }
+
+    const checkProviderAvatar = () => {
+        if(auth.data?.provider === 'default'){
+            return (
+                isActivatedUser ?
+                <Link to='/accaunt'>
+                    <img className={s.header__icon} src={checkAvatar} alt="user" />
+                </Link>
+                :
+                <img className={s.header__icon} src={checkAvatar} alt="user" onClick={() => window.alert('Авторизируйтесь')} />
+            )
+        }
+        else {
+            return (
+                <a href={auth.data?.user.profileUrl}>
+                    <img className={s.header__icon} src={checkAvatar} alt="user" />
+                </a>
+            )
         }
     }
 
@@ -68,7 +94,6 @@ export const HeaderContent: React.FC = () => {
                                 <li className={`${s.header__mobile_li} ${s.header__mobile_auth}`} >
                                     {
                                         !!auth.data && isActivatedUser ?
-
                                             <Link className={s.header__mobile_link} to={'/'} onClick={() => userLogout()}>
                                                 Logout
                                             </Link>
@@ -99,10 +124,10 @@ export const HeaderContent: React.FC = () => {
                         {
                             isActivatedUser ?
                                 <Link to='/accaunt'>
-                                    <img className={s.header__icon} src={avatar} alt="user" />
+                                    <img className={s.header__icon} src={checkAvatar} alt="user" />
                                 </Link>
                                 :
-                                <img className={s.header__icon} src={avatar} alt="user" onClick={() => window.alert('Авторизируйтесь')} />
+                                <img className={s.header__icon} src={checkAvatar} alt="user" onClick={() => window.alert('Авторизируйтесь')} />
                         }
                     </div>
                 </div>
@@ -145,14 +170,7 @@ export const HeaderContent: React.FC = () => {
                         <Link to='/'>
                             <img className={s.header__icon} src={ring} alt="ring" />
                         </Link>
-                        {
-                            isActivatedUser ?
-                                <Link to='/accaunt'>
-                                    <img className={s.header__icon} src={avatar} alt="user" />
-                                </Link>
-                                :
-                                <img className={s.header__icon} src={avatar} alt="user" onClick={() => window.alert('Авторизируйтесь')} />
-                        }
+                        {checkProviderAvatar()}
                     </div>
                 </div>
             </div>

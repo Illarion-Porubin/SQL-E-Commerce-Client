@@ -3,6 +3,7 @@ export type UserTypes = {
   accessToken?: string;
   refreshToken?: string;
   isLoading?: string;
+  provider?: string;
   user: {
     avatar: string | null;
     username: string;
@@ -12,9 +13,10 @@ export type UserTypes = {
     oldpass?: string;
     newpass?: string;
     confirmpass?: string;
-    isActivated?: boolean;
+    isActivated: boolean;
     admin?: boolean;
-    id?: string;
+    id: string;
+    profileUrl: string;
   }
 };
 

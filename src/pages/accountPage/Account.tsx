@@ -37,6 +37,7 @@ export const AccauntComponent: React.FC = () => {
     const [changeForm, setChangeForm] = React.useState<boolean>(true);
     const auth = useCustomSelector(selectAuthData);
     const avatar = auth.data?.user.avatar ? `${'http://localhost:5000/' + auth.data?.user.avatar}` : defaultAvatar;
+    const checkAvatar = auth.data?.provider !== 'default' && auth.data?.user.avatar ?  auth.data?.user.avatar : avatar;
     const filePicker = React.useRef<HTMLInputElement>(null);
 
     React.useEffect(() => {
@@ -196,7 +197,7 @@ export const AccauntComponent: React.FC = () => {
                         <img
                             className={s.accaunt__avatar}
                             onClick={upLoadAvatar}
-                            src={avatar}
+                            src={checkAvatar}
                             alt="avatar"
                         />
                     <form className={s.accaunt__form} onSubmit={(e) => handleSubmit(e)}>

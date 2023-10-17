@@ -91,6 +91,20 @@
     &__input_err {
         border: 1px solid red;
     }
+
+    &__other_logins{
+        display: flex;
+        justify-content: center;
+        position: relative;
+        top: -50px;
+    }
+
+    &__other_icon{
+        width: 40px;
+        height: 40px;
+        margin: 0 20px;
+        cursor: pointer;
+    }
 }
 
 @media(max-width: 460px) {

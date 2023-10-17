@@ -21,6 +21,16 @@ export const fetchLogin = createAsyncThunk<UserTypes, { email: FormDataEntryValu
   }
 );
 
+export const ThirdPartyAuthorization = createAsyncThunk(
+  "api/GooglefetchLogin", async (_, { rejectWithValue }) => {
+    const { data }: { data: any } = await axios.get("/auth/login/success");
+    if (!data) {
+      return rejectWithValue("Server Error!");
+    }
+    return data.user; 
+  }
+);
+
 export const fetchAuthMe = createAsyncThunk<UserTypes, void, { rejectValue: string }>(
   "api/fetchAuthMe", async (_, { rejectWithValue }) => {
     const { data }: { data: UserTypes } = await axios.get("/api/me");
@@ -96,6 +106,19 @@ export const authSlice = createSlice({
         state.isLoading = "loaded";
       })
       .addCase(fetchRegistration.rejected, (state) => {
+        state.data = null;
+        state.isLoading = "error";
+      })
+      ///ThirdPartyAuthorization
+      .addCase(ThirdPartyAuthorization.pending, (state) => {
+        state.data = null;
+        state.isLoading = "loading";
+      })
+      .addCase(ThirdPartyAuthorization.fulfilled, (state, action) => {
+        state.data = action.payload;
+        state.isLoading = "loaded";
+      }) 
+      .addCase(ThirdPartyAuthorization.rejected, (state) => {
         state.data = null;
         state.isLoading = "error";
       })

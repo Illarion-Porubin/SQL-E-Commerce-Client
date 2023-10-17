@@ -46,7 +46,6 @@ export const cartSlice = createSlice({
                 else {
                     check ? (check.count = check.count > 1 ? check.count - 1 : check.count) : state.data.push(action.payload);
                 }
-                console.log(state.data)
             }
         },
         deleteOrder(state, action: PayloadAction<ProductType>) {

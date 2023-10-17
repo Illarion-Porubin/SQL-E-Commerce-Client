@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import s from './Auth.module.scss';
 import { Link, Navigate } from 'react-router-dom';
 import { useCustomDispatch, useCustomSelector } from '../../hooks/store';
@@ -7,6 +7,9 @@ import { Container } from '../../components/containerComp/Container';
 import { fetchLogin } from '../../redux/slices/authSlice';
 import { FormInput } from '../../components/formInputComp/FormInput';
 import { UserTypes } from '../../types/types';
+import googleIcon from "../../asets/svg/google.svg";
+import githubIcon from "../../asets/svg/github.svg";
+
 
 
 interface InputsType {
@@ -60,6 +63,7 @@ export const LoginContent: React.FC = () => {
         setInputValue({ ...inputValue, [e.target.name]: e.target.value })
     }
 
+
     const clearValue = (value: 'username' | 'email' | 'phone' | 'oldpass' | 'newpass' | 'confirmpass' | 'password') => {
         setInputValue({ ...inputValue, [value]: '' })
     }
@@ -69,7 +73,7 @@ export const LoginContent: React.FC = () => {
         const data = new FormData(e.target as HTMLFormElement)
         const value = Object.fromEntries(data.entries())
         const userData = { email: value.email, password: value.password }
-        const { payload }  = await dispatch(fetchLogin(userData));
+        const { payload } = await dispatch(fetchLogin(userData));
         const _payload = payload as UserTypes;
         if (!_payload) {
             return alert("Не удалось авторизоваться");
@@ -83,9 +87,22 @@ export const LoginContent: React.FC = () => {
         }
     }
 
+
+    const google = () => {
+        window.open("http://localhost:5000/auth/google", "_self");
+    }
+
+    const github = () => {
+        window.open("http://localhost:5000/auth/github", "_self");
+    }
+ 
+    console.log(auth?.data?.user)
+
     if (auth.data && auth.data.user.isActivated) {
         return <Navigate to="/" />
     }
+
+
 
     return (
         <div className={s.auth}>
@@ -110,6 +127,18 @@ export const LoginContent: React.FC = () => {
                     <input className={s.auth__form_btn} type="submit" />
                 </form>
                 <Link className={s.auth__form_change} to='/regist'>Нет аккаунта?</Link>
+            </div>
+            <div className={s.auth__other_logins}>
+                <img className={s.auth__other_icon}
+                    onClick={google}
+                    src={googleIcon}
+                    alt="google logo"
+                />
+                <img className={s.auth__other_icon}
+                    onClick={github}
+                    src={githubIcon}
+                    alt="github logo"
+                />
             </div>
         </div >
     )
