@@ -7,26 +7,22 @@ import { Cart } from './pages/cartPage/Cart';
 import { Error } from './pages/errorPage/error';
 import { Regist } from './pages/authPage/Regist';
 import { Login } from './pages/authPage/Login';
-import { useCustomDispatch, useCustomSelector } from './hooks/store';
+import { useCustomDispatch } from './hooks/store';
 import { ThirdPartyAuthorization, fetchAuthMe } from './redux/slices/authSlice';
 import { Accaunt } from './pages/accountPage/Account';
-import { selectAuthData } from './redux/selectos';
 
 
 function App() {
   const dispatch = useCustomDispatch();
-  const auth = useCustomSelector(selectAuthData);
-  console.log(auth)
-  
+
   React.useEffect(() => {
-    if(!auth.data){
-      dispatch(ThirdPartyAuthorization())
-    }else{
-      dispatch(fetchAuthMe())
-    }
+    dispatch(fetchAuthMe())
   }, [])
-  
-  console.log(auth)
+
+  React.useEffect(() => {
+    dispatch(ThirdPartyAuthorization())
+  }, [])
+
   return (
     <>
       <Routes>

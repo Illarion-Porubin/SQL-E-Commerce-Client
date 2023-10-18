@@ -46,7 +46,7 @@ export const CardContetn: React.FC<Props> = ({ item }) => {
                             </svg>
                         </span>
 
-                        <span className={ findProductInCart ? `${s.card__icon_circle} ${s.active}` : s.card__icon_circle} onClick={addProductCart}>
+                        <span className={findProductInCart ? `${s.card__icon_circle} ${s.active}` : s.card__icon_circle} onClick={addProductCart}>
                             <svg className={s.card__icon} width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <g clipPath="url(#clip0_2_694)">
                                     <path d="M18.6798 16.1669H17.0611V14.5463C17.0611 14.3314 16.9758 14.1253 16.8241 13.9733C16.6723 13.8213 16.4664 13.736 16.2518 13.736C16.0371 13.736 15.8312 13.8213 15.6795 13.9733C15.5277 14.1253 15.4424 14.3314 15.4424 14.5463V16.1669H13.8237C13.609 16.1669 13.4032 16.2522 13.2514 16.4042C13.0996 16.5562 13.0143 16.7623 13.0143 16.9772C13.0143 17.1921 13.0996 17.3982 13.2514 17.5501C13.4032 17.7021 13.609 17.7875 13.8237 17.7875H15.4424V19.4081C15.4424 19.623 15.5277 19.8291 15.6795 19.981C15.8312 20.133 16.0371 20.2184 16.2518 20.2184C16.4664 20.2184 16.6723 20.133 16.8241 19.981C16.9758 19.8291 17.0611 19.623 17.0611 19.4081V17.7875H18.6798C18.8945 17.7875 19.1003 17.7021 19.2521 17.5501C19.4039 17.3982 19.4892 17.1921 19.4892 16.9772C19.4892 16.7623 19.4039 16.5562 19.2521 16.4042C19.1003 16.2522 18.8945 16.1669 18.6798 16.1669Z" fill="#757575" />
@@ -98,7 +98,7 @@ export const CardContetn: React.FC<Props> = ({ item }) => {
                             <p className={s.card__price_old}>$<span>{item.oldprice}</span></p>
                         </div>
                         <div>
-                            <StarRating starRating={item.Ratings} productId={item.id}/>
+                            <StarRating starRating={item.Ratings} productId={item.id} />
                         </div>
                     </div>
                 </div>
@@ -115,15 +115,17 @@ export const Cards: React.FC<PropsProduct> = ({ products }) => {
 
     return (
         <div className={s.card}>
-            {
-                products.isLoading === "loaded" && products.data.length
-                    ?
-                    products.data.map((item: any, i: number) => (
-                        <CardContetn item={item} key={item.desc + i} />
-                    ))
-                    :
-                    null
-            }
+            <div className={s.card__content}>
+                {
+                    products.isLoading === "loaded" && products.data.length
+                        ?
+                        products.data.map((item: any, i: number) => (
+                            <CardContetn item={item} key={item.desc + i} />
+                        ))
+                        :
+                        null
+                }
+            </div>
         </div>
     )
 }

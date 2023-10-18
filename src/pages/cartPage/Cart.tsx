@@ -8,6 +8,9 @@ import { cartSlice, fetchOrder } from '../../redux/slices/cartSlice';
 import { ProductType } from '../../types/types';
 
 export const CartContent: React.FC = () => {
+    const [conferm, setConferm] = React.useState<boolean>(false)
+    const [phone, setPhone] = React.useState<string>('')
+
     const dispatch = useCustomDispatch();
     const userProducts = useCustomSelector(selectCartData);
 
@@ -26,7 +29,6 @@ export const CartContent: React.FC = () => {
     const totalAmount = userProducts.data.reduce((sum: number, product: ProductType) => {
         return sum + (product.count * product.newprice);
     }, 0)
-
 
 
     const order = () => {
@@ -52,8 +54,13 @@ export const CartContent: React.FC = () => {
             amount: countProducts,
             totalsum: totalAmount
         }
-        dispatch(fetchOrder(userOrder));
-        userProducts.isLoading === "loaded" && userProducts.data.length ? alert('Заказ офрмлен') : alert("Произошла ошибка или корзина пуста")
+
+        if (userProducts.isLoading === "loaded" && userProducts.data.length) {
+            dispatch(fetchOrder(userOrder));
+            alert('Заказ офрмлен')
+        } else {
+            alert("Произошла ошибка или корзина пуста")
+        }
     }
 
     return (
@@ -87,10 +94,27 @@ export const CartContent: React.FC = () => {
                     }
                 </div>
                 <div className={s.cart__action}>
-                    <button className={s.cart__btn_oder} onClick={order}>приступить к оформлению</button>
+                    <button className={s.cart__btn_oder} onClick={() => setConferm(true)}>оформить заказ</button>
                     <div className={s.cart__total_amount}>общая стоитмость <span className={s.cart__sum}>{totalAmount}</span>$</div>
                     <div className={s.cart__count_info}>количество товара <span className={s.cart__count}>{countProducts}</span></div>
                 </div>
+                {
+                    conferm ?
+                        <div className={s.cart__order_wrap}>
+                            <div className={s.cart__order}>
+                                <p className={s.cart__order_title}>Укажите ваш номер телефона</p>
+                                <p className={s.cart__order_back} onClick={() => setConferm(false)}>x</p>
+                                <input className={s.cart__order_input}
+                                    onChange={(e) => setPhone(e.target.value)}
+                                    value={phone}
+                                    type="text"
+                                />
+                                <button className={s.cart__order_btn} onClick={order}>заказать</button>
+                            </div>
+                        </div>
+                        :
+                        null
+                }
             </div>
         </>
     )

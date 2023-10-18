@@ -20,8 +20,8 @@ export const HeaderContent: React.FC = () => {
     const auth = useCustomSelector(selectAuthData);
     const [mobMenu, setMobMenu] = React.useState<boolean>(false);
     const [search, setSearch] = React.useState<string>(``);
-    const avatar = auth.data?.user.avatar ? `${'http://localhost:5000/' + auth.data?.user.avatar}` : user;
-    const checkAvatar = auth.data?.provider !== 'default' && auth.data?.user.avatar ?  auth.data?.user.avatar : avatar;
+    const avatar = auth?.data?.user.avatar ? `${'http://localhost:5000/' + auth?.data?.user.avatar}` : user;
+    const checkAvatar = auth?.data?.provider !== 'default' && auth?.data?.user.avatar ? auth?.data?.user.avatar : avatar;
     const isActivatedUser = auth.data?.user.isActivated;
 
     const userLogout = () => {
@@ -37,14 +37,14 @@ export const HeaderContent: React.FC = () => {
     }
 
     const checkProviderAvatar = () => {
-        if(auth.data?.provider === 'default'){
+        if(auth.data?.provider === 'default' || auth.data?.provider === undefined){
             return (
                 isActivatedUser ?
                 <Link to='/accaunt'>
                     <img className={s.header__icon} src={checkAvatar} alt="user" />
                 </Link>
                 :
-                <img className={s.header__icon} src={checkAvatar} alt="user" onClick={() => window.alert('Авторизируйтесь')} />
+                <img className={s.header__icon} src={checkAvatar} alt="user" onClick={() => window.alert('Авторизируйтесь или залогиньтесь со стороннего сервиса.')} />
             )
         }
         else {
@@ -156,7 +156,7 @@ export const HeaderContent: React.FC = () => {
                 </div>
                 <div className={s.header__info}>
                     <a className={s.header__logo} href="/#">
-                        <img className={s.header__logo_img} src={logo} alt="logo" />userLogout
+                        <img className={s.header__logo_img} src={logo} alt="logo" />
                         <span className={s.header__logo_text}>Furniking</span>
                     </a>
                     <div className={s.header__search}>

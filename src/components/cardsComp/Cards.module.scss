@@ -1,10 +1,16 @@
 .card {
     width: 100%;
     height: auto;
-    margin-top: 73px;
-    margin-bottom: 70px;
-    display: flex;
-    flex-wrap: wrap;
+    overflow: hidden;
+    padding-left: 4%;
+    &__content {
+        width: auto;
+        height: auto;
+        margin-top: 73px;
+        margin-bottom: 70px;
+        display: flex;
+        flex-wrap: wrap;
+    }
 
     &__item {
         display: flex;
@@ -171,13 +177,14 @@
     }
 }
 
-.card__icon_circle.active{
+.card__icon_circle.active {
     &::after {
         background-color: #7AC751;
         transition: all .3s;
     }
 }
-.card__icon_circle.active{
+
+.card__icon_circle.active {
     .card__icon g path {
         fill: #fff;
         transition: all .3s;
@@ -186,23 +193,18 @@
 
 
 @media(max-width: 1151px) {
-    .card__item_wrap{
+    .card__item_wrap {
         width: 100%;
         height: auto;
     }
-    .card__item{
+
+    .card__item {
         margin: 4px;
     }
 }
 
-@media(max-width: 1146px) {
-    .card{
-        justify-content: space-around;
+@media(max-width: 862px) {
+    .card__content{
+        justify-content: center;
     }
 }
-
-// @media(max-width: 864px) {
-//     .card{
-//         justify-content: space-around;
-//     }
-// }
