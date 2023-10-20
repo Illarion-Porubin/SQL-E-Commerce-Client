@@ -1,0 +1,43 @@
+.order{
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    &__content{
+        width: 290px;
+        height: 200px;
+        border: 2px solid #7AC751;
+        border-radius: 33px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        background-color: rgba($color: #9f9f9f, $alpha: 0.2);
+        align-items: center;
+        position: relative;
+    }
+    
+    &__title{
+        margin-top: 20px;
+    }
+    
+    &__input{
+        width: 260px;
+    }
+    
+    &__back{
+        position: absolute;
+        right: 20px;
+        top: 15px;
+        cursor: pointer;
+    }
+    
+    &__btn{
+        width: 100px;
+        height: auto;
+        border: 2px solid #7AC751;
+        border-radius: 12px;
+        background-color: transparent;
+    }
+}

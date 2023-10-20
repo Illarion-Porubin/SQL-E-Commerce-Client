@@ -3,16 +3,27 @@ import s from './Cart.module.scss';
 import { Link } from 'react-router-dom';
 import { Container } from '../../components/containerComp/Container';
 import { useCustomDispatch, useCustomSelector } from '../../hooks/store';
-import { selectCartData } from '../../redux/selectos';
+import { selectAuthData, selectCartData } from '../../redux/selectos';
 import { cartSlice, fetchOrder } from '../../redux/slices/cartSlice';
 import { ProductType } from '../../types/types';
+import { PopupOrder } from '../../popup/PopupOrder';
 
 export const CartContent: React.FC = () => {
-    const [conferm, setConferm] = React.useState<boolean>(false)
-    const [phone, setPhone] = React.useState<string>('')
-
     const dispatch = useCustomDispatch();
     const userProducts = useCustomSelector(selectCartData);
+    const auth = useCustomSelector(selectAuthData);
+    const [conferm, setConferm] = React.useState<boolean>(false)
+    const [phone, setPhone] = React.useState<string | null>(null);
+    const [email, setEmail] = React.useState<string | null>(null);
+    const [id, setId] = React.useState<string | null>(null);
+
+    React.useEffect(() => {   
+        if(auth.data?.user) {         
+            setPhone(auth.data?.user.phone)
+            setEmail(auth.data?.user.email)
+            setId(auth.data?.user.id)
+        }
+    }, [auth.data?.user])
 
     const addProduct = (product: ProductType, id: string) => {
         dispatch(cartSlice.actions.addOrder({ ...product, id }))
@@ -47,19 +58,21 @@ export const CartContent: React.FC = () => {
         const message = `<div>${emailBody}</div>`
 
         const userOrder = {
-            userId: "",
-            email: "",
-            phone: "8989778777",
+            userId: id || '',
+            email: email || '',
+            phone: phone || '',
             userCart: message,
             amount: countProducts,
             totalsum: totalAmount
         }
 
+        console.log(userOrder)
+
         if (userProducts.isLoading === "loaded" && userProducts.data.length) {
             dispatch(fetchOrder(userOrder));
             alert('Заказ офрмлен')
         } else {
-            alert("Произошла ошибка или корзина пуста")
+            alert("Корзина пуста, вернитесь к покупкам")
         }
     }
 
@@ -100,18 +113,12 @@ export const CartContent: React.FC = () => {
                 </div>
                 {
                     conferm ?
-                        <div className={s.cart__order_wrap}>
-                            <div className={s.cart__order}>
-                                <p className={s.cart__order_title}>Укажите ваш номер телефона</p>
-                                <p className={s.cart__order_back} onClick={() => setConferm(false)}>x</p>
-                                <input className={s.cart__order_input}
-                                    onChange={(e) => setPhone(e.target.value)}
-                                    value={phone}
-                                    type="text"
-                                />
-                                <button className={s.cart__order_btn} onClick={order}>заказать</button>
-                            </div>
-                        </div>
+                        <PopupOrder
+                            setConferm={setConferm}
+                            phone={phone ? phone : ''}
+                            setPhone={setPhone}
+                            order={order}
+                        />
                         :
                         null
                 }
