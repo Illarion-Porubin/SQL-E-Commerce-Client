@@ -1,3 +1,24 @@
+.wrapper{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(60, 60, 60, 0);
+    display: flex;
+    justify-content: center;
+    transition: all .3s;
+    margin: 0;
+    padding: 0;
+}
+
+.wrapper.active{
+    background-color: rgba(60, 60, 60, 0.7);
+    transition: all 1.3s;
+}
+
 .order{
     width: 100%;
     height: auto;
@@ -13,31 +34,76 @@
         display: flex;
         flex-direction: column;
         justify-content: space-around;
-        background-color: rgba($color: #9f9f9f, $alpha: 0.2);
+        background-color: white;
         align-items: center;
         position: relative;
+        opacity: 0;
+        transition: all .3s;
     }
+
+    &__content.active{
+        opacity: 1;
+        transition: all .3s;
+    }
+
     
     &__title{
-        margin-top: 20px;
+        margin-top: 40px;
     }
     
     &__input{
-        width: 260px;
+        width: 250px;
+        height: 50px;
+        border: 1px solid black;
+        font-size: 22px;
+        line-height: 0;
+        border-radius: 8px;
+        text-align: center;
     }
     
     &__back{
+        width: 20px;
+        height: 20px;
         position: absolute;
         right: 20px;
         top: 15px;
         cursor: pointer;
+        transition: all .3s;
+        &:hover{
+            transform: rotate(180deg);
+            transition: all .3s;
+        }
     }
-    
-    &__btn{
-        width: 100px;
-        height: auto;
-        border: 2px solid #7AC751;
-        border-radius: 12px;
-        background-color: transparent;
-    }
+}
+
+.order__error{
+    font-size: 12px;
+    line-height: 0;
+    opacity: 0;
+    color: red;
+    transition: all .3s;
+}
+
+.order__error.action{
+    opacity: 1;
+    transition: all .3s;
+}
+
+
+.order__btn{
+    width: 100px;
+    height: 30px;
+    border: 2px solid red;
+    border-radius: 12px;
+    background-color: transparent;
+    text-align: center;
+    cursor: pointer;
+    position: relative;
+    transition: all .3s;
+    margin-bottom: 10px;
+}
+
+.order__btn.action{
+    border: 2px solid #7AC751;
+    transition: all .3s;
 }

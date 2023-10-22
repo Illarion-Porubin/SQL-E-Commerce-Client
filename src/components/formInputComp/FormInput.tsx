@@ -75,7 +75,6 @@ export const FormInput: React.FC<Props> = (props) => {
                        onClick={() => clearValue(inputProps.name)}
                        src={cancel} alt="check"
                    />
-
                 }
                 <span className={s.forminput__error}>{errorMessage}</span>
             </div>

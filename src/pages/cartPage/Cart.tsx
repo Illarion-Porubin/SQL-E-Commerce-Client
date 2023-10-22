@@ -17,6 +17,7 @@ export const CartContent: React.FC = () => {
     const [email, setEmail] = React.useState<string | null>(null);
     const [id, setId] = React.useState<string | null>(null);
 
+
     React.useEffect(() => {   
         if(auth.data?.user) {         
             setPhone(auth.data?.user.phone)
@@ -66,12 +67,16 @@ export const CartContent: React.FC = () => {
             totalsum: totalAmount
         }
 
-        console.log(userOrder)
-
         if (userProducts.isLoading === "loaded" && userProducts.data.length) {
             dispatch(fetchOrder(userOrder));
-            alert('Заказ офрмлен')
+            setTimeout(() => {
+                setConferm(false)
+            }, 200);
+            alert('Заказ оформлен')
         } else {
+            setTimeout(() => {
+                setConferm(false)
+            }, 200);
             alert("Корзина пуста, вернитесь к покупкам")
         }
     }
@@ -111,18 +116,19 @@ export const CartContent: React.FC = () => {
                     <div className={s.cart__total_amount}>общая стоитмость <span className={s.cart__sum}>{totalAmount}</span>$</div>
                     <div className={s.cart__count_info}>количество товара <span className={s.cart__count}>{countProducts}</span></div>
                 </div>
-                {
+            </div>
+            {
                     conferm ?
                         <PopupOrder
                             setConferm={setConferm}
                             phone={phone ? phone : ''}
                             setPhone={setPhone}
                             order={order}
+                            conferm={conferm}
                         />
                         :
                         null
                 }
-            </div>
         </>
     )
 }
