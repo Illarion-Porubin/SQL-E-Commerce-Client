@@ -34,7 +34,7 @@ export type AdminTypes = {
   id: string | null | undefined;
 };
 
-export interface ProductType {
+export interface ProductCartType {
   id?: string,
   productId: number,
   type: string,
@@ -56,6 +56,7 @@ export interface ProductCardType {
   oldprice: number,
   rating: number,
   type: string,
+  count: number,
   updatedAt: string
 }
 

@@ -1,10 +1,10 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from "../../http/index";
-import { ProductType } from '../../types/types';
+import { ProductCardType } from '../../types/types';
 
-export const fetchGetTrendingByLabel = createAsyncThunk<ProductType[], string, { rejectValue: string }>(
+export const fetchGetTrendingByLabel = createAsyncThunk<ProductCardType[], string, { rejectValue: string }>(
     "api/fetchGetTrendingByLabel", async (paramsProducts, { rejectWithValue }) => {
-        const { data }: { data: ProductType[] } = await axios.get(`/api/products/label/${paramsProducts}`);
+        const { data }: { data: ProductCardType[] } = await axios.get(`/api/products/label/${paramsProducts}`);
         if (!data) {
             return rejectWithValue("Server Error!");
         }
@@ -12,7 +12,7 @@ export const fetchGetTrendingByLabel = createAsyncThunk<ProductType[], string, {
     });
 
 interface State {
-    data: ProductType[],
+    data: ProductCardType[],
     isLoading: "idle" | "loading" | "loaded" | "error";
     error: string | null,
 }

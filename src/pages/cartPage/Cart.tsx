@@ -5,7 +5,7 @@ import { Container } from '../../components/containerComp/Container';
 import { useCustomDispatch, useCustomSelector } from '../../hooks/store';
 import { selectAuthData, selectCartData } from '../../redux/selectos';
 import { cartSlice, fetchOrder } from '../../redux/slices/cartSlice';
-import { ProductType } from '../../types/types';
+import { ProductCartType } from '../../types/types';
 import { PopupOrder } from '../../popup/PopupOrder';
 
 export const CartContent: React.FC = () => {
@@ -17,28 +17,27 @@ export const CartContent: React.FC = () => {
     const [email, setEmail] = React.useState<string | null>(null);
     const [id, setId] = React.useState<string | null>(null);
 
-
     React.useEffect(() => {   
         if(auth.data?.user) {         
             setPhone(auth.data?.user.phone)
             setEmail(auth.data?.user.email)
             setId(auth.data?.user.id)
-        }
+        } 
     }, [auth.data?.user])
 
-    const addProduct = (product: ProductType, id: string) => {
+    const addProduct = (product: ProductCartType, id: string) => {
         dispatch(cartSlice.actions.addOrder({ ...product, id }))
     }
 
-    const deleteProduct = (product: ProductType) => {
+    const deleteProduct = (product: ProductCartType) => {
         dispatch(cartSlice.actions.deleteOrder(product))
     }
 
-    const countProducts = userProducts.data.reduce((sum: number, product: ProductType) => {
+    const countProducts = userProducts.data.reduce((sum: number, product: ProductCartType) => {
         return sum + product.count;
     }, 0)
 
-    const totalAmount = userProducts.data.reduce((sum: number, product: ProductType) => {
+    const totalAmount = userProducts.data.reduce((sum: number, product: ProductCartType) => {
         return sum + (product.count * product.newprice);
     }, 0)
 
@@ -91,7 +90,7 @@ export const CartContent: React.FC = () => {
                 <div className={s.cart__list}>
                     {
                         userProducts ?
-                            userProducts.data.map((product: ProductType, index: number) => (
+                            userProducts.data.map((product: ProductCartType, index: number) => (
                                 <div className={s.cart__item} key={index}>
                                     <img className={s.cart__item_img} src={product.img} alt="" />
                                     <div className={s.cart__item_info}>

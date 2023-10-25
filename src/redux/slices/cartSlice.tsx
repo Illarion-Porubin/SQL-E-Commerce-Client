@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-import { ProductType, UserOrder } from "../../types/types";
+import { ProductCartType, UserOrder } from "../../types/types";
 import axios from "../../http/index";
 
 
@@ -14,7 +14,7 @@ export const fetchOrder = createAsyncThunk<UserOrder, UserOrder, { rejectValue: 
     });
 
 interface State {
-    data: ProductType[],
+    data: ProductCartType[],
     isLoading: "idle" | "loading" | "loaded" | "error";
     error: string | null,
 }
@@ -30,11 +30,11 @@ export const cartSlice = createSlice({
     name: "cart",
     initialState,
     reducers: {
-        addOrder(state, action: PayloadAction<ProductType>) {
+        addOrder(state, action: PayloadAction<ProductCartType>) {
             if (!state.data?.length) {
                 state.data?.push(action.payload);
             } else {
-                const check = state.data.find((item: ProductType) => {
+                const check = state.data.find((item: ProductCartType) => {
                     if (action.payload.productId === item.productId) {
                         return item;
                     }
@@ -48,8 +48,8 @@ export const cartSlice = createSlice({
                 }
             }
         },
-        deleteOrder(state, action: PayloadAction<ProductType>) {
-            state.data = state.data.filter((item: ProductType) => {
+        deleteOrder(state, action: PayloadAction<ProductCartType>) {
+            state.data = state.data.filter((item: ProductCartType) => {
                 if (action.payload.productId !== item.productId) {
                     return item;
                 }

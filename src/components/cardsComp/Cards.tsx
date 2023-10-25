@@ -3,7 +3,7 @@ import s from './Cards.module.scss';
 import { StarRating } from '../ratingComp/StarRating';
 import { useCustomDispatch, useCustomSelector } from '../../hooks/store';
 import { cartSlice } from '../../redux/slices/cartSlice';
-import { ProductCardType, ProductType } from '../../types/types';
+import { ProductCardType, ProductCartType } from '../../types/types';
 import ProductImage from '../../asets/png/Furniture1.png';
 import { selectCartData } from '../../redux/selectos';
 
@@ -21,7 +21,7 @@ export const CardContetn: React.FC<Props> = ({ item }) => {
 
     const addProductCart = () => {
         setActive(!active)
-        const product: ProductType = {
+        const product: ProductCartType = {
             productId: item.id,
             type: item.type,
             desc: item.desc,
@@ -103,15 +103,20 @@ export const CardContetn: React.FC<Props> = ({ item }) => {
                     </div>
                 </div>
             </div>
-        </>
+        </> 
     )
 }
-
+ 
 interface PropsProduct {
-    products: any
+    products: {
+        data: ProductCardType[];
+        error: string | null;
+        isLoading: "idle" | "loading" | "loaded" | "error";
+    } 
 }
 
 export const Cards: React.FC<PropsProduct> = ({ products }) => {
+
 
     return (
         <div className={s.card}>
@@ -119,7 +124,7 @@ export const Cards: React.FC<PropsProduct> = ({ products }) => {
                 {
                     products.isLoading === "loaded" && products.data.length
                         ?
-                        products.data.map((item: any, i: number) => (
+                        products.data.map((item: ProductCardType, i: number) => (
                             <CardContetn item={item} key={item.desc + i} />
                         ))
                         :

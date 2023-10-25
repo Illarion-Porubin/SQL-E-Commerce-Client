@@ -2,6 +2,7 @@
   "name": "newclient",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.5",
     "@testing-library/jest-dom": "^5.17.0",
@@ -50,6 +51,7 @@
     ]
   },
   "devDependencies": {
+    "@babel/preset-typescript": "^7.23.2",
     "@types/lodash.debounce": "^4.0.7",
     "@types/react-input-mask": "^3.0.2",
     "scss": "^0.2.4"

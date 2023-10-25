@@ -1,39 +1,39 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from "../../http/index";
-import { ProductType } from '../../types/types';
+import { ProductCardType } from '../../types/types';
 
 
-export const fetchGetProductsByLabel = createAsyncThunk<ProductType[], string, { rejectValue: string }>(
-    "api/fetchGetProductsByLabel", async (paramsProducts, { rejectWithValue }) => {
-        const { data }: { data: ProductType[] } = await axios.get(`/api/products/label/${paramsProducts}`);
+export const fetchGetProduct = createAsyncThunk<ProductCardType[], string, { rejectValue: string }>(
+    "api/fetchGetProduct", async (id, { rejectWithValue }) => {
+        const { data }: { data: ProductCardType[] } = await axios.get(`/api/product/${id}`);
         if (!data) {
             return rejectWithValue("Server Error!");
         }
         return data;
     });
 
-export const fetchSearchProduct = createAsyncThunk<ProductType[], string, { rejectValue: string }>(
+export const fetchGetProductsByLabel = createAsyncThunk<ProductCardType[], string, { rejectValue: string }>(
+    "api/fetchGetProductsByLabel", async (paramsProducts, { rejectWithValue }) => {
+        const { data }: { data: ProductCardType[] } = await axios.get(`/api/products/label/${paramsProducts}`);
+        if (!data) {
+            return rejectWithValue("Server Error!");
+        }
+        return data;
+    });
+
+export const fetchSearchProduct = createAsyncThunk<ProductCardType[], string, { rejectValue: string }>(
     "api/fetchSearchProduct",
     async (paramsProduct, { rejectWithValue }) => {
-        const { data }: { data: ProductType[] } = await axios.get(`/api/product/search/${paramsProduct}`);
+        const { data }: { data: ProductCardType[] } = await axios.get(`/api/product/search/${paramsProduct}`);
         if (!data) {
             return rejectWithValue("Server Error!");
         }
         return data;
     });
 
-export const fetchGetProduct = createAsyncThunk<ProductType[], string, { rejectValue: string }>(
-    "api/fetchGetProduct", async (id, { rejectWithValue }) => {
-        const { data }: { data: ProductType[] } = await axios.get(`/api/product/${id}`);
-        if (!data) {
-            return rejectWithValue("Server Error!");
-        }
-        return data;
-    });
-
-export const fetchAddRating = createAsyncThunk<ProductType[], {ProductId: number, UserId: string | undefined, rating: number}, { rejectValue: string }>(
+export const fetchAddRating = createAsyncThunk<ProductCardType[], {ProductId: number, UserId: string | undefined, rating: number}, { rejectValue: string }>(
     "api/fetchAddRating", async (params, { rejectWithValue }) => {
-        const { data }: { data: ProductType[] } = await axios.post("/api/product/rating", params);
+        const { data }: { data: ProductCardType[] } = await axios.post("/api/product/rating", params);
         if (!data) {
             return rejectWithValue("Server Error!");
         }
@@ -41,7 +41,7 @@ export const fetchAddRating = createAsyncThunk<ProductType[], {ProductId: number
     });
 
 interface State {
-    data: ProductType[],
+    data: ProductCardType[],
     isLoading: "idle" | "loading" | "loaded" | "error";
     error: string | null,
 }

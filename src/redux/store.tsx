@@ -15,7 +15,7 @@ import {
   REGISTER,
 } from 'redux-persist'
 
-const rootReducer = combineReducers({
+export const rootReducer = combineReducers({
   authReducer,
   productReducer,
   cartReducer,
@@ -42,6 +42,7 @@ export const store = configureStore({
 
 export const persistor = persistStore(store)
 
-export type AppState = ReturnType<typeof store.getState>
+export type RootState = ReturnType<typeof rootReducer>;
+export type AppState = ReturnType<typeof store.getState>;
 export type AppStore = typeof store;
-export type AppDispath = AppStore['dispatch']
+export type AppDispath = AppStore['dispatch'];

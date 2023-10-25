@@ -45,7 +45,7 @@ export const Products: React.FC = () => {
             <Heading title={"OUR PRODUCTS"} />
             <Categories categorieList={productsCategories} key={'Categories'} setLabel={setLabel} label={label} />,
             <Container children={[
-                <Cards products={products.data.length ? products : []} key={'Cards'} />,
+                <Cards products={products} key={'Cards'} />,
                 <Paginate
                     key={'Paginate'}
                     page={page}
