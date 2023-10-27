@@ -12,6 +12,7 @@ import { ThirdPartyAuthorization, fetchAuthMe } from './redux/slices/authSlice';
 import { Accaunt } from './pages/accountPage/Account';
 
 
+
 function App() {
   const dispatch = useCustomDispatch();
 

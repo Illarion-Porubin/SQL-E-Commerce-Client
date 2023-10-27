@@ -13,14 +13,14 @@ export const fetchOrder = createAsyncThunk<UserOrder, UserOrder, { rejectValue: 
         return data;
     });
 
-interface State {
+interface cartReducer {
     data: ProductCartType[],
     isLoading: "idle" | "loading" | "loaded" | "error";
     error: string | null,
 }
 
 
-export const initialState: State = {
+export const initialState: cartReducer = {
     data: [],
     isLoading: "idle",
     error: null

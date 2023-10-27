@@ -17,3 +17,8 @@ declare module "*.scss" {
     const content: string | any;
     export default content;
 }
+
+declare module "*.ts" {
+    const content: string | any;
+    export default content;
+}

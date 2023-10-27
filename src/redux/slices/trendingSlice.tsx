@@ -11,13 +11,13 @@ export const fetchGetTrendingByLabel = createAsyncThunk<ProductCardType[], strin
         return await data;
     });
 
-interface State {
+interface trendingReducer {
     data: ProductCardType[],
     isLoading: "idle" | "loading" | "loaded" | "error";
     error: string | null,
 }
 
-const initialState:State = {
+const initialState: trendingReducer = {
     data: [],
     isLoading: "idle",
     error: null

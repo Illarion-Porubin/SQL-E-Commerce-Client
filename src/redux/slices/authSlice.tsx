@@ -73,13 +73,13 @@ export const fetchDeleteAvatar = createAsyncThunk<UserTypes, undefined, { reject
   }
 );
 
-export type AuthState = {
+export type authReducer = {
   data: UserTypes | null;
   isLoading: "idle" | "loading" | "loaded" | "error";
   error: string | null;
 }
 
-const initialState: AuthState = {
+const initialState: authReducer = {
   data: null,
   isLoading: "idle",
   error: null,
