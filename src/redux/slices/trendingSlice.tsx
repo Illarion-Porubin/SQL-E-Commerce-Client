@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import axios from "../../http/index";
 import { ProductCardType } from '../../types/types';
+import axios from "../../http/index"; ////for work use "../../http/index", for tests use "axios"
+
 
 export const fetchGetTrendingByLabel = createAsyncThunk<ProductCardType[], string, { rejectValue: string }>(
     "api/fetchGetTrendingByLabel", async (paramsProducts, { rejectWithValue }) => {
@@ -8,7 +9,7 @@ export const fetchGetTrendingByLabel = createAsyncThunk<ProductCardType[], strin
         if (!data) {
             return rejectWithValue("Server Error!");
         }
-        return await data;
+        return data;
     });
 
 interface trendingReducer {

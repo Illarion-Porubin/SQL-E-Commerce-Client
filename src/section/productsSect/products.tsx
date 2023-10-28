@@ -18,6 +18,7 @@ export const Products: React.FC = () => {
 
     const debounce = useDebounce(search, 400);
     const products = useCustomSelector(selectProductData);
+
     const checkPage = products.data.length < 8;
 
     React.useEffect(() => {
