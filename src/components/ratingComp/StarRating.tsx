@@ -2,7 +2,7 @@ import * as React from 'react';
 import s from './StarRating.module.scss';
 import { useCustomDispatch, useCustomSelector } from '../../hooks/store';
 import { fetchAddRating } from '../../redux/slices/productSlice';
-import { selectAuthData } from '../../redux/selectos';
+import { selectAuthData, selectProductData } from '../../redux/selectos';
 
 interface Props {
     starRating: number[],
@@ -14,6 +14,10 @@ export const StarRating: React.FC<Props> = ({ starRating, productId }) => {
     const dispatch = useCustomDispatch();
     const [hover, setHover] = React.useState<number>(0);
     const user = useCustomSelector(selectAuthData);
+    const products = useCustomSelector(selectProductData);
+
+    // console.log(products, 'products')
+
     const totalRating = starRating.reduce((sum: number, item: { rating: number } | any) => {
         return sum + item.rating
     }, 0)

@@ -22,11 +22,11 @@ describe('productSlice', () => {
         });
     })
     it('should change status and error witch "fetchGetProductsByLabel.rejected"', () => {
-        const state = productReducer(initialState, fetchGetProductsByLabel.rejected());  
+        const state = productReducer(initialState, fetchGetProductsByLabel.rejected());        
         expect(state).toEqual({
             data: [],
             isLoading: "error",
-            error: "Fetch Error!"
+            error: "FetchGetProductsByLabel Error!" 
         });
     })
 })
