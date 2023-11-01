@@ -85,7 +85,7 @@ const productSlice = createSlice({
             .addCase(fetchGetProductsByLabel.rejected, (state) => {
                 state.data = [];
                 state.isLoading = "error";
-                state.error = "FetchGetProductsByLabel Error!";
+                state.error = "fetchGetProductsByLabel Error!";
             })
             ///fetchSearchProduct
             .addCase(fetchSearchProduct.pending, (state) => {
@@ -101,7 +101,7 @@ const productSlice = createSlice({
             .addCase(fetchSearchProduct.rejected, (state) => {
                 state.data = [];
                 state.isLoading = "error";
-                state.error = "FetchSearchProduct Error!";
+                state.error = "fetchSearchProduct Error!";
             })
         ///fetchGetProduct
         // .addCase(fetchGetProduct.pending, (state) => {
