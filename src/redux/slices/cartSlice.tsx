@@ -13,14 +13,27 @@ export const fetchOrder = createAsyncThunk<UserOrder, UserOrder, { rejectValue: 
         return data;
     });
 
-interface cartReducer {
+// export const fetchOrder = createAsyncThunk<string, UserOrder, { rejectValue: string }>(
+//     "api/fetchOrder", async (params, { rejectWithValue }) => {
+//         try {
+//             if (params) {
+//                 await axios.post("/api/cart", params);
+//                 return "Add order"
+//             }
+//             return rejectWithValue("Data undefined");
+//         } catch (error) {
+//             return rejectWithValue("Can't fetchOrder");
+//         }
+//     });
+
+interface cartState {
     data: ProductCartType[],
     isLoading: "idle" | "loading" | "loaded" | "error";
     error: string | null,
 }
 
 
-export const initialState: cartReducer = {
+export const initialState: cartState = {
     data: [],
     isLoading: "idle",
     error: null
@@ -55,6 +68,9 @@ export const cartSlice = createSlice({
                 }
                 return null
             })
+        },
+        deleteUserProducts(state, _) {
+            state.data = []
         }
     },
 
@@ -62,13 +78,16 @@ export const cartSlice = createSlice({
         builder
             ///fetchRegister
             .addCase(fetchOrder.pending, (state) => {
+                console.log('pending')
                 state.isLoading = "loading";
             })
             .addCase(fetchOrder.fulfilled, (state) => {
+                console.log('fulfilled')
                 state.data = [];
                 state.isLoading = "loaded";
             })
             .addCase(fetchOrder.rejected, (state) => {
+                console.log('rejected')
                 state.isLoading = "error";
             })
     }

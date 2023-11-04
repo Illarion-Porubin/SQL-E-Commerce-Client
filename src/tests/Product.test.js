@@ -83,7 +83,7 @@ describe('productThunk', () => {
     it('shold "fetchAddRating" with resolved response', async () => {
         const mockState = { data: [{ id: 1, product: 'product1', desc: 'desc1' }] };
         const newRating = { ProductId: 1, UserId: 1, rating: 100 }
-        axios.get.mockResolvedValue(mockState);
+        axios.post.mockResolvedValue(mockState);
 
         const dispatch = jest.fn();
         const thunk = fetchAddRating(newRating);

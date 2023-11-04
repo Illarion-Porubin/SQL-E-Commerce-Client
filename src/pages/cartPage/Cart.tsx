@@ -66,11 +66,13 @@ export const CartContent: React.FC = () => {
             totalsum: totalAmount
         }
 
-        if (userProducts.isLoading === "loaded" && userProducts.data.length) {
+
+        if (userProducts.data.length) {
             dispatch(fetchOrder(userOrder));
             setTimeout(() => {
                 setConferm(false)
             }, 200);
+            dispatch(cartSlice.actions.deleteUserProducts(null))
             alert('Заказ оформлен')
         } else {
             setTimeout(() => {
