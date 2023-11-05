@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { ProductCardType } from '../../types/types';
-import axios from "../../http/index"; ///for work 
-// import axios from "axios"; ///for tests"
+// import axios from "../../http/index"; ///for work 
+import axios from "axios"; ///for tests"
 
 
 export const fetchGetTrendingByLabel = createAsyncThunk<ProductCardType[], string, { rejectValue: string }>(

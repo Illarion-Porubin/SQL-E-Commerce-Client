@@ -1,30 +1,31 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import { ProductCartType, UserOrder } from "../../types/types";
-import axios from "../../http/index";
+// import axios from "../../http/index"; ///for work 
+import axios from "axios"; ///for tests"
 
 
 
-export const fetchOrder = createAsyncThunk<UserOrder, UserOrder, { rejectValue: string }>(
-    "api/fetchOrder", async (params, { rejectWithValue }) => {
-        const { data }: { data: UserOrder } = await axios.post("/api/cart", params);
-        if (!data) {
-            return rejectWithValue("Server Error!");
-        }
-        return data;
-    });
-
-// export const fetchOrder = createAsyncThunk<string, UserOrder, { rejectValue: string }>(
+// export const fetchOrder = createAsyncThunk<UserOrder, UserOrder, { rejectValue: string }>(
 //     "api/fetchOrder", async (params, { rejectWithValue }) => {
-//         try {
-//             if (params) {
-//                 await axios.post("/api/cart", params);
-//                 return "Add order"
-//             }
-//             return rejectWithValue("Data undefined");
-//         } catch (error) {
-//             return rejectWithValue("Can't fetchOrder");
+//         const { data }: { data: UserOrder } = await axios.post("/api/cart", params);
+//         if (!data) {
+//             return rejectWithValue("Server Error!");
 //         }
+//         return data;
 //     });
+
+export const fetchOrder = createAsyncThunk<string, UserOrder, { rejectValue: string }>(
+    "api/fetchOrder", async (params, { rejectWithValue }) => {
+        try {
+            if (params) {
+                await axios.post("/api/cart", params);
+                return "Add order"
+            }
+            return rejectWithValue("Data undefined");
+        } catch (error) {
+            return rejectWithValue("Can't fetchOrder");
+        }
+    });
 
 interface cartState {
     data: ProductCartType[],
@@ -73,24 +74,8 @@ export const cartSlice = createSlice({
             state.data = []
         }
     },
-
-    extraReducers: (builder) => {
-        builder
-            ///fetchRegister
-            .addCase(fetchOrder.pending, (state) => {
-                console.log('pending')
-                state.isLoading = "loading";
-            })
-            .addCase(fetchOrder.fulfilled, (state) => {
-                console.log('fulfilled')
-                state.data = [];
-                state.isLoading = "loaded";
-            })
-            .addCase(fetchOrder.rejected, (state) => {
-                console.log('rejected')
-                state.isLoading = "error";
-            })
-    }
 })
+
+export const { addOrder, deleteOrder, deleteUserProducts } = cartSlice.actions;
 
 export default cartSlice.reducer;

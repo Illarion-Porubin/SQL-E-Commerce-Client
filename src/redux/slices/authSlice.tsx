@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk, AnyAction, PayloadAction } from "@reduxjs/toolkit";
 import { UpdateTypes, UserTypes } from "../../types/types";
-import axios from "../../http/index";
+// import axios from "../../http/index"; ///for work 
+import axios from "axios"; ///for tests"
 
 export const fetchRegistration = createAsyncThunk<UserTypes, { username: FormDataEntryValue, email: FormDataEntryValue, password: FormDataEntryValue, phone: FormDataEntryValue }, { rejectValue: string }>(
   "api/fetchRegistration", async (params, { rejectWithValue }) => {
