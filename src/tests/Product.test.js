@@ -6,7 +6,7 @@ jest.mock('axios');
 describe('productThunk', () => {
     ///////////////fetchGetProductsByLabel
 
-    it('shold "fetchGetProductsByLabel" with resolved response', async () => {
+    it('should "fetchGetProductsByLabel" with resolved response', async () => {
         const mockState = { data: [{ id: 1, product: 'product1', desc: 'desc1' }] };
         axios.get.mockResolvedValue(mockState);
 
@@ -24,7 +24,7 @@ describe('productThunk', () => {
         expect(end[0].payload).toBe(mockState.data);
     })
 
-    it('shold "fetchGetProductsByLabel" with rejected response', async () => {
+    it('should "fetchGetProductsByLabel" with rejected response', async () => {
         const dispatch = jest.fn();
         const thunk = fetchGetProductsByLabel();
 
@@ -43,7 +43,7 @@ describe('productThunk', () => {
 
     ///////////////fetchSearchProduct
 
-    it('shold "fetchSearchProduct" with resolved response', async () => {
+    it('should "fetchSearchProduct" with resolved response', async () => {
         const mockState = { data: [{ id: 1, product: 'product1', desc: 'desc1' }] };
         axios.get.mockResolvedValue(mockState);
 
@@ -61,7 +61,7 @@ describe('productThunk', () => {
         expect(end[0].payload).toBe(mockState.data);
     })
 
-    it('shold "fetchSearchProduct" with rejected response', async () => {
+    it('should "fetchSearchProduct" with rejected response', async () => {
         const dispatch = jest.fn();
         const thunk = fetchSearchProduct();
 
@@ -80,7 +80,8 @@ describe('productThunk', () => {
 
     ///////////////fetchAddRating
 
-    it('shold "fetchAddRating" with resolved response', async () => {
+    it('should "fetchAddRating" with resolved response', async () => {
+        // проверить что рейтинг действительно меняется в mockState
         const mockState = { data: [{ id: 1, product: 'product1', desc: 'desc1' }] };
         const newRating = { ProductId: 1, UserId: 1, rating: 100 }
         axios.post.mockResolvedValue(mockState);
@@ -99,7 +100,7 @@ describe('productThunk', () => {
         expect(end[0].payload).toBe("Rating update");
     })
 
-    it('shold "fetchAddRating" with rejected response', async () => {
+    it('should "fetchAddRating" with rejected response', async () => {
         const dispatch = jest.fn();
         const thunk = fetchAddRating();
 

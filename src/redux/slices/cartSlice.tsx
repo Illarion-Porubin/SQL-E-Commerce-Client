@@ -70,12 +70,12 @@ export const cartSlice = createSlice({
                 return null
             })
         },
-        deleteUserProducts(state, _) {
+        deleteUserOrders(state, _) {
             state.data = []
         }
     },
 })
 
-export const { addOrder, deleteOrder, deleteUserProducts } = cartSlice.actions;
+export const { addOrder, deleteOrder, deleteUserOrders } = cartSlice.actions;
 
 export default cartSlice.reducer;

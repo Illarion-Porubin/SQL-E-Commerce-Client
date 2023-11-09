@@ -3,32 +3,60 @@ import { UpdateTypes, UserTypes } from "../../types/types";
 // import axios from "../../http/index"; ///for work 
 import axios from "axios"; ///for tests"
 
-export const fetchRegistration = createAsyncThunk<UserTypes, { username: FormDataEntryValue, email: FormDataEntryValue, password: FormDataEntryValue, phone: FormDataEntryValue }, { rejectValue: string }>(
+// export const fetchRegistration = createAsyncThunk<UserTypes, { username: FormDataEntryValue, email: FormDataEntryValue, password: FormDataEntryValue, phone: FormDataEntryValue }, { rejectValue: string }>(
+//   "api/fetchRegistration", async (params, { rejectWithValue }) => {
+//     try {
+//       const { data }: { data: UserTypes } = await axios.post("/api/registration", params);
+//       if (!data) {
+//         return rejectWithValue("Server Error!");
+//       }
+//       return data;
+//     } catch (error) {
+//       return rejectWithValue("Can't fetchRegistration");
+//     }
+//   });
+
+export const fetchRegistration = createAsyncThunk<string, { username: FormDataEntryValue, email: FormDataEntryValue, password: FormDataEntryValue, phone: FormDataEntryValue }, { rejectValue: string }>(
   "api/fetchRegistration", async (params, { rejectWithValue }) => {
-    const { data }: { data: UserTypes } = await axios.post("/api/registration", params);
-    if (!data) {
+    try {
+      if (params) {
+        await axios.post("/api/registration", params);
+        return "User added"
+      }
       return rejectWithValue("Server Error!");
+    } catch (error) {
+      return rejectWithValue("Can't fetchRegistration");
     }
-    return data;
   });
 
 export const fetchLogin = createAsyncThunk<UserTypes, { email: FormDataEntryValue, password: FormDataEntryValue }, { rejectValue: string }>(
   "api/fetchLogin", async (params, { rejectWithValue }) => {
-    const { data }: { data: UserTypes } = await axios.post("/api/login", params);
-    if (!data) {
-      return rejectWithValue("Server Error!");
+    try {
+      if (!params) {
+        return rejectWithValue("Value not found!");
+      }
+      const { data }: { data: UserTypes } = await axios.post("/api/login", params);
+      if (!data) {
+        return rejectWithValue("Server Error!");
+      }
+      return data;
+    } catch (error) {
+      return rejectWithValue("Can't fetchLogin");
     }
-    return data;
   }
 );
 
 export const ThirdPartyAuthorization = createAsyncThunk(
-  "api/GooglefetchLogin", async (_, { rejectWithValue }) => {
-    const { data }: { data: any } = await axios.get("/auth/login/success");
-    if (!data) {
-      return rejectWithValue("Server Error!");
+  "api/ThirdPartyAuthorization", async (_, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.get("/auth/login/success");
+      if (!data) {
+        return rejectWithValue("Server Error!");
+      }
+      return data.user;
+    } catch (error) {
+      return rejectWithValue("Can't ThirdPartyAuthorization");
     }
-    return data.user; 
   }
 );
 
@@ -97,19 +125,25 @@ export const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      ///fetchRegister
-      .addCase(fetchRegistration.pending, (state) => {
-        state.data = null;
-        state.isLoading = "loading";
-      })
-      .addCase(fetchRegistration.fulfilled, (state, action) => {
-        state.data = action.payload;
-        state.isLoading = "loaded";
-      })
-      .addCase(fetchRegistration.rejected, (state) => {
-        state.data = null;
-        state.isLoading = "error";
-      })
+      ///fetchRegistration
+      // .addCase(fetchRegistration.pending, (state) => {
+      //   console.log('pending <<<')
+      //   state.data = null;
+      //   state.isLoading = "loading";
+      //   state.error = null;
+      // })
+      // .addCase(fetchRegistration.fulfilled, (state, action) => {
+      //   console.log(action.payload, '<<<')
+      //   state.data = action.payload;
+      //   state.isLoading = "loaded";
+      //   state.error = null;
+      // })
+      // .addCase(fetchRegistration.rejected, (state) => {
+      //   console.log('rejected <<<')
+      //   state.data = null;
+      //   state.isLoading = "error";
+      //   state.error = "fetchRegistration Error!";
+      // })
       ///ThirdPartyAuthorization
       .addCase(ThirdPartyAuthorization.pending, (state) => {
         state.data = null;
@@ -118,7 +152,7 @@ export const authSlice = createSlice({
       .addCase(ThirdPartyAuthorization.fulfilled, (state, action) => {
         state.data = action.payload;
         state.isLoading = "loaded";
-      }) 
+      })
       .addCase(ThirdPartyAuthorization.rejected, (state) => {
         state.data = null;
         state.isLoading = "error";

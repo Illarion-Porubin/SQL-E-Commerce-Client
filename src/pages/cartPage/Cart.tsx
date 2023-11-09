@@ -72,7 +72,7 @@ export const CartContent: React.FC = () => {
             setTimeout(() => {
                 setConferm(false)
             }, 200);
-            dispatch(cartSlice.actions.deleteUserProducts(null))
+            dispatch(cartSlice.actions.deleteUserOrders(null))
             alert('Заказ оформлен')
         } else {
             setTimeout(() => {
