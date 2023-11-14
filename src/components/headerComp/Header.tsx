@@ -26,25 +26,25 @@ export const HeaderContent: React.FC = () => {
 
     const userLogout = () => {
         if (window.confirm(`Вы точно хотите выйти?`)) {
-            if(auth.data?.provider === 'default'){
+            if (auth.data?.provider === 'default') {
                 dispatch(authSlice.actions.logout())
                 window.localStorage.removeItem('token')
             }
-            else{
+            else {
                 window.open("http://localhost:5000/auth/logout", "_self");
             }
         }
     }
 
     const checkProviderAvatar = () => {
-        if(auth.data?.provider === 'default' || auth.data?.provider === undefined){
+        if (auth.data?.provider === 'default' || auth.data?.provider === undefined) {
             return (
                 isActivatedUser ?
-                <Link to='/accaunt'>
-                    <img className={s.header__icon} src={checkAvatar} alt="user" />
-                </Link>
-                :
-                <img className={s.header__icon} src={checkAvatar} alt="user" onClick={() => window.alert('Авторизируйтесь или залогиньтесь со стороннего сервиса.')} />
+                    <Link to='/accaunt'>
+                        <img className={s.header__icon} src={checkAvatar} alt="user" />
+                    </Link>
+                    :
+                    <img className={s.header__icon} src={checkAvatar} alt="user" onClick={() => window.alert('Авторизируйтесь или залогиньтесь со стороннего сервиса.')} />
             )
         }
         else {

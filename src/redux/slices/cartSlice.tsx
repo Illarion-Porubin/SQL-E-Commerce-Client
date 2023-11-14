@@ -1,18 +1,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import { ProductCartType, UserOrder } from "../../types/types";
-// import axios from "../../http/index"; ///for work 
-import axios from "axios"; ///for tests"
-
-
-
-// export const fetchOrder = createAsyncThunk<UserOrder, UserOrder, { rejectValue: string }>(
-//     "api/fetchOrder", async (params, { rejectWithValue }) => {
-//         const { data }: { data: UserOrder } = await axios.post("/api/cart", params);
-//         if (!data) {
-//             return rejectWithValue("Server Error!");
-//         }
-//         return data;
-//     });
+import axios from "../../http/index"; ///for work 
+// import axios from "axios"; ///for tests"
 
 export const fetchOrder = createAsyncThunk<string, UserOrder, { rejectValue: string }>(
     "api/fetchOrder", async (params, { rejectWithValue }) => {
