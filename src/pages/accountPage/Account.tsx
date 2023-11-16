@@ -2,11 +2,13 @@ import * as React from 'react';
 import s from './Account.module.scss';
 import { Container } from '../../components/containerComp/Container';
 import { useCustomDispatch, useCustomSelector } from '../../hooks/store';
-import { Link } from 'react-router-dom';
-import { fetchAuthMe, fetchDeleteAvatar, fetchUpdateInfo, fetchUploadAvatar } from '../../redux/slices/authSlice';
+import { Link, Navigate } from 'react-router-dom';
+// import { fetchAuthMe, fetchDeleteAvatar, fetchUpdateInfo, fetchUploadAvatar } from '../../redux/slices/authSlice';
+import { fetchUpdateInfo } from '../../redux/slices/authSlice';
 import { selectAuthData } from '../../redux/selectos';
 import { FormInput } from '../../components/formInputComp/FormInput';
 import defaultAvatar from '../../asets/jpg/unnamed.jpg';
+import { UploadWidget } from '../../components/upLoad/upLoadWidget';
 
 
 interface InputsType {
@@ -37,8 +39,8 @@ export const AccauntComponent: React.FC = () => {
     const [changeForm, setChangeForm] = React.useState<boolean>(true);
     const auth = useCustomSelector(selectAuthData);
     const avatar = auth.data?.user.avatar ? `${'http://localhost:5000/' + auth.data?.user.avatar}` : defaultAvatar;
-    const checkAvatar = auth.data?.provider !== 'default' && auth.data?.user.avatar ?  auth.data?.user.avatar : avatar;
-    const filePicker = React.useRef<HTMLInputElement>(null);
+    const checkAvatar = auth.data?.provider !== 'default' && auth.data?.user.avatar ? auth.data?.user.avatar : avatar;
+    // const filePicker = React.useRef<HTMLInputElement>(null);
 
     React.useEffect(() => {
         if (auth.isLoading === "loaded" && auth.data) {
@@ -160,21 +162,25 @@ export const AccauntComponent: React.FC = () => {
         setInputValue({ ...inputValue, [value]: '' })
     }
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.target?.files ? e.target?.files[0] : false;
-        const formData = new FormData();
-        if (file) {
-            formData.append('file', file)
-            dispatch(fetchDeleteAvatar())
-            dispatch(fetchUploadAvatar(formData))
-            setTimeout(() => {
-                dispatch(fetchAuthMe())
-            }, 300);
-        }
-    }
+    // const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    //     const file = e.target?.files ? e.target?.files[0] : false;
+    //     const formData = new FormData();
+    //     if (file) {
+    //         formData.append('file', file)
+    //         dispatch(fetchDeleteAvatar())
+    //         dispatch(fetchUploadAvatar(formData))
+    //         setTimeout(() => {
+    //             dispatch(fetchAuthMe())
+    //         }, 300);
+    //     }
+    // }
 
-    const upLoadAvatar = () => {
-        filePicker.current?.click();
+    // const upLoadAvatar = () => {
+    //     filePicker.current?.click();
+    // }
+
+    if (auth.isLoading === 'error') {
+        return <Navigate to="/" />
     }
 
     return (
@@ -187,19 +193,20 @@ export const AccauntComponent: React.FC = () => {
                 </div>
 
                 <div className={s.accaunt__wrap_content}>
-                    <input
+                    {/* <input
                         className={s.accaunt__avatar_hidden}
                         ref={filePicker}
                         type="file"
                         onChange={(e) => handleChange(e)}
                         accept='image/*,.png,.jpg,.svg,.web'
                     />
-                        <img
-                            className={s.accaunt__avatar}
-                            onClick={upLoadAvatar}
-                            src={checkAvatar}
-                            alt="avatar"
-                        />
+                    <img
+                        className={s.accaunt__avatar}
+                        onClick={upLoadAvatar}
+                        src={checkAvatar}
+                        alt="avatar"
+                    /> */}
+                    <UploadWidget/>
                     <form className={s.accaunt__form} onSubmit={(e) => handleSubmit(e)}>
                         {
                             changeForm ?
@@ -246,7 +253,7 @@ export const Accaunt: React.FC = () => {
     return (
         <>
             <div className={s.accaunt}>
-                <Container children={[<AccauntComponent key={`AccauntComponent`} />]} />
+                <Container children={[<AccauntComponent key={`AccauntComponent`}/>]} />
             </div>
         </>
     )

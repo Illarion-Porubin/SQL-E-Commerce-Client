@@ -91,31 +91,43 @@ export const fetchUpdateInfo = createAsyncThunk<UserTypes, UpdateTypes, { reject
   }
 );
 
-export const fetchUploadAvatar = createAsyncThunk<UserTypes, FormData, { rejectValue: string }>(
-  "api/fetchUploadAvatar", async (params, { rejectWithValue }) => {
-    try {
-      const { data }: { data: UserTypes } = await axios.post("/api/avatar", params);
-      if (!data) {
-        return rejectWithValue("Server Error!");
-      }
-      return data;
-    } catch (error) {
-      return rejectWithValue("Can't fetchUploadAvatar");
-    }
-  });
+// export const fetchUploadAvatar = createAsyncThunk<UserTypes, FormData, { rejectValue: string }>(
+//   "api/fetchUploadAvatar", async (params, { rejectWithValue }) => {
+//     try {
+//       const { data }: { data: UserTypes } = await axios.post("/api/avatar", params);
+//       if (!data) {
+//         return rejectWithValue("Server Error!");
+//       }
+//       return data;
+//     } catch (error) {
+//       return rejectWithValue("Can't fetchUploadAvatar");
+//     }
+//   });
 
-export const fetchDeleteAvatar = createAsyncThunk<UserTypes, undefined, { rejectValue: string }>(
+// export const fetchDeleteAvatar = createAsyncThunk<UserTypes, undefined, { rejectValue: string }>(
+//   "api/fetchDeleteAvatar",
+//   async (_, { rejectWithValue }) => {
+//     try {
+//       const { data }: { data: UserTypes } = await axios.delete("/api/avatar/");
+//       if (!data) {
+//         return rejectWithValue("Server Error!");
+//       }
+//       return data;
+//     } catch (error) {
+//       return rejectWithValue("Can't fetchDeleteAvatar");
+//     }
+//   }
+// );
+
+export const fetchDeleteAvatar = createAsyncThunk<UserTypes, string, { rejectValue: string }>(
   "api/fetchDeleteAvatar",
-  async (_, { rejectWithValue }) => {
-    try {
-      const { data }: { data: UserTypes } = await axios.delete("/api/avatar/");
-      if (!data) {
-        return rejectWithValue("Server Error!");
-      }
-      return data;
-    } catch (error) {
-      return rejectWithValue("Can't fetchDeleteAvatar");
+  async (id, { rejectWithValue }) => {
+    const { data }: { data: UserTypes } = await axios.delete("/api/avatar/" + id);
+    if (!data) {
+      return rejectWithValue("Server Error!");
     }
+    const auth: UserTypes = data
+    return auth;
   }
 );
 
