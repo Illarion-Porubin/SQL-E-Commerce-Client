@@ -4,21 +4,16 @@ import { AdvancedImage } from "@cloudinary/react";
 import { Cloudinary } from "@cloudinary/url-gen";
 import { selectAuthData } from "../../redux/selectos.tsx";
 import { useCustomSelector, useCustomDispatch } from "../../hooks/store.tsx";
-import { fetchAuthMe, fetchDeleteAvatar, fetchUpdateInfo } from "../../redux/slices/authSlice.tsx";
-// import { fetchGetContetn, fetchUpdateContent } from "../../redux/slices/contentSlice";
-// import Avatar from "../../assets/png/avatar.png";
+import { fetchAuthMe, fetchDeleteAvatar, fetchUpdateAvatar } from "../../redux/slices/authSlice.tsx";
 import s from "./UploadWidget.module.scss";
-import { Navigate } from "react-router-dom";
-
 
 
 export const UploadWidget = ({ ...props }) => {
   const dispatch = useCustomDispatch();
   const authState = useCustomSelector(selectAuthData);
-  //   const contentState = useCustomSelector(selectContentData);
   const cloudinaryRef = React.useRef();
   const widgetRef = React.useRef();
-  const [avatar, setAvatar] = React.useState(null);
+  const [userAvatarId, setUserAvatarId] = React.useState(null);
 
   const cld = new Cloudinary({
     cloud: {
@@ -28,7 +23,7 @@ export const UploadWidget = ({ ...props }) => {
   
   React.useEffect(() => {
     if (authState.isLoading === 'loaded') {
-      setAvatar(authState.data?.user.avatar);
+      setUserAvatarId(authState.data?.user.avatar);
     }else{
       dispatch(fetchAuthMe())
     }
@@ -48,23 +43,24 @@ export const UploadWidget = ({ ...props }) => {
     }, function (error, result) {
       try {
         const photoId = result.info.public_id;
+        // const avatarUrl = result.info.url;
         if (photoId) {
-          console.log(avatar, '<<')
-          const data = { id: authState?.data?.user?.id, avatar: photoId };
-          dispatch(fetchDeleteAvatar(avatar))
+          const data = { email: authState?.data?.user?.email, avatar: photoId };
+          dispatch(fetchDeleteAvatar(userAvatarId))
           setTimeout(() => {
-            dispatch(fetchUpdateInfo({ ...data }));
-          }, 500)
+            dispatch(fetchUpdateAvatar({ ...data }));
+            dispatch(fetchAuthMe())
+          }, 400)
         }
       } catch (e) {
         console.log(error);
       }
     });
     widgetRef.current.open()
-  },[dispatch, avatar, authState?.data?.user?.id])
+  },[dispatch, userAvatarId, authState?.data?.user?.email])
 
-  const defaultAvatar = "https://res.cloudinary.com/dnd2lc6qw/image/upload/v1700142769/yiphqaz26efk5rmvzzaq.png";
-  const userAvatar = cld.image(avatar ? avatar : defaultAvatar).format('auto').quality('auto');
+  const defaultAvatar = "https://res.cloudinary.com/dnd2lc6qw/image/upload/v1700142769/ha19yqibgjmmxvnfszbr.png";
+  const userAvatar = cld.image(userAvatarId ? userAvatarId : defaultAvatar).format('auto').quality('auto');
 
   return (
     <>

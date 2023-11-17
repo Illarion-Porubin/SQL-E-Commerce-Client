@@ -119,6 +119,22 @@ export const fetchUpdateInfo = createAsyncThunk<UserTypes, UpdateTypes, { reject
 //   }
 // );
 
+export const fetchUpdateAvatar = createAsyncThunk<UserTypes, {email: string, avatar: string}, { rejectValue: string }>(
+  "api/fetchUpdateAvatar",
+  async (params, { rejectWithValue }) => {
+    console.log(params, 'fetchUpdateAvatar<<<<<<<<<<<')
+    try {
+      const { data }: { data: UserTypes } = await axios.put("/api/avatar", params);
+      if (!data) {
+        return rejectWithValue("Server Error!");
+      }
+      return data;
+    } catch (error) {
+      return rejectWithValue("Can't fetchUpdateAvatar");
+    }
+  }
+);
+
 export const fetchDeleteAvatar = createAsyncThunk<UserTypes, string, { rejectValue: string }>(
   "api/fetchDeleteAvatar",
   async (id, { rejectWithValue }) => {
