@@ -11,6 +11,16 @@
     width: 100%;
     height: auto;
 
+    &__tipe {
+        position: absolute;
+        font-size: 16px;
+    }
+
+    &__tipe_title {
+        font-size: 18px;
+        font-weight: bold;
+    }
+
     &__info {
         display: flex;
         justify-content: space-between;
@@ -92,14 +102,14 @@
         border: 1px solid red;
     }
 
-    &__other_logins{
+    &__other_logins {
         display: flex;
         justify-content: center;
         position: relative;
         top: -50px;
     }
 
-    &__other_icon{
+    &__other_icon {
         width: 40px;
         height: 40px;
         margin: 0 20px;
@@ -108,7 +118,8 @@
 }
 
 @media(max-width: 460px) {
-    .auth__title, .auth__main {
+    .auth__title,
+    .auth__main {
         font-size: 18px;
     }
 }

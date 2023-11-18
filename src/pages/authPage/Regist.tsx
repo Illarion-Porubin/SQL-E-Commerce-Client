@@ -1,6 +1,6 @@
 import * as React from 'react';
 import s from './Auth.module.scss';
-import { Link, Navigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useCustomDispatch } from '../../hooks/store';
 import { Container } from '../../components/containerComp/Container';
 import { FormInput } from '../../components/formInputComp/FormInput';
@@ -101,7 +101,7 @@ export const RegistContent: React.FC = () => {
             }
             dispatch(fetchRegistration(userData));
             window.alert('Письмо отправленно на вашу почту');
-            // window.location.href = "/login"
+            window.location.href = "/login"
         }
     }
 

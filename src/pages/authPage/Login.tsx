@@ -108,6 +108,11 @@ export const LoginContent: React.FC = () => {
                 <h1 className={s.auth__title}>Simple Login</h1>
                 <Link className={s.auth__main} to='/'>На главную</Link>
             </div>
+            <div className={s.auth__tipe}>
+                <p className={s.auth__tipe_title}>Log in as an Admin</p>
+                <p>Login: user@mail.ru4</p>
+                <p>Password: qweQWE123!</p>
+            </div>
             <div className={s.auth__form_wrap}>
                 <form className={s.auth__form} onSubmit={(e) => handleSubmit(e)} >
                     {

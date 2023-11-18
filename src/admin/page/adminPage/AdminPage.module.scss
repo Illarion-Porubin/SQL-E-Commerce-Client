@@ -1,0 +1,68 @@
+.background {
+    width: 100%;
+    height: 100vh;
+    background-image: url('https://kalix.club/uploads/posts/2022-12/1671738585_kalix-club-p-fon-so-stolom-oboi-2.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.admin {
+    overflow: hidden;
+    width: 100%;
+    height: 100vh;
+
+    &__info {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 25px 0;
+    }
+
+    &__title {
+        padding: 0;
+        margin: 0;
+        color: #7AC751;
+    }
+
+    &__main {
+        padding: 0;
+        margin: 0;
+        font-size: 22px;
+        font-weight: 600;
+        color: black;
+        transition: all .3s;
+
+        &:hover {
+            color: #7AC751;
+            transition: all .3s;
+        }
+    }
+
+    &__content {
+        width: 100%;
+        height: 80%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    &__items{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        margin: 0 20px;
+    }
+
+    &__items_title{
+        position: absolute;
+    }
+
+    &__items_img{
+        width: 260px;
+        height: 280px;
+        border: 1px solid rgb(64, 64, 64);
+        border-radius: 12px;
+    }
+}

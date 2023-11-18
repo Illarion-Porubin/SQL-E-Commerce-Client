@@ -7,7 +7,7 @@ import { Link, Navigate } from 'react-router-dom';
 import { fetchUpdateInfo } from '../../redux/slices/authSlice';
 import { selectAuthData } from '../../redux/selectos';
 import { FormInput } from '../../components/formInputComp/FormInput';
-import defaultAvatar from '../../asets/jpg/unnamed.jpg';
+// import defaultAvatar from '../../asets/jpg/unnamed.jpg';
 import { UploadWidget } from '../../components/upLoad/upLoadWidget';
 
 
@@ -38,9 +38,11 @@ export const AccauntComponent: React.FC = () => {
     );
     const [changeForm, setChangeForm] = React.useState<boolean>(true);
     const auth = useCustomSelector(selectAuthData);
-    const avatar = auth.data?.user.avatar ? `${'http://localhost:5000/' + auth.data?.user.avatar}` : defaultAvatar;
-    const checkAvatar = auth.data?.provider !== 'default' && auth.data?.user.avatar ? auth.data?.user.avatar : avatar;
+    // const avatar = auth.data?.user.avatar ? `${'http://localhost:5000/' + auth.data?.user.avatar}` : defaultAvatar;
+    // const checkAvatar = auth.data?.provider !== 'default' && auth.data?.user.avatar ? auth.data?.user.avatar : avatar;
     // const filePicker = React.useRef<HTMLInputElement>(null);
+
+    console.log(auth)
 
     React.useEffect(() => {
         if (auth.isLoading === "loaded" && auth.data) {
@@ -191,7 +193,7 @@ export const AccauntComponent: React.FC = () => {
                     <h1 className={s.accaunt__title}>User Account</h1>
                     <Link className={s.accaunt__main} to='/'>На главную</Link>
                 </div>
-
+                <Link className={s.accaunt__admin} to='/admin'>Админ панель</Link>
                 <div className={s.accaunt__wrap_content}>
                     {/* <input
                         className={s.accaunt__avatar_hidden}
@@ -206,7 +208,7 @@ export const AccauntComponent: React.FC = () => {
                         src={checkAvatar}
                         alt="avatar"
                     /> */}
-                    <UploadWidget/>
+                    <UploadWidget />
                     <form className={s.accaunt__form} onSubmit={(e) => handleSubmit(e)}>
                         {
                             changeForm ?
@@ -253,7 +255,7 @@ export const Accaunt: React.FC = () => {
     return (
         <>
             <div className={s.accaunt}>
-                <Container children={[<AccauntComponent key={`AccauntComponent`}/>]} />
+                <Container children={[<AccauntComponent key={`AccauntComponent`} />]} />
             </div>
         </>
     )

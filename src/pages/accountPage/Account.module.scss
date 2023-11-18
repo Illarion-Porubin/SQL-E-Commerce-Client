@@ -45,6 +45,20 @@
         }
     }
 
+    &__admin{
+        position: absolute;
+        padding: 0;
+        margin: 0;
+        font-size: 22px;
+        font-weight: 600;
+        color: black;
+        transition: all .3s;
+        &:hover {
+            color: #7AC751;
+            transition: all .3s;
+        }
+    }
+
     &__avatar {
         width: 120px;
         height: 120px;
