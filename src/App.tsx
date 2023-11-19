@@ -11,8 +11,7 @@ import { useCustomDispatch } from './hooks/store';
 import { ThirdPartyAuthorization, fetchAuthMe } from './redux/slices/authSlice';
 import { Accaunt } from './pages/accountPage/Account';
 import { AdminPage } from './admin/page/adminPage/AdminPage';
-import { Categories } from './admin/page/categoriesPage/Categories';
-import { Products } from './admin/page/productsPage/Products';
+
 
 
 
@@ -36,8 +35,6 @@ function App() {
         <Route path="/accaunt" element={<Accaunt />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/admin" element={<AdminPage />} />
-        <Route path="/categories" element={<Categories />} />
-        <Route path="/products" element={<Products />} />
         <Route path="*" element={<Error />} />
       </Routes>
     </>
