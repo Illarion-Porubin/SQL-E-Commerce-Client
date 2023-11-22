@@ -1,0 +1,74 @@
+.categories {
+    width: 100%;
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    &__content {
+        width: 280px;
+        height: auto;
+    }
+
+    &__add_svg {
+        width: 22px;
+        height: 22px;
+        position: absolute;
+        right: 0;
+    }
+
+    &__item,
+    &__add,
+    &__add_btn {
+        border: 2px solid rgb(1, 152, 1);
+        background-color: rgb(245, 245, 245);
+        border-radius: 10px;
+        width: 100%;
+        height: 60px;
+        margin-bottom: 20px;
+        cursor: pointer;
+        transition: all .3s;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+    }
+    
+    &__item {
+        &:hover {
+            .categories__item_svg {
+                transition: all .5s;
+                opacity: 1;
+            }
+        }
+    }
+
+    &__item_svg {
+        width: 22px;
+        height: 22px;
+        position: absolute;
+        right: 0;
+        opacity: 0;
+        transition: all .5s;
+    }
+
+
+    &__accept {
+        right: -30px;
+    }
+
+    &__cross {
+        right: -60px;
+    }
+
+    &__add_btn {
+        transition: all .3s;
+    }
+
+    &__item_input {
+        padding: 0 10px;
+    }
+
+
+}

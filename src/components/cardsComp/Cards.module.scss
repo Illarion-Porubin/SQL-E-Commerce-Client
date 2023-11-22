@@ -16,7 +16,7 @@
         display: flex;
         flex-direction: column;
         flex-wrap: wrap;
-        margin: 10px;
+        margin-right: 10px;
     }
 
     &__item_wrap {
@@ -92,7 +92,6 @@
             bottom: 0;
             background-color: #fff;
             border-radius: 100%;
-
         }
 
     }
@@ -154,7 +153,6 @@
         line-height: 120%;
         letter-spacing: 0.09px;
         text-decoration-line: line-through;
-
     }
 
 }
@@ -204,6 +202,10 @@
 }
 
 @media(max-width: 862px) {
+    .card{
+        padding-left: 0;
+    }
+
     .card__content{
         justify-content: center;
     }

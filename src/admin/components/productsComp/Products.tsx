@@ -36,7 +36,7 @@ export const ProductsContent: React.FC = () => {
 
     return (
         <>
-            <Cards products={products} key={'Cards'} />,
+            <Cards products={products} key={'Cards'} />
             <Paginate
                 key={'Paginate'}
                 page={page}
@@ -44,7 +44,7 @@ export const ProductsContent: React.FC = () => {
                 setSearch={setSearch}
                 setPage={setPage}
                 checkPage={checkPage}
-            />,
+            />
         </>
     )
 }

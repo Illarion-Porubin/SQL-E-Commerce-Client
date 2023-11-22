@@ -3,6 +3,7 @@ import s from './AdminPage.module.scss';
 import { Link } from 'react-router-dom';
 import { Container } from '../../../components/containerComp/Container';
 import { Products } from '../../components/productsComp/Products';
+import { Categories } from '../../components/categoriesComp/Categories';
 
 export const AdminContent: React.FC = () => {
     const [section, setSection] = React.useState<string>('Admin')
@@ -29,11 +30,11 @@ export const AdminContent: React.FC = () => {
             {
                 section === 'Categories'
                     ?
-                    <p>catrgories</p>
+                    <Categories />
                     :
                     section === 'Products'
                         ?
-                        <Products/>
+                        <Products />
                         :
                         <div className={s.admin__content}>
                             <div className={s.admin__items} onClick={() => changeSection('Products')}>

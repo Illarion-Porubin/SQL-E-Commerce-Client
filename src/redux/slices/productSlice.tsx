@@ -3,14 +3,14 @@ import { ProductCardType } from '../../types/types';
 import axios from "../../http/index"; ///for work 
 // import axios from "axios"; ///for tests"
 
-// export const fetchGetProduct = createAsyncThunk<ProductCardType[], string, { rejectValue: string }>(
-//     "api/fetchGetProduct", async (id, { rejectWithValue }) => {
-//         const { data }: { data: ProductCardType[] } = await axios.get(`/api/product/${id}`);
-//         if (!data) {
-//             return rejectWithValue("Server Error!");
-//         }
-//         return data;
-//     });
+export const fetchGetProducts = createAsyncThunk<ProductCardType[], null, { rejectValue: string }>(
+    "api/fetchGetProducts", async (_, { rejectWithValue }) => {
+        const { data }: { data: ProductCardType[] } = await axios.get(`/api/products`);
+        if (!data) {
+            return rejectWithValue("Server Error!");
+        }
+        return data;
+    });
 
 export const fetchGetProductsByLabel = createAsyncThunk<ProductCardType[], string, { rejectValue: string }>(
     "api/fetchGetProductsByLabel", async (paramsProducts, { rejectWithValue }) => {
