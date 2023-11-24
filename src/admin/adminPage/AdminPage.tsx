@@ -1,9 +1,9 @@
 import * as React from 'react';
 import s from './AdminPage.module.scss';
 import { Link } from 'react-router-dom';
-import { Container } from '../../../components/containerComp/Container';
-import { Products } from '../../components/productsComp/Products';
-import { Categories } from '../../components/categoriesComp/Categories';
+import { Container } from '../../components/containerComp/Container';
+import { Products } from '../../admin/adminComponents/adminProducts/Products';
+import { Categories } from '../adminComponents/adminCategories/Categories';
 
 export const AdminContent: React.FC = () => {
     const [section, setSection] = React.useState<string>('Admin')

@@ -1,12 +1,13 @@
 import * as React from 'react';
 import { Container } from '../../../components/containerComp/Container';
-import s from './Products.module.scss';
-import { Cards } from '../../../components/cardsComp/Cards';
+import { Cards } from '../adminCards/Cards';
 import { selectProductData } from '../../../redux/selectos';
 import { useCustomDispatch, useCustomSelector } from '../../../hooks/store';
 import { fetchGetProductsByLabel, fetchSearchProduct } from '../../../redux/slices/productSlice';
 import { Paginate } from '../../../components/paginateComp/Paginate';
 import useDebounce from '../../../hooks/useDebounce';
+import s from './Products.module.scss';
+import { Categories } from '../../../components/categoriesComp/Categories';
 
 
 export const ProductsContent: React.FC = () => {
@@ -33,18 +34,29 @@ export const ProductsContent: React.FC = () => {
         setPage(1)
     }, [label])
 
+    const productsCategories = [
+        { label: 'all', title: 'All Products' },
+        { label: 'best', title: 'Best Sellers' },
+        { label: 'new', title: 'New Arrivals' },
+        { label: 'today', title: 'Today Deals' },
+    ]
 
     return (
         <>
+            <div className={s.products}>
+                <Categories categorieList={productsCategories} key={'Categories'} setLabel={setLabel} label={label} />
+            </div>
             <Cards products={products} key={'Cards'} />
-            <Paginate
-                key={'Paginate'}
-                page={page}
-                search={search}
-                setSearch={setSearch}
-                setPage={setPage}
-                checkPage={checkPage}
-            />
+            <div className={s.paginate}>
+                <Paginate
+                    key={'Paginate'}
+                    page={page}
+                    search={search}
+                    setSearch={setSearch}
+                    setPage={setPage}
+                    checkPage={checkPage}
+                />,
+            </div>
         </>
     )
 }

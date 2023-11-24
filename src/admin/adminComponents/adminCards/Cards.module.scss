@@ -60,13 +60,13 @@
         flex-direction: column;
         position: absolute;
         z-index: 1;
-        bottom: 0;
+        top: 8px;
         right: 0;
     }
 
     &__icon {
-        width: 26px;
-        height: 26px;
+        width: 22px;
+        height: 22px;
         position: relative;
         z-index: 1;
         transition: all .3s;

@@ -10,7 +10,7 @@ import { Login } from './pages/authPage/Login';
 import { useCustomDispatch } from './hooks/store';
 import { ThirdPartyAuthorization, fetchAuthMe } from './redux/slices/authSlice';
 import { Accaunt } from './pages/accountPage/Account';
-import { AdminPage } from './admin/page/adminPage/AdminPage';
+import { AdminPage } from './admin/adminPage/AdminPage';
 
 
 
