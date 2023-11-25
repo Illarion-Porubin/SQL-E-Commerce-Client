@@ -3,6 +3,7 @@ import auth from './slices/authSlice';
 import products from './slices/productSlice';
 import cart from './slices/cartSlice';
 import trending from './slices/trendingSlice';
+import categories from './slices/categorySlyce';
 import storage from 'redux-persist/lib/storage';
 import {
   persistStore,
@@ -19,7 +20,8 @@ export const rootReducer = combineReducers({
   auth,
   products,
   cart,
-  trending
+  trending,
+  categories
 });
 
 const persistConfig = {

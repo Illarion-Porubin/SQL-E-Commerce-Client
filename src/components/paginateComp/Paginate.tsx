@@ -14,12 +14,10 @@ export const Paginate: React.FC<Props> = ({ search, page, setSearch, setPage, ch
 
     return (
         <div className={s.paginate}>
-            {/* <input className={s.paginate__search} type="text" placeholder='найти' onChange={(e) => setSearch(e.target?.value)} value={search} /> */}
             <div className={s.paginate__search}>
                 <Search key={'Search'} showSelect={false} value={search} setSearch={setSearch}/>
             </div>
             <div className={s.paginate__wrap}>
-                {/* <button className={s.paginate__btn} onClick={() => setPage(prev => checkPage ? prev : prev + 1)}>Next page</button> */}
                 <div className={s.paginate__block}>
                     <label className={s.paginate__label} htmlFor="">
                         <input className={s.paginate__page_count} type="text" value={page} readOnly={true} />

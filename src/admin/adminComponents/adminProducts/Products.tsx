@@ -8,6 +8,7 @@ import { Paginate } from '../../../components/paginateComp/Paginate';
 import useDebounce from '../../../hooks/useDebounce';
 import s from './Products.module.scss';
 import { Categories } from '../../../components/categoriesComp/Categories';
+import { Service } from '../adminService/Service';
 
 
 export const ProductsContent: React.FC = () => {
@@ -44,7 +45,8 @@ export const ProductsContent: React.FC = () => {
     return (
         <>
             <div className={s.products}>
-                <Categories categorieList={productsCategories} key={'Categories'} setLabel={setLabel} label={label} />
+                {/* <Categories categorieList={productsCategories} key={'Categories'} setLabel={setLabel} label={label} /> */}
+                <Service/>
             </div>
             <Cards products={products} key={'Cards'} />
             <div className={s.paginate}>

@@ -33,19 +33,19 @@ export const AdminContent: React.FC = () => {
                     <Categories />
                     :
                     section === 'Products'
-                        ?
-                        <Products />
-                        :
-                        <div className={s.admin__content}>
-                            <div className={s.admin__items} onClick={() => changeSection('Products')}>
-                                <p className={s.admin__items_title}>Товары</p>
-                                <img className={s.admin__items_img} src="https://vrcert.ru/wp-content/uploads/2021/09/nov32.jpg" alt="card" />
-                            </div>
-                            <div className={s.admin__items} onClick={() => changeSection('Categories')}>
-                                <p className={s.admin__items_title} id="categories" onClick={(e) => (console.log(e.target))} >Категории</p>
-                                <img className={s.admin__items_img} src="https://clipart-library.com/images/8T6zxLnTE.jpg" alt="card" />
-                            </div>
+                    ?
+                    <Products />
+                    :
+                    <div className={s.admin__content}>
+                        <div className={s.admin__items} onClick={() => changeSection('Products')}>
+                            <p className={s.admin__items_title}>Товары</p>
+                            <img className={s.admin__items_img} src="https://vrcert.ru/wp-content/uploads/2021/09/nov32.jpg" alt="card" />
                         </div>
+                        <div className={s.admin__items} onClick={() => changeSection('Categories')}>
+                            <p className={s.admin__items_title} id="categories" onClick={(e) => (console.log(e.target))} >Категории</p>
+                            <img className={s.admin__items_img} src="https://clipart-library.com/images/8T6zxLnTE.jpg" alt="card" />
+                        </div>
+                    </div>
             }
 
         </div>
