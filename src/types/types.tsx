@@ -80,3 +80,7 @@ export interface UpdateTypes {
   confirmpass: FormDataEntryValue,
 }
 
+export interface Category {
+  id: number,
+  title: string
+}

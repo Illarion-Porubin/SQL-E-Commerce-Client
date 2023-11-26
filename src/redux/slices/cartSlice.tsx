@@ -22,7 +22,6 @@ interface cartState {
     error: string | null,
 }
 
-
 export const initialState: cartState = {
     data: [],
     isLoading: "idle",
@@ -66,5 +65,4 @@ export const cartSlice = createSlice({
 })
 
 export const { addOrder, deleteOrder, deleteUserOrders } = cartSlice.actions;
-
 export default cartSlice.reducer;

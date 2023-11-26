@@ -19,65 +19,52 @@
         }
     }
 
-    &__serch {
-        width: 280px;
-    }
+    ///dropdown
 
-    &__wrap{
-
-    }
-
-    
-
-    &__sort {
-        position: relative;
+    &__dropdown_btn {
+        width: 120px;
         height: 30px;
-        transition: all .3s;
-        &:hover {
-            .service__list {
-                top: 30px;
-                transition: all .5s;
-                opacity: 1;
-                z-index: 4;
-            }
+        flex-shrink: 0;
+        background: #7AC751;
+        color: #FFF;
+        font-family: Rubik;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
+        letter-spacing: 0.32px;
+        border: none;
+    }
+
+    &__dropdown_list {
+        position: absolute;
+        overflow: hidden;
+    }
+
+    &__dropdown_li {
+        position: relative;
+        top: -100vw;
+        background-color: #F7F8FA;
+        width: 120px;
+        height: 30px;
+        color: #555;
+        text-align: left;
+        border-top: 1px solid #E3E3E3;
+        border-bottom: 1px solid #E3E3E3;
+        cursor: pointer;
+        display: flex;
+        padding-left: 16px;
+        align-items: center;
+        transition: all 1.3s;
+        z-index: 5;
+        &:hover{
+            transition: all 1.3s;
+            padding-left: 25px;
         }
     }
 
-   
-
-    &__label {
-        background-color: #7AC751;
-        color: #fff;
-        width: 120px;
-        height: 30px;
-        cursor: pointer;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        z-index: 2;
-    }
-
-
-
-    &__arrow {
-        margin: 0 6px;
-        position: relative;
-    }
-
-    &__list {
-        position: absolute;
-        overflow: hidden;
-        top: -2000%;
-        z-index: 1;
-        opacity: 0;
-        transition: all 1.3s;
-    }
-
-    &__category {
-        padding: 0 8px;
-        width: 120px;
-        background-color: #eeeeee;
-        border: 1px solid rgb(212, 212, 212);
-        cursor: pointer;
+    &__dropdown_li.active {
+        top: 0vw;
+        transition: all .6s;
     }
 }
