@@ -31,11 +31,11 @@ export const fetchAddCategory = createAsyncThunk<Category[], { title: string }, 
         }
     });
 
-export const fetchUpdateCategory = createAsyncThunk<Category[], { title: string }, { rejectValue: string }>(
+export const fetchUpdateCategory = createAsyncThunk<Category[], { id: number, title: string }, { rejectValue: string }>(
     "api/fetchUpdateCategory", async (params, { rejectWithValue }) => {
         try {
             if (params) {
-                const { data }: { data: Category[] } = await axios.post("/api/category", params);
+                const { data }: { data: Category[] } = await axios.put("/api/category", params);
                 return data;
             }
             return rejectWithValue("Data undefined");

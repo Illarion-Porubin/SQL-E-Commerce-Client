@@ -21,7 +21,6 @@ export const Service = () => {
     const addProduct = () => {
 
     }
-    console.log(category)
 
     const sort = (value: string) => {
         console.log(value)

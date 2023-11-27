@@ -1,0 +1,45 @@
+.categories__item {
+    border: 2px solid rgb(1, 152, 1);
+    background-color: rgb(245, 245, 245);
+    border-radius: 10px;
+    width: 100%;
+    height: 60px;
+    margin-bottom: 20px;
+    cursor: pointer;
+    transition: all .3s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.categories__item {
+    &:hover {
+        .categories__item_svg {
+            transition: all .5s;
+            opacity: 1;
+        }
+    }
+}
+
+.categories__item_svg {
+    width: 22px;
+    height: 22px;
+    position: absolute;
+    right: 0;
+    opacity: 0;
+    transition: all .5s;
+}
+
+.categories__accept {
+    right: -30px;
+}
+
+.categories__cross {
+    right: -60px;
+}
+
+
+.categories__item_input {
+    padding: 0 10px;
+}

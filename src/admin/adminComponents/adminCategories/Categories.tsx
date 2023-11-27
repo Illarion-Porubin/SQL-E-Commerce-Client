@@ -7,6 +7,7 @@ import { useCustomDispatch, useCustomSelector } from '../../../hooks/store';
 import { fetchAddCategory, fetchDeleteCategory, fetchGetCategories } from '../../../redux/slices/categorySlyce';
 import { selectCategoriesData } from '../../../redux/selectos';
 import { Category } from '../../../types/types';
+import { CategoryList } from '../adminCategoryList/CategoryList';
 
 
 
@@ -27,20 +28,17 @@ export const CategoriesContent: React.FC = () => {
         setAdd(true)
     }
 
-    const updateCategory = (id: number) => {
-        dispatch(fetchAddCategory({ title: category }))
-    }
-
     const deleteCategory = (value: number) => {
         dispatch(fetchDeleteCategory({ id: value }))
         setTimeout(() => {
             dispatch(fetchGetCategories())
-        }, 300)
+        }, 200)
     }
 
     React.useEffect(() => {
         dispatch(fetchGetCategories())
-    }, [])
+    }, [dispatch])
+
 
     return (
         <>
@@ -72,21 +70,18 @@ export const CategoriesContent: React.FC = () => {
 
                     {
                         //создать компонент categoryList [category, setCategory]
-                        categories.data.map((value: Category) => (
-                            <div className={s.categories__item} key={value.id}>
-                                <input type="text" value={value.title} />
-                                <img
-                                    className={`${s.categories__item_svg} ${s.categories__accept}`}
-                                    onClick={() => close()}
-                                    src={accept} alt="accept"
+                        categories.isLoading === 'loaded'
+                            ?
+                            categories.data.map((value: Category) => (
+                                <CategoryList
+                                    key={value.id}
+                                    value={value}
+                                    close={close}
+                                    deleteCategory={deleteCategory}
                                 />
-                                <img
-                                    className={`${s.categories__item_svg} ${s.categories__cross}`}
-                                    onClick={() => deleteCategory(value.id)}
-                                    src={cross} alt="cross"
-                                />
-                            </div>
-                        ))
+                            ))
+                            :
+                            null
                     }
                 </div>
             </div>
