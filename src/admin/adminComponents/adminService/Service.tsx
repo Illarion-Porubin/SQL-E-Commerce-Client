@@ -6,32 +6,39 @@ import { selectCategoriesData } from '../../../redux/selectos';
 import { fetchGetCategories } from '../../../redux/slices/categorySlyce';
 import { Category } from '../../../types/types';
 
+interface Props {
+    setModalActive: (value: boolean) => void,
+    modalActive: boolean,
+}
 
-export const Service = () => {
+export const Service: React.FC<Props> = ({ setModalActive, modalActive }) => {
     const dispatch = useCustomDispatch();
     const category = useCustomSelector(selectCategoriesData);
     const sortRef = React.useRef<HTMLDivElement>(null);
     const [search, setSearch] = React.useState<string>('');
-    const [drop, setDrop] = React.useState<boolean>(false)
+    const [drop, setDrop] = React.useState<boolean>(false);
+
 
     React.useEffect(() => {
         dispatch(fetchGetCategories())
     }, [])
 
-    const addProduct = () => {
-
-    }
-
     const sort = (value: string) => {
         console.log(value)
     }
 
-   
+    const addProduct = (e: any) => {
+        setModalActive(!modalActive)
+        e.stopPropagation()
+    }
 
     return (
         <>
             <div className={s.service}>
-                <button className={s.service__add_btn}>+ Добавить</button>
+                <button className={s.service__add_btn}
+                    onClick={(e) => { addProduct(e) }}
+                >+ Добавить
+                </button>
                 <div className={s.service__serch}>
                     <Search key={'Search'} showSelect={false} value={search} setSearch={setSearch} />
                 </div>

@@ -9,6 +9,7 @@ import useDebounce from '../../../hooks/useDebounce';
 import s from './Products.module.scss';
 import { Categories } from '../../../components/categoriesComp/Categories';
 import { Service } from '../adminService/Service';
+import { Modal } from '../adminModal/Modal';
 
 
 export const ProductsContent: React.FC = () => {
@@ -16,6 +17,7 @@ export const ProductsContent: React.FC = () => {
     const [search, setSearch] = React.useState<string>(``)
     const [label, setLabel] = React.useState<string>('all');
     const [page, setPage] = React.useState<number>(1);
+    const [modalActive, setModalActive] = React.useState<boolean>(false)
 
     const debounce = useDebounce(search, 400);
     const products = useCustomSelector(selectProductData);
@@ -35,30 +37,25 @@ export const ProductsContent: React.FC = () => {
         setPage(1)
     }, [label])
 
-    const productsCategories = [
-        { label: 'all', title: 'All Products' },
-        { label: 'best', title: 'Best Sellers' },
-        { label: 'new', title: 'New Arrivals' },
-        { label: 'today', title: 'Today Deals' },
-    ]
-
     return (
         <>
-            <div className={s.products}>
-                {/* <Categories categorieList={productsCategories} key={'Categories'} setLabel={setLabel} label={label} /> */}
-                <Service/>
-            </div>
-            <Cards products={products} key={'Cards'} />
-            <div className={s.paginate}>
-                <Paginate
-                    key={'Paginate'}
-                    page={page}
-                    search={search}
-                    setSearch={setSearch}
-                    setPage={setPage}
-                    checkPage={checkPage}
-                />,
-            </div>
+            <Modal setModalActive={setModalActive} modalActive={modalActive} />
+            <>
+                <div className={s.products}>
+                    <Service setModalActive={setModalActive} modalActive={modalActive} />
+                </div>
+                <Cards products={products} key={'Cards'} />
+                <div className={s.paginate}>
+                    <Paginate
+                        key={'Paginate'}
+                        page={page}
+                        search={search}
+                        setSearch={setSearch}
+                        setPage={setPage}
+                        checkPage={checkPage}
+                    />,
+                </div>
+            </>
         </>
     )
 }

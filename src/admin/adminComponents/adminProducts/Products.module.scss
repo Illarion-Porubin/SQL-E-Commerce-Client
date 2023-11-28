@@ -1,3 +1,11 @@
+.productsContainer{
+    position: relative;
+    width: 100%;
+    height: 80vh;
+    background-color: rgb(138, 138, 138);
+    z-index: 1;
+}
+
 .paginate {
     margin-bottom: 60px;
 }
