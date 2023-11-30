@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios from "../../http/index"; ///for work 
 import { Category } from "../../types/types";
-import { AxiosRequestConfig } from "axios";
 // import axios from "axios"; ///for tests"
 
 

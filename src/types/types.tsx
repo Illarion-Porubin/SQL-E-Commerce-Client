@@ -44,6 +44,14 @@ export interface ProductCartType {
   count: number
 }
 
+export interface ProductType {
+  desc: FormDataEntryValue,
+  label: FormDataEntryValue,
+  img: string,
+  newprice: FormDataEntryValue,
+  oldprice: FormDataEntryValue
+}
+
 export interface ProductCardType {
   Ratings: number[],
   collection: string,

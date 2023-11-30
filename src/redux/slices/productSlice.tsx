@@ -1,9 +1,9 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { ProductCardType } from '../../types/types';
+import { ProductCardType, ProductType } from '../../types/types';
 import axios from "../../http/index"; ///for work 
 // import axios from "axios"; ///for tests"
 
-export const fetchGetProducts = createAsyncThunk<ProductCardType[], null, { rejectValue: string }>(
+export const fetchGetProducts = createAsyncThunk<ProductCardType[], undefined, { rejectValue: string }>(
     "api/fetchGetProducts", async (_, { rejectWithValue }) => {
         const { data }: { data: ProductCardType[] } = await axios.get(`/api/products`);
         if (!data) {
@@ -37,6 +37,19 @@ export const fetchSearchProduct = createAsyncThunk<ProductCardType[], string, { 
             return data;
         } catch (error) {
             return rejectWithValue("Can't fetchSearchProduct");
+        }
+    });
+
+export const fetchAddProduct = createAsyncThunk<ProductCardType[], ProductType, { rejectValue: string }>(
+    "api/fetchAddProduct", async (params, { rejectWithValue }) => {
+        try {
+            const { data }: { data: ProductCardType[] } = await axios.post('/api/product', params);
+            if (data) {
+                return data
+            }
+            return rejectWithValue("Data undefined");
+        } catch (error) {
+            return rejectWithValue("Can't fetchAddProduct");
         }
     });
 
@@ -102,6 +115,22 @@ const productSlice = createSlice({
                 state.data = [];
                 state.isLoading = "error";
                 state.error = "fetchSearchProduct Error!";
+            })
+            //fetchAddProduct
+            .addCase(fetchAddProduct.pending, (state) => {
+                state.data = [];
+                state.isLoading = "loading";
+                state.error = null;
+            })
+            .addCase(fetchAddProduct.fulfilled, (state, action) => {
+                state.data = action.payload;
+                state.isLoading = "loaded";
+                state.error = null;
+            })
+            .addCase(fetchAddProduct.rejected, (state) => {
+                state.data = [];
+                state.isLoading = "error";
+                state.error = "fetchAddProduct Error!";
             })
         ///fetchGetProduct
         // .addCase(fetchGetProduct.pending, (state) => {
