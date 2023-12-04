@@ -2,8 +2,8 @@ import * as React from 'react';
 import s from './Modal.module.scss';
 import { UploadWidget } from '../../../components/upLoad/upLoadWidget';
 import { useCustomDispatch, useCustomSelector } from '../../../hooks/store';
-import { selectCategoriesData } from '../../../redux/selectos';
-import { Category } from '../../../types/types';
+import { selectCategoriesData, selectProductData } from '../../../redux/selectos';
+import { Category, ProductCardType } from '../../../types/types';
 import { fetchAddProduct, fetchGetProducts } from '../../../redux/slices/productSlice';
 
 interface Props {
@@ -13,8 +13,10 @@ interface Props {
 export const Modal: React.FC<Props> = ({ modalActive, setModalActive }) => {
     const dispatch = useCustomDispatch()
     const [url, setUrl] = React.useState('');
+    const { product } = useCustomSelector(selectProductData);
     const categorys = useCustomSelector(selectCategoriesData);
     const labls = ['Top', 'New', 'Hot', 'Hit', 'Best', 'Today'];
+    const [data, setData] = React.useState<ProductCardType>();
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -28,11 +30,20 @@ export const Modal: React.FC<Props> = ({ modalActive, setModalActive }) => {
             newprice: value.newPrice,
             oldprice: value.oldPrice
         }
+        console.log(newProduct)
         dispatch(fetchAddProduct(newProduct))
-        setTimeout(() => {
-            dispatch(fetchGetProducts())
-        }, 300);
+        // setTimeout(() => {
+        //     dispatch(fetchGetProducts())
+        // }, 300);
     }
+
+    React.useEffect(() => {
+        if (product) {
+            setData(product)
+        }
+    }, [product])
+
+    console.log(data)
 
     return (
         <>
@@ -43,17 +54,17 @@ export const Modal: React.FC<Props> = ({ modalActive, setModalActive }) => {
                     <div className={s.modal__drop_label_list}>
                         <label htmlFor="add-label"></label>
                         <select name="label" id="add-label" required>
-                            <option value="">Выберите маркировку</option>
+                            <option value={data?.label || ''}>{data?.label || 'Выберите маркировку'}</option>
                             {labls.map((item: string) => (
                                 <option value={item} key={item}>{item}</option>
                             ))}
                         </select>
                     </div>
-                    <UploadWidget url={url} setUrl={setUrl} admin={true} />
+                    <UploadWidget url={data?.img || url} setUrl={setUrl} admin={true} />
                     <div className={s.modal__drop_category_list}>
                         <label htmlFor="add-category"></label>
                         <select name="category" id="add-category" required>
-                            <option value="">Выберите категорию</option>
+                            <option value={data?.CategoryId || ''}>{data?.CategoryId || 'Выберите категорию'}</option>
                             {categorys.data.map((item: Category) => (
                                 <option value={item.title} key={item.id}>{item.title}</option>
                             ))}
@@ -66,6 +77,7 @@ export const Modal: React.FC<Props> = ({ modalActive, setModalActive }) => {
                         type="text"
                         placeholder='Desc'
                         required
+                        value={data?.desc || ''}
                     />
                     <div className={s.modal__inputs}>
                         <label htmlFor="add-newPrice"></label>
@@ -76,6 +88,7 @@ export const Modal: React.FC<Props> = ({ modalActive, setModalActive }) => {
                             placeholder='New price'
                             min="1"
                             required
+                            value={data?.newprice || ''}
                         />
                         <label htmlFor="add-oldPrice"></label>
                         <input className={s.modal__input}
@@ -85,17 +98,19 @@ export const Modal: React.FC<Props> = ({ modalActive, setModalActive }) => {
                             placeholder='Old price'
                             min="10"
                             required
+                            value={data?.oldprice || ''}
                         />
                     </div>
                     <label htmlFor="add-rating"></label>
-                        <input className={s.modal__input}
-                            name='rating'
-                            id='add-rating'
-                            type="number"
-                            placeholder='Rating'
-                            min="1" max="5000"
-                            required
-                        />
+                    <input className={s.modal__input}
+                        name='rating'
+                        id='add-rating'
+                        type="number"
+                        placeholder='Rating'
+                        min="1" max="5000"
+                        required
+                        value={data?.rating || ''}
+                    />
                     <input className={s.modal__btn} type="submit" value='Сохранить' />
                 </form>
             </div>

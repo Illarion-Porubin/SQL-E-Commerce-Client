@@ -65,6 +65,7 @@ export interface ProductCardType {
   rating: number,
   type: string,
   count: number,
+  CategoryId?: number,
   updatedAt: string
 }
 

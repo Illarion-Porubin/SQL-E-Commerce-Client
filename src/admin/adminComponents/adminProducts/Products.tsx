@@ -37,6 +37,8 @@ export const ProductsContent: React.FC = () => {
         setPage(1)
     }, [label])
 
+    console.log(products)
+
     return (
         <>
             <Modal setModalActive={setModalActive} modalActive={modalActive} />
@@ -44,7 +46,7 @@ export const ProductsContent: React.FC = () => {
                 <div className={s.products}>
                     <Service setModalActive={setModalActive} modalActive={modalActive} />
                 </div>
-                <Cards products={products} key={'Cards'} />
+                <Cards products={products} key={'Cards'} setModalActive={setModalActive} modalActive={modalActive} />
                 <div className={s.paginate}>
                     <Paginate
                         key={'Paginate'}

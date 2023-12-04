@@ -1,29 +1,32 @@
 import * as React from 'react';
 import s from './Cards.module.scss';
-import { useCustomDispatch, useCustomSelector } from '../../../hooks/store';
-import { cartSlice } from '../../../redux/slices/cartSlice';
-import { ProductCardType, ProductCartType } from '../../../types/types';
-import { selectCartData } from '../../../redux/selectos';
+import { useCustomDispatch } from '../../../hooks/store';
+import { ProductCardType } from '../../../types/types';
 import ProductImage from '../../../asets/png/Furniture1.png';
 import cross from "../../../asets/svg/cross.svg";
 import pencil from "../../../asets/svg/pencil.svg";
+import { fetchDeleteProduct, fetchUpdateProduct } from '../../../redux/slices/productSlice';
 
 
 interface Props {
-    item: ProductCardType
+    item: ProductCardType,
+    setModalActive: (value: boolean) => void,
+    modalActive: boolean,
 }
 
-export const CardContetn: React.FC<Props> = ({ item }) => {
+export const CardContetn: React.FC<Props> = ({ item, setModalActive, modalActive }) => {
     const dispatch = useCustomDispatch();
 
 
     const deleteProduct = () => {
-        console.log(item)
+        dispatch(fetchDeleteProduct({ id: item.id }))
     }
 
     const changeProduct = () => {
-        console.log(item)
+        dispatch(fetchUpdateProduct({ id: item.id }))
+        setModalActive(true)
     }
+
 
     return (
         <>
@@ -69,11 +72,12 @@ interface PropsProduct {
         error: string | null;
         isLoading: "idle" | "loading" | "loaded" | "error";
     }
+    setModalActive: (value: boolean) => void,
+    modalActive: boolean,
 }
 
 
-export const Cards: React.FC<PropsProduct> = ({ products }) => {
-    console.log(products.data)
+export const Cards: React.FC<PropsProduct> = ({ products, setModalActive, modalActive }) => {
     return (
         <div className={s.card}>
             <div className={s.card__content}>
@@ -81,7 +85,7 @@ export const Cards: React.FC<PropsProduct> = ({ products }) => {
                     products.isLoading === "loaded" && products.data.length
                         ?
                         products.data.map((item: ProductCardType, i: number) => (
-                            <CardContetn item={item} key={item.desc + i} />
+                            <CardContetn item={item} key={item.desc + i} setModalActive={setModalActive} modalActive={modalActive}/>
                         ))
                         :
                         null

@@ -43,7 +43,7 @@ export const fetchUpdateCategory = createAsyncThunk<Category[], { id: number, ti
         }
     });
 
-export const fetchDeleteCategory = createAsyncThunk<Category[], any, { rejectValue: string }>(
+export const fetchDeleteCategory = createAsyncThunk<Category[], { id: number }, { rejectValue: string }>(
     "api/fetchDeleteCategory", async (params, { rejectWithValue }) => {
         try {
             if (params) {

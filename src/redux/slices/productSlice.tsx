@@ -53,6 +53,35 @@ export const fetchAddProduct = createAsyncThunk<ProductCardType[], ProductType, 
         }
     });
 
+export const fetchDeleteProduct = createAsyncThunk<ProductCardType[], { id: number }, { rejectValue: string }>(
+    "api/fetchDeleteProduct", async (params, { rejectWithValue }) => {
+        try {
+            const { data }: { data: ProductCardType[] } = await axios.delete('/api/product', { data: params });
+            if (data) {
+                return data
+            }
+            return rejectWithValue("Data undefined");
+        } catch (error) {
+            return rejectWithValue("Can't fetchDeleteProduct");
+        }
+    });
+
+export const fetchUpdateProduct = createAsyncThunk<ProductCardType, { id: number }, { rejectValue: string }>(
+    "api/fetchUpdateProduct", async (params, { rejectWithValue }) => {
+        try {
+            const { data }: { data: ProductCardType } = await axios.put('/api/product', params);
+            console.log(params, 'parID')
+            if (data) {
+                return data
+            }
+            return rejectWithValue("Data undefined");
+        } catch (error) {
+            return rejectWithValue("Can't fetchUpdateProduct");
+        }
+    });
+
+/////////////Rating/////////////
+
 export const fetchAddRating = createAsyncThunk<string, { ProductId: number, UserId: string | undefined, rating: number }, { rejectValue: string }>(
     "api/fetchAddRating", async (params, { rejectWithValue }) => {
         try {
@@ -68,12 +97,14 @@ export const fetchAddRating = createAsyncThunk<string, { ProductId: number, User
 
 export interface productState {
     data: ProductCardType[],
+    product: ProductCardType | null,
     isLoading: "idle" | "loading" | "loaded" | "error";
     error: string | null,
 }
 
 const initialState: productState = {
     data: [],
+    product: null,
     isLoading: "idle",
     error: null
 }
@@ -132,19 +163,38 @@ const productSlice = createSlice({
                 state.isLoading = "error";
                 state.error = "fetchAddProduct Error!";
             })
-        ///fetchGetProduct
-        // .addCase(fetchGetProduct.pending, (state) => {
-        //     state.data = [];
-        //     state.isLoading = "loading";
-        // })
-        // .addCase(fetchGetProduct.fulfilled, (state, action) => {
-        //     state.data = action.payload;
-        //     state.isLoading = "loaded";
-        // })
-        // .addCase(fetchGetProduct.rejected, (state) => {
-        //     state.data = [];
-        //     state.isLoading = "error";
-        // })
+            //fetchDeleteProduct
+            .addCase(fetchDeleteProduct.pending, (state) => {
+                state.data = [];
+                state.isLoading = "loading";
+                state.error = null;
+            })
+            .addCase(fetchDeleteProduct.fulfilled, (state, action) => {
+                state.data = action.payload;
+                state.isLoading = "loaded";
+                state.error = null;
+            })
+            .addCase(fetchDeleteProduct.rejected, (state) => {
+                state.data = [];
+                state.isLoading = "error";
+                state.error = "fetchDeleteProduct Error!";
+            })
+            //fetchUpdateProduct
+            .addCase(fetchUpdateProduct.pending, (state) => {
+                state.product = null;
+                state.isLoading = "loading";
+                state.error = null;
+            })
+            .addCase(fetchUpdateProduct.fulfilled, (state, action) => {
+                state.product = action.payload;
+                state.isLoading = "loaded";
+                state.error = null;
+            })
+            .addCase(fetchUpdateProduct.rejected, (state) => {
+                state.product = null;
+                state.isLoading = "error";
+                state.error = "fetchUpdateProduct Error!";
+            })
     },
 })
 
