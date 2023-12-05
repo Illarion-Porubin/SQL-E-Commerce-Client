@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { ProductCardType, ProductType } from '../../types/types';
+import { ProductCardType, ProductForm } from '../../types/types';
 import axios from "../../http/index"; ///for work 
 // import axios from "axios"; ///for tests"
 
@@ -40,7 +40,7 @@ export const fetchSearchProduct = createAsyncThunk<ProductCardType[], string, { 
         }
     });
 
-export const fetchAddProduct = createAsyncThunk<ProductCardType[], ProductType, { rejectValue: string }>(
+export const fetchAddProduct = createAsyncThunk<ProductCardType[], ProductForm, { rejectValue: string }>(
     "api/fetchAddProduct", async (params, { rejectWithValue }) => {
         try {
             const { data }: { data: ProductCardType[] } = await axios.post('/api/product', params);
@@ -66,11 +66,23 @@ export const fetchDeleteProduct = createAsyncThunk<ProductCardType[], { id: numb
         }
     });
 
-export const fetchUpdateProduct = createAsyncThunk<ProductCardType, { id: number }, { rejectValue: string }>(
+export const fetchFindProductByID = createAsyncThunk<ProductCardType, number, { rejectValue: string }>(
+    "api/fetchUpdateProduct", async (params, { rejectWithValue }) => {
+        try {
+            const { data }: { data: ProductCardType } = await axios.get(`/api/product/${params}`);
+            if (data) {
+                return data
+            }
+            return rejectWithValue("Data undefined");
+        } catch (error) {
+            return rejectWithValue("Can't fetchUpdateProduct");
+        }
+    });
+
+export const fetchUpdateProduct = createAsyncThunk<ProductCardType, ProductForm, { rejectValue: string }>(
     "api/fetchUpdateProduct", async (params, { rejectWithValue }) => {
         try {
             const { data }: { data: ProductCardType } = await axios.put('/api/product', params);
-            console.log(params, 'parID')
             if (data) {
                 return data
             }
@@ -179,18 +191,18 @@ const productSlice = createSlice({
                 state.isLoading = "error";
                 state.error = "fetchDeleteProduct Error!";
             })
-            //fetchUpdateProduct
-            .addCase(fetchUpdateProduct.pending, (state) => {
+            //fetchFindProductByID
+            .addCase(fetchFindProductByID.pending, (state) => {
                 state.product = null;
                 state.isLoading = "loading";
                 state.error = null;
             })
-            .addCase(fetchUpdateProduct.fulfilled, (state, action) => {
+            .addCase(fetchFindProductByID.fulfilled, (state, action) => {
                 state.product = action.payload;
                 state.isLoading = "loaded";
                 state.error = null;
             })
-            .addCase(fetchUpdateProduct.rejected, (state) => {
+            .addCase(fetchFindProductByID.rejected, (state) => {
                 state.product = null;
                 state.isLoading = "error";
                 state.error = "fetchUpdateProduct Error!";

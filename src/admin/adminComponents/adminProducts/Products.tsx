@@ -18,6 +18,7 @@ export const ProductsContent: React.FC = () => {
     const [label, setLabel] = React.useState<string>('all');
     const [page, setPage] = React.useState<number>(1);
     const [modalActive, setModalActive] = React.useState<boolean>(false)
+    const [id, setId] = React.useState<number | undefined>();
 
     const debounce = useDebounce(search, 400);
     const products = useCustomSelector(selectProductData);
@@ -37,16 +38,14 @@ export const ProductsContent: React.FC = () => {
         setPage(1)
     }, [label])
 
-    console.log(products)
-
     return (
         <>
-            <Modal setModalActive={setModalActive} modalActive={modalActive} />
+            <Modal setModalActive={setModalActive} modalActive={modalActive} id={id} setId={setId}/>
             <>
                 <div className={s.products}>
-                    <Service setModalActive={setModalActive} modalActive={modalActive} />
+                    <Service setModalActive={setModalActive} modalActive={modalActive} setId={setId}/>
                 </div>
-                <Cards products={products} key={'Cards'} setModalActive={setModalActive} modalActive={modalActive} />
+                <Cards products={products} key={'Cards'} setModalActive={setModalActive} setId={setId} />
                 <div className={s.paginate}>
                     <Paginate
                         key={'Paginate'}

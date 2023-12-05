@@ -3,51 +3,78 @@ import s from './Modal.module.scss';
 import { UploadWidget } from '../../../components/upLoad/upLoadWidget';
 import { useCustomDispatch, useCustomSelector } from '../../../hooks/store';
 import { selectCategoriesData, selectProductData } from '../../../redux/selectos';
-import { Category, ProductCardType } from '../../../types/types';
-import { fetchAddProduct, fetchGetProducts } from '../../../redux/slices/productSlice';
+import { Category, ProductForm, ProductType } from '../../../types/types';
+import { fetchAddProduct, fetchGetProducts, fetchUpdateProduct } from '../../../redux/slices/productSlice';
+import axios from 'axios';
 
 interface Props {
     setModalActive: (value: boolean) => void,
     modalActive: boolean,
+    id: number | undefined,
+    setId: (value: number | undefined) => void,
 }
-export const Modal: React.FC<Props> = ({ modalActive, setModalActive }) => {
+export const Modal: React.FC<Props> = ({ modalActive, setModalActive, id, setId }) => {
     const dispatch = useCustomDispatch()
     const [url, setUrl] = React.useState('');
-    const { product } = useCustomSelector(selectProductData);
     const categorys = useCustomSelector(selectCategoriesData);
     const labls = ['Top', 'New', 'Hot', 'Hit', 'Best', 'Today'];
-    const [data, setData] = React.useState<ProductCardType>();
+    const [data, setData] = React.useState<ProductType | undefined>();
+
+    if (id && !data) {
+        axios({
+            method: 'get',
+            url: `http://localhost:5000/api/product/${id}`,
+        })
+            .then(data => setData(data.data))
+    }
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const data = new FormData(e.target as HTMLFormElement)
-        const value = Object.fromEntries(data.entries())
-        const newProduct = {
-            category: value.category,
-            desc: value.desc,
-            label: value.label,
-            img: url,
-            newprice: value.newPrice,
-            oldprice: value.oldPrice
+        const formData = new FormData(e.target as HTMLFormElement)
+        const value = Object.fromEntries(formData.entries())
+        if (!data && id) {
+            const formProduct: ProductForm = {
+                id: id,  
+                desc: value.desc,
+                label: value.label,
+                img: url,
+                newprice: value.newPrice,
+                oldprice: value.oldPrice,
+                rating: value.rating,
+                CategoryId: value.category,
+            }
+            console.log(1)
+            dispatch(fetchUpdateProduct(formProduct))
+        } else {
+            const newProduct = {
+                desc: value.desc,
+                label: value.label,
+                img: url,
+                newprice: value.newPrice,
+                oldprice: value.oldPrice,
+                rating: value.rating,
+                CategoryId: value.category,
+            }
+            console.log(2)
+
+            dispatch(fetchAddProduct(newProduct))
         }
-        console.log(newProduct)
-        dispatch(fetchAddProduct(newProduct))
-        // setTimeout(() => {
-        //     dispatch(fetchGetProducts())
-        // }, 300);
+        setTimeout(() => {
+            dispatch(fetchGetProducts())
+        }, 300);
     }
 
-    React.useEffect(() => {
-        if (product) {
-            setData(product)
-        }
-    }, [product])
-
-    console.log(data)
+    const close = () => {
+        setId(undefined)
+        setTimeout(() => {
+            setData(undefined)
+        }, 300)
+        setModalActive(false)
+    }
 
     return (
         <>
-            <div className={modalActive ? `${s.modal} ${s.active}` : s.modal} onClick={() => setModalActive(false)}>
+            <div className={modalActive ? `${s.modal} ${s.active}` : s.modal} onClick={() => close()}>
                 <form className={modalActive ? `${s.modal__content} ${s.active}` : s.modal__content}
                     onClick={(e) => e.stopPropagation()} onSubmit={(e) => handleSubmit(e)}
                 >
@@ -66,7 +93,7 @@ export const Modal: React.FC<Props> = ({ modalActive, setModalActive }) => {
                         <select name="category" id="add-category" required>
                             <option value={data?.CategoryId || ''}>{data?.CategoryId || 'Выберите категорию'}</option>
                             {categorys.data.map((item: Category) => (
-                                <option value={item.title} key={item.id}>{item.title}</option>
+                                <option value={item.id} key={item.id}>{item.title}</option>
                             ))}
                         </select>
                     </div>
@@ -77,6 +104,7 @@ export const Modal: React.FC<Props> = ({ modalActive, setModalActive }) => {
                         type="text"
                         placeholder='Desc'
                         required
+                        onChange={e => setData({ ...data, desc: e.target.value })}
                         value={data?.desc || ''}
                     />
                     <div className={s.modal__inputs}>
@@ -89,6 +117,7 @@ export const Modal: React.FC<Props> = ({ modalActive, setModalActive }) => {
                             min="1"
                             required
                             value={data?.newprice || ''}
+                            onChange={e => setData({ ...data, newprice: e.target.value })}
                         />
                         <label htmlFor="add-oldPrice"></label>
                         <input className={s.modal__input}
@@ -99,6 +128,7 @@ export const Modal: React.FC<Props> = ({ modalActive, setModalActive }) => {
                             min="10"
                             required
                             value={data?.oldprice || ''}
+                            onChange={e => setData({ ...data, oldprice: e.target.value })}
                         />
                     </div>
                     <label htmlFor="add-rating"></label>
@@ -110,6 +140,7 @@ export const Modal: React.FC<Props> = ({ modalActive, setModalActive }) => {
                         min="1" max="5000"
                         required
                         value={data?.rating || ''}
+                        onChange={e => setData({ ...data, rating: e.target.value })}
                     />
                     <input className={s.modal__btn} type="submit" value='Сохранить' />
                 </form>

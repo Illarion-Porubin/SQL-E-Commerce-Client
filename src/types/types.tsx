@@ -40,16 +40,29 @@ export interface ProductCartType {
   type: string,
   desc: string,
   img: string,
-  newprice: number,
+  newprice: string,
   count: number
 }
 
-export interface ProductType {
+export interface ProductForm {
+  id?: number,
+  CategoryId?: FormDataEntryValue,
   desc: FormDataEntryValue,
   label: FormDataEntryValue,
   img: string,
   newprice: FormDataEntryValue,
   oldprice: FormDataEntryValue
+  rating?: FormDataEntryValue
+}
+export interface ProductType {
+  id?: number,
+  desc?: string,
+  img?: string,
+  label?: string
+  newprice?: string,
+  oldprice?: string,
+  rating?: string,
+  CategoryId?: number,
 }
 
 export interface ProductCardType {
@@ -60,14 +73,15 @@ export interface ProductCardType {
   id: number,
   img: string,
   label: string
-  newprice: number,
-  oldprice: number,
-  rating: number,
+  newprice: string,
+  oldprice: string,
+  rating: string,
   type: string,
   count: number,
   CategoryId?: number,
   updatedAt: string
 }
+
 
 export interface UserOrder {
   userId: string,

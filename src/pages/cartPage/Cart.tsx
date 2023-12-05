@@ -38,7 +38,7 @@ export const CartContent: React.FC = () => {
     }, 0)
 
     const totalAmount = userProducts.data.reduce((sum: number, product: ProductCartType) => {
-        return sum + (product.count * product.newprice);
+        return sum + (product.count * Number(product.newprice));
     }, 0)
 
 
@@ -99,7 +99,7 @@ export const CartContent: React.FC = () => {
                                         <p className={s.cart__item_cat}>{product.type}</p>
                                         <p className={s.cart__item_desc}>{product.desc}</p>
                                     </div>
-                                    <p className={s.cart__item_price}><span>$</span>{product.newprice * product.count}</p>
+                                    <p className={s.cart__item_price}><span>$</span>{Number(product.newprice) * product.count}</p>
                                     <div className={s.cart__item_btn}>
                                         <button className={s.cart__item_less} id="minus" onClick={(e) => addProduct(product, (e.target as Element).id)}>-</button>
                                         <span className={s.cart__item_count}>{product.count}</span>

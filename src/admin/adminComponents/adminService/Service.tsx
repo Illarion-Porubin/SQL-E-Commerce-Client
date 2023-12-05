@@ -9,9 +9,10 @@ import { Category } from '../../../types/types';
 interface Props {
     setModalActive: (value: boolean) => void,
     modalActive: boolean,
+    setId: (value: number | undefined) => void,
 }
 
-export const Service: React.FC<Props> = ({ setModalActive, modalActive }) => {
+export const Service: React.FC<Props> = ({ setModalActive, modalActive, setId }) => {
     const dispatch = useCustomDispatch();
     const category = useCustomSelector(selectCategoriesData);
     const sortRef = React.useRef<HTMLDivElement>(null);
@@ -28,6 +29,7 @@ export const Service: React.FC<Props> = ({ setModalActive, modalActive }) => {
     }
 
     const addProduct = (e: any) => {
+        setId(undefined)
         setModalActive(!modalActive)
         e.stopPropagation()
     }

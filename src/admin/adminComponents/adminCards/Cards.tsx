@@ -5,16 +5,16 @@ import { ProductCardType } from '../../../types/types';
 import ProductImage from '../../../asets/png/Furniture1.png';
 import cross from "../../../asets/svg/cross.svg";
 import pencil from "../../../asets/svg/pencil.svg";
-import { fetchDeleteProduct, fetchUpdateProduct } from '../../../redux/slices/productSlice';
+import { fetchDeleteProduct, fetchFindProductByID } from '../../../redux/slices/productSlice';
 
 
 interface Props {
     item: ProductCardType,
     setModalActive: (value: boolean) => void,
-    modalActive: boolean,
+    setId: (value: number | undefined) => void,
 }
 
-export const CardContetn: React.FC<Props> = ({ item, setModalActive, modalActive }) => {
+export const CardContetn: React.FC<Props> = ({ item, setModalActive, setId }) => {
     const dispatch = useCustomDispatch();
 
 
@@ -23,7 +23,8 @@ export const CardContetn: React.FC<Props> = ({ item, setModalActive, modalActive
     }
 
     const changeProduct = () => {
-        dispatch(fetchUpdateProduct({ id: item.id }))
+        console.log(item)
+        setId(item.id)
         setModalActive(true)
     }
 
@@ -73,11 +74,11 @@ interface PropsProduct {
         isLoading: "idle" | "loading" | "loaded" | "error";
     }
     setModalActive: (value: boolean) => void,
-    modalActive: boolean,
+    setId: (value: number | undefined) => void,
 }
 
 
-export const Cards: React.FC<PropsProduct> = ({ products, setModalActive, modalActive }) => {
+export const Cards: React.FC<PropsProduct> = ({ products, setModalActive, setId }) => {
     return (
         <div className={s.card}>
             <div className={s.card__content}>
@@ -85,7 +86,7 @@ export const Cards: React.FC<PropsProduct> = ({ products, setModalActive, modalA
                     products.isLoading === "loaded" && products.data.length
                         ?
                         products.data.map((item: ProductCardType, i: number) => (
-                            <CardContetn item={item} key={item.desc + i} setModalActive={setModalActive} modalActive={modalActive}/>
+                            <CardContetn item={item} key={item.desc + i} setModalActive={setModalActive} setId={setId}/>
                         ))
                         :
                         null
