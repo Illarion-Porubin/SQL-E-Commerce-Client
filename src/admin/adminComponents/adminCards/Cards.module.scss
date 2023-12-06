@@ -51,8 +51,9 @@
     }
 
     &__main_img {
-        min-width: 100%;
-        min-height: auto;
+        width: 270px;
+        height: 280px;
+        object-fit: cover;
     }
 
     &__icons {
@@ -81,6 +82,8 @@
         position: relative;
         margin-bottom: 8px;
         margin-right: 8px;
+        border: none;
+        background-color: transparent;
 
         &::after {
             content: '';

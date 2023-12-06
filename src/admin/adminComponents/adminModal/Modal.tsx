@@ -4,7 +4,7 @@ import { UploadWidget } from '../../../components/upLoad/upLoadWidget';
 import { useCustomDispatch, useCustomSelector } from '../../../hooks/store';
 import { selectCategoriesData, selectProductData } from '../../../redux/selectos';
 import { Category, ProductForm, ProductType } from '../../../types/types';
-import { fetchAddProduct, fetchGetProducts, fetchUpdateProduct } from '../../../redux/slices/productSlice';
+import { fetchAddProduct, fetchUpdateProduct } from '../../../redux/slices/productSlice';
 import axios from 'axios';
 
 interface Props {
@@ -20,6 +20,7 @@ export const Modal: React.FC<Props> = ({ modalActive, setModalActive, id, setId 
     const labls = ['Top', 'New', 'Hot', 'Hit', 'Best', 'Today'];
     const [data, setData] = React.useState<ProductType | undefined>();
 
+
     if (id && !data) {
         axios({
             method: 'get',
@@ -32,9 +33,9 @@ export const Modal: React.FC<Props> = ({ modalActive, setModalActive, id, setId 
         e.preventDefault();
         const formData = new FormData(e.target as HTMLFormElement)
         const value = Object.fromEntries(formData.entries())
-        if (!data && id) {
+        if (data && id) {
             const formProduct: ProductForm = {
-                id: id,  
+                id: id,
                 desc: value.desc,
                 label: value.label,
                 img: url,
@@ -43,7 +44,6 @@ export const Modal: React.FC<Props> = ({ modalActive, setModalActive, id, setId 
                 rating: value.rating,
                 CategoryId: value.category,
             }
-            console.log(1)
             dispatch(fetchUpdateProduct(formProduct))
         } else {
             const newProduct = {
@@ -55,13 +55,8 @@ export const Modal: React.FC<Props> = ({ modalActive, setModalActive, id, setId 
                 rating: value.rating,
                 CategoryId: value.category,
             }
-            console.log(2)
-
             dispatch(fetchAddProduct(newProduct))
         }
-        setTimeout(() => {
-            dispatch(fetchGetProducts())
-        }, 300);
     }
 
     const close = () => {
@@ -71,6 +66,8 @@ export const Modal: React.FC<Props> = ({ modalActive, setModalActive, id, setId 
         }, 300)
         setModalActive(false)
     }
+
+    // console.log(categorys.data[0].title)
 
     return (
         <>
@@ -87,11 +84,11 @@ export const Modal: React.FC<Props> = ({ modalActive, setModalActive, id, setId 
                             ))}
                         </select>
                     </div>
-                    <UploadWidget url={data?.img || url} setUrl={setUrl} admin={true} />
+                    <UploadWidget url={url || data?.img} setUrl={setUrl} admin={true} />
                     <div className={s.modal__drop_category_list}>
                         <label htmlFor="add-category"></label>
                         <select name="category" id="add-category" required>
-                            <option value={data?.CategoryId || ''}>{data?.CategoryId || 'Выберите категорию'}</option>
+                            <option value={data?.CategoryId || ''}>{categorys.data[data?.CategoryId || 0]?.title || 'Выберите категорию'}</option>
                             {categorys.data.map((item: Category) => (
                                 <option value={item.id} key={item.id}>{item.title}</option>
                             ))}

@@ -46,8 +46,10 @@ export const UploadWidget = ({ ...props }) => {
       ],
     }, function (error, result) {
       try {
+        
         const photoId = result.info.public_id;
         const productUrl = result.info.url;
+
         if (!props.admin) {
           if (photoId) {
             const data = { email: authState?.data?.user?.email, avatar: photoId };
@@ -59,6 +61,7 @@ export const UploadWidget = ({ ...props }) => {
           }
         }
         if (props.admin && productUrl) {
+          console.log(productUrl, 'productUrl')
           props.setUrl(productUrl)
         }
       } catch (e) {

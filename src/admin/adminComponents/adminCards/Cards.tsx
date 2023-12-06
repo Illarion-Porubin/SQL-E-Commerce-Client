@@ -23,7 +23,6 @@ export const CardContetn: React.FC<Props> = ({ item, setModalActive, setId }) =>
     }
 
     const changeProduct = () => {
-        console.log(item)
         setId(item.id)
         setModalActive(true)
     }
@@ -34,21 +33,15 @@ export const CardContetn: React.FC<Props> = ({ item, setModalActive, setId }) =>
             <div className={s.card__item}>
                 <div className={s.card__item_wrap}>
                     <span className={s.card__news}>{item.label}</span>
-                    <img className={s.card__main_img} src={item.img ? item.img : ProductImage} alt="armchair" />
+                    <img className={s.card__main_img} src={item.img ? item.img : ProductImage} alt="armchair" onClick={() => changeProduct()}/>
 
                     <div className={s.card__icons}>
 
-                        <span className={s.card__icon_circle}
+                        <button className={s.card__icon_circle}
                             onClick={() => deleteProduct()}
                         >
                             <img className={s.card__icon} src={cross} alt="cross" />
-                        </span>
-
-                        <span className={s.card__icon_circle}
-                            onClick={() => changeProduct()}
-                        >
-                            <img className={s.card__icon} src={pencil} alt="pencil" />
-                        </span>
+                        </button>
 
                     </div>
                 </div>

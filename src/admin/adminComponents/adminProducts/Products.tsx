@@ -3,7 +3,7 @@ import { Container } from '../../../components/containerComp/Container';
 import { Cards } from '../adminCards/Cards';
 import { selectProductData } from '../../../redux/selectos';
 import { useCustomDispatch, useCustomSelector } from '../../../hooks/store';
-import { fetchGetProductsByLabel, fetchSearchProduct } from '../../../redux/slices/productSlice';
+import { fetchGetProducts, fetchGetProductsByLabel, fetchSearchProduct } from '../../../redux/slices/productSlice';
 import { Paginate } from '../../../components/paginateComp/Paginate';
 import useDebounce from '../../../hooks/useDebounce';
 import s from './Products.module.scss';
@@ -25,18 +25,20 @@ export const ProductsContent: React.FC = () => {
 
     const checkPage = products.data.length < 8;
 
-    React.useEffect(() => {
-        if (debounce) {
-            dispatch(fetchSearchProduct(JSON.stringify({ word: debounce, page: page - 1 })));
-        }
-        else {
-            dispatch(fetchGetProductsByLabel(JSON.stringify({ page: page - 1, label: label })));
-        }
-    }, [dispatch, debounce, page, label])
+    // React.useEffect(() => {
+    //     if (debounce) {
+    //         dispatch(fetchSearchProduct(JSON.stringify({ word: debounce, page: page - 1 })));
+    //     }
+    //     else {
+    //         dispatch(fetchGetProductsByLabel(JSON.stringify({ page: page - 1, label: label })));
+    //     }
+    // }, [dispatch, debounce, page, label])
 
     React.useEffect(() => {
-        setPage(1)
-    }, [label])
+        dispatch(fetchGetProducts())
+    }, [])
+
+    console.log(products, 'products')
 
     return (
         <>

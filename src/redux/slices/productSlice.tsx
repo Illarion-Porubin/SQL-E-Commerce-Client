@@ -6,6 +6,7 @@ import axios from "../../http/index"; ///for work
 export const fetchGetProducts = createAsyncThunk<ProductCardType[], undefined, { rejectValue: string }>(
     "api/fetchGetProducts", async (_, { rejectWithValue }) => {
         const { data }: { data: ProductCardType[] } = await axios.get(`/api/products`);
+        console.log(data, 'data')
         if (!data) {
             return rejectWithValue("Server Error!");
         }
@@ -66,10 +67,10 @@ export const fetchDeleteProduct = createAsyncThunk<ProductCardType[], { id: numb
         }
     });
 
-export const fetchFindProductByID = createAsyncThunk<ProductCardType, number, { rejectValue: string }>(
+export const fetchFindProductByID = createAsyncThunk<ProductCardType[], number, { rejectValue: string }>(
     "api/fetchUpdateProduct", async (params, { rejectWithValue }) => {
         try {
-            const { data }: { data: ProductCardType } = await axios.get(`/api/product/${params}`);
+            const { data }: { data: ProductCardType[] } = await axios.get(`/api/product/${params}`);
             if (data) {
                 return data
             }
@@ -79,10 +80,10 @@ export const fetchFindProductByID = createAsyncThunk<ProductCardType, number, { 
         }
     });
 
-export const fetchUpdateProduct = createAsyncThunk<ProductCardType, ProductForm, { rejectValue: string }>(
+export const fetchUpdateProduct = createAsyncThunk<ProductCardType[], ProductForm, { rejectValue: string }>(
     "api/fetchUpdateProduct", async (params, { rejectWithValue }) => {
         try {
-            const { data }: { data: ProductCardType } = await axios.put('/api/product', params);
+            const { data }: { data: ProductCardType[] } = await axios.put('/api/product', params);
             if (data) {
                 return data
             }
@@ -109,14 +110,12 @@ export const fetchAddRating = createAsyncThunk<string, { ProductId: number, User
 
 export interface productState {
     data: ProductCardType[],
-    product: ProductCardType | null,
     isLoading: "idle" | "loading" | "loaded" | "error";
     error: string | null,
 }
 
 const initialState: productState = {
     data: [],
-    product: null,
     isLoading: "idle",
     error: null
 }
@@ -127,6 +126,22 @@ const productSlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder
+            ///fetchGetProducts
+            .addCase(fetchGetProducts.pending, (state) => {
+                state.data = [];
+                state.isLoading = "loading";
+                state.error = null;
+            })
+            .addCase(fetchGetProducts.fulfilled, (state, action) => {
+                state.data = action.payload;
+                state.isLoading = "loaded";
+                state.error = null;
+            })
+            .addCase(fetchGetProducts.rejected, (state) => {
+                state.data = [];
+                state.isLoading = "error";
+                state.error = "fetchGetProducts Error!";
+            })
             ///fetchGetProductsByLabel
             .addCase(fetchGetProductsByLabel.pending, (state) => {
                 state.data = [];
@@ -193,17 +208,17 @@ const productSlice = createSlice({
             })
             //fetchFindProductByID
             .addCase(fetchFindProductByID.pending, (state) => {
-                state.product = null;
+                state.data = [];
                 state.isLoading = "loading";
                 state.error = null;
             })
             .addCase(fetchFindProductByID.fulfilled, (state, action) => {
-                state.product = action.payload;
+                state.data = action.payload;
                 state.isLoading = "loaded";
                 state.error = null;
             })
             .addCase(fetchFindProductByID.rejected, (state) => {
-                state.product = null;
+                state.data = [];
                 state.isLoading = "error";
                 state.error = "fetchUpdateProduct Error!";
             })

@@ -51,8 +51,9 @@
     }
 
     &__main_img {
-        min-width: 100%;
-        min-height: auto;
+        width: 270px;
+        height: 280px;
+        object-fit: cover;
     }
 
     &__icons {
