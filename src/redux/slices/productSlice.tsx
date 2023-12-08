@@ -6,7 +6,6 @@ import axios from "../../http/index"; ///for work
 export const fetchGetProducts = createAsyncThunk<ProductCardType[], undefined, { rejectValue: string }>(
     "api/fetchGetProducts", async (_, { rejectWithValue }) => {
         const { data }: { data: ProductCardType[] } = await axios.get(`/api/products`);
-        console.log(data, 'data')
         if (!data) {
             return rejectWithValue("Server Error!");
         }

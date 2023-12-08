@@ -41,6 +41,8 @@ export const Products: React.FC = () => {
         { label: 'today', title: 'Today Deals' },
     ]
 
+    console.log(products, 'Products')
+
     return (
         <section>
             <Heading title={"OUR PRODUCTS"} />

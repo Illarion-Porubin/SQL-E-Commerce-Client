@@ -9,15 +9,16 @@ import { Category } from '../../../types/types';
 interface Props {
     setModalActive: (value: boolean) => void,
     modalActive: boolean,
-    setId: (value: number | undefined) => void,
+    setProduct: (value: number | undefined) => void,
 }
 
-export const Service: React.FC<Props> = ({ setModalActive, modalActive, setId }) => {
+export const Service: React.FC<Props> = ({ setModalActive, modalActive, setProduct }) => {
     const dispatch = useCustomDispatch();
     const category = useCustomSelector(selectCategoriesData);
     const sortRef = React.useRef<HTMLDivElement>(null);
     const [search, setSearch] = React.useState<string>('');
     const [drop, setDrop] = React.useState<boolean>(false);
+
 
 
     React.useEffect(() => {
@@ -29,7 +30,7 @@ export const Service: React.FC<Props> = ({ setModalActive, modalActive, setId })
     }
 
     const addProduct = (e: any) => {
-        setId(undefined)
+        setProduct(undefined)
         setModalActive(!modalActive)
         e.stopPropagation()
     }
