@@ -79,7 +79,7 @@ export const LoginContent: React.FC = () => {
             return alert("Не удалось авторизоваться");
         }
         if (!(_payload?.user?.isActivated)) {
-            return alert("Пожалуйста, подтвердите аккаунт");
+            return alert("Неверное имя пользователя или пароль");
         } else {
             if (_payload.accessToken && "accessToken" in _payload) {
                 window.localStorage.setItem("token", _payload.accessToken);
@@ -95,8 +95,8 @@ export const LoginContent: React.FC = () => {
     const github = () => {
         window.open("http://localhost:5000/auth/github", "_self");
     }
-
-    if (auth.data && auth.data.user.isActivated) {
+    
+    if (auth.data && auth?.data?.user?.isActivated) {
         return <Navigate to="/" />
     }
 

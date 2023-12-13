@@ -1,6 +1,6 @@
 import React from 'react';
 import s from './Header.module.scss';
-import user from '../../asets/icons/user.svg';
+import DefaultAvatar from '../../asets/icons/user.svg';
 import cartIcon from '../../asets/icons/cart.svg';
 import logo from '../../asets/icons/logo.svg';
 import ring from '../../asets/icons/ring.svg';
@@ -12,17 +12,16 @@ import { selectAuthData, selectCartData } from '../../redux/selectos';
 import { authSlice } from '../../redux/slices/authSlice';
 
 
-
-
 export const HeaderContent: React.FC = () => {
     const dispatch = useCustomDispatch();
     const cart = useCustomSelector(selectCartData);
     const auth = useCustomSelector(selectAuthData);
     const [mobMenu, setMobMenu] = React.useState<boolean>(false);
     const [search, setSearch] = React.useState<string>(``);
-    const avatar = auth?.data?.user.avatar ? `${'http://localhost:5000/' + auth?.data?.user.avatar}` : user;
-    const checkAvatar = auth?.data?.provider !== 'default' && auth?.data?.user.avatar ? auth?.data?.user.avatar : avatar;
+    const userAvatar = `https://res.cloudinary.com/dnd2lc6qw/image/upload/f_auto/q_auto/${auth?.data?.user.avatar}?_a=BAJFJtWI0`;
+    const checkAvatar = auth?.data?.provider ? userAvatar : DefaultAvatar;
     const isActivatedUser = auth.data?.user.isActivated;
+
 
     const userLogout = () => {
         if (window.confirm(`Вы точно хотите выйти?`)) {

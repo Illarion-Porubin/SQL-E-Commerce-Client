@@ -46,28 +46,24 @@ export const UploadWidget = ({ ...props }) => {
       ],
     }, function (error, result) {
       try {
-        
         const photoId = result.info.public_id;
         const productUrl = result.info.url;
-
         if (!props.admin) {
           if (photoId) {
             const data = { email: authState?.data?.user?.email, avatar: photoId };
             dispatch(fetchDeleteAvatar(userAvatarId))
+            dispatch(fetchUpdateAvatar({ ...data }));
             setTimeout(() => {
-              dispatch(fetchUpdateAvatar({ ...data }));
               dispatch(fetchAuthMe())
             }, 400)
           }
         }
         if (props.admin && productUrl) {
-          console.log(productUrl, 'productUrl')
           props.setUrl(productUrl)
         }
       } catch (e) {
         console.log(error);
       }
-
     });
     widgetRef.current.open()
   }, [dispatch, userAvatarId, authState?.data?.user?.email, props])

@@ -79,7 +79,7 @@ export interface ProductCardType {
   type: string,
   count: number,
   CategoryId?: number,
-  updatedAt: string
+  updatedAt: string,
 }
 
 

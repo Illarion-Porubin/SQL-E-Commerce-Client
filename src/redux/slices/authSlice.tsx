@@ -122,7 +122,6 @@ export const fetchUpdateInfo = createAsyncThunk<UserTypes, UpdateTypes, { reject
 export const fetchUpdateAvatar = createAsyncThunk<UserTypes, {email: string, avatar: string}, { rejectValue: string }>(
   "api/fetchUpdateAvatar",
   async (params, { rejectWithValue }) => {
-    console.log(params, 'fetchUpdateAvatar<<<<<<<<<<<')
     try {
       const { data }: { data: UserTypes } = await axios.put("/api/avatar", params);
       if (!data) {
@@ -138,7 +137,7 @@ export const fetchUpdateAvatar = createAsyncThunk<UserTypes, {email: string, ava
 export const fetchDeleteAvatar = createAsyncThunk<UserTypes, string, { rejectValue: string }>(
   "api/fetchDeleteAvatar",
   async (id, { rejectWithValue }) => {
-    const { data }: { data: UserTypes } = await axios.delete("/api/avatar/" + id);
+    const { data }: { data: UserTypes } = await axios.delete("/api/photo/" + id);
     if (!data) {
       return rejectWithValue("Server Error!");
     }

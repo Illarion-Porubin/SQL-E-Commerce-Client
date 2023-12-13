@@ -4,8 +4,8 @@ import { StarRating } from '../ratingComp/StarRating';
 import { useCustomDispatch, useCustomSelector } from '../../hooks/store';
 import { cartSlice } from '../../redux/slices/cartSlice';
 import { ProductCardType, ProductCartType } from '../../types/types';
-import ProductImage from '../../asets/png/Furniture1.png';
 import { selectCartData } from '../../redux/selectos';
+import ProductImage from '../../asets/png/Furniture1.png';
 
 interface Props {
     item: ProductCardType
@@ -37,7 +37,7 @@ export const CardContetn: React.FC<Props> = ({ item }) => {
             <div className={s.card__item}>
                 <div className={s.card__item_wrap}>
                     <span className={s.card__news}>{item.label}</span>
-                    <img className={s.card__main_img} src={item.img ? item.img : ProductImage} alt="armchair" />
+                    <img className={s.card__main_img} src={item.img || ProductImage} alt="armchair" />
                     <div className={s.card__icons}>
 
                         <span className={s.card__icon_circle}>
@@ -71,7 +71,6 @@ export const CardContetn: React.FC<Props> = ({ item }) => {
                                     </clipPath>
                                 </defs>
                             </svg>
-
                         </span>
 
                         <span className={s.card__icon_circle} >
@@ -117,6 +116,7 @@ interface PropsProduct {
 
 export const Cards: React.FC<PropsProduct> = ({ products }) => {
 
+    console.log(products)
 
     return (
         <div className={s.card}>

@@ -4,8 +4,8 @@ import { UploadWidget } from '../../../components/upLoad/upLoadWidget';
 import { useCustomDispatch, useCustomSelector } from '../../../hooks/store';
 import { selectCategoriesData, selectProductData } from '../../../redux/selectos';
 import { Category, ProductForm, ProductType } from '../../../types/types';
-import { fetchAddProduct, fetchUpdateProduct } from '../../../redux/slices/productSlice';
-// import axios from 'axios';
+import { fetchAddProduct, fetchGetProducts, fetchUpdateProduct } from '../../../redux/slices/productSlice';
+
 
 interface Props {
     setModalActive: (value: boolean) => void,
@@ -35,8 +35,9 @@ export const Modal: React.FC<Props> = ({ modalActive, setModalActive, product, s
                 rating: value.rating,
                 CategoryId: value.category,
             }
-            console.log(formProduct, '1')
+            console.log(formProduct)
             dispatch(fetchUpdateProduct(formProduct))
+            dispatch(fetchGetProducts)
         } else {
             const newProduct = {
                 desc: value.desc,
@@ -47,21 +48,18 @@ export const Modal: React.FC<Props> = ({ modalActive, setModalActive, product, s
                 rating: value.rating,
                 CategoryId: value.category,
             }
-            console.log(newProduct, '2')
             dispatch(fetchAddProduct(newProduct))
         }
     }
 
     const close = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         e.stopPropagation()
-        // setId(undefined)
-        // setTimeout(() => {
-        //     setData(undefined)
-        // }, 300)
+        setUrl('')
+        setTimeout(() => {
+            setProduct(undefined)
+        }, 300)
         setModalActive(false)
     }
-
-
 
     return (
         <>

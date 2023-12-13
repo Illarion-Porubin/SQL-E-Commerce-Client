@@ -25,6 +25,19 @@ export const fetchGetProductsByLabel = createAsyncThunk<ProductCardType[], strin
         }
     });
 
+export const fetchGetProductsByCategory = createAsyncThunk<ProductCardType[], string, { rejectValue: string }>(
+    "api/fetchGetProductsByCategory", async (paramsProducts, { rejectWithValue }) => {
+        try {
+            const { data }: { data: ProductCardType[] } = await axios.get(`/api/products/category/${paramsProducts}`);
+            if (!data) {
+                return rejectWithValue("Data undefined");
+            }
+            return data;
+        } catch (error) {
+            return rejectWithValue("Can't fetchGetProductsByCategory");
+        }
+    });
+
 
 export const fetchSearchProduct = createAsyncThunk<ProductCardType[], string, { rejectValue: string }>(
     "api/fetchSearchProduct",
@@ -107,6 +120,18 @@ export const fetchAddRating = createAsyncThunk<string, { ProductId: number, User
         }
     });
 
+export const fetchDeletePhoto = createAsyncThunk<any, string, { rejectValue: string }>(
+    "api/fetchDeletePhoto",
+    async (id, { rejectWithValue }) => {
+        const { data } = await axios.delete("/api/photo/" + id);
+        if (!data) {
+            return rejectWithValue("Server Error!");
+        }
+        const auth = data
+        return auth;
+    }
+);
+
 export interface productState {
     data: ProductCardType[],
     isLoading: "idle" | "loading" | "loaded" | "error";
@@ -153,6 +178,22 @@ const productSlice = createSlice({
                 state.error = null;
             })
             .addCase(fetchGetProductsByLabel.rejected, (state) => {
+                state.data = [];
+                state.isLoading = "error";
+                state.error = "fetchGetProductsByLabel Error!";
+            })
+            ///fetchGetProductsByCategory
+            .addCase(fetchGetProductsByCategory.pending, (state) => {
+                state.data = [];
+                state.isLoading = "loading";
+                state.error = null;
+            })
+            .addCase(fetchGetProductsByCategory.fulfilled, (state, action) => {
+                state.data = action.payload;
+                state.isLoading = "loaded";
+                state.error = null;
+            })
+            .addCase(fetchGetProductsByCategory.rejected, (state) => {
                 state.data = [];
                 state.isLoading = "error";
                 state.error = "fetchGetProductsByLabel Error!";

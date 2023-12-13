@@ -10,9 +10,10 @@ interface Props {
     setModalActive: (value: boolean) => void,
     modalActive: boolean,
     setProduct: (value: number | undefined) => void,
+    setCategory: React.Dispatch<React.SetStateAction<string>>
 }
 
-export const Service: React.FC<Props> = ({ setModalActive, modalActive, setProduct }) => {
+export const Service: React.FC<Props> = ({ setModalActive, modalActive, setProduct, setCategory }) => {
     const dispatch = useCustomDispatch();
     const category = useCustomSelector(selectCategoriesData);
     const sortRef = React.useRef<HTMLDivElement>(null);
@@ -25,8 +26,9 @@ export const Service: React.FC<Props> = ({ setModalActive, modalActive, setProdu
         dispatch(fetchGetCategories())
     }, [])
 
-    const sort = (value: string) => {
-        console.log(value)
+    const sortByLabel = (e: React.MouseEvent<HTMLLIElement, MouseEvent>, category: string) => {
+        e.preventDefault()
+        setCategory(category)
     }
 
     const addProduct = (e: any) => {
@@ -52,7 +54,7 @@ export const Service: React.FC<Props> = ({ setModalActive, modalActive, setProdu
                             <li
                                 className={drop ? `${s.service__dropdown_li} ${s.active}` : s.service__dropdown_li}
                                 key={item.id}
-                                onClick={() => sort(item.title)}
+                                onClick={(e) => sortByLabel(e, item.title)}
                             >
                                 {item.title}
                             </li>

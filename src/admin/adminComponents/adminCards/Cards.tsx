@@ -1,10 +1,10 @@
 import * as React from 'react';
 import s from './Cards.module.scss';
+import ProductImage from '../../../asets/png/Furniture1.png';
 import { useCustomDispatch } from '../../../hooks/store';
 import { ProductCardType } from '../../../types/types';
-import ProductImage from '../../../asets/png/Furniture1.png';
 import { StarRating } from '../../../components/ratingComp/StarRating';
-import { fetchDeleteProduct, fetchFindProductByID } from '../../../redux/slices/productSlice';
+import { fetchDeleteProduct, fetchDeletePhoto } from '../../../redux/slices/productSlice';
 
 
 interface Props {
@@ -15,18 +15,17 @@ interface Props {
 
 export const CardContetn: React.FC<Props> = ({ item, setModalActive, setProduct }) => {
     const dispatch = useCustomDispatch();
-
-
     const deleteProduct = () => {
         dispatch(fetchDeleteProduct({ id: item.id }))
+        setTimeout(() => {
+            dispatch(fetchDeletePhoto(item.img.slice(-24, -4)))
+        }, 300);
     }
 
     const changeProduct = () => {
         setProduct(item)
         setModalActive(true)
     }
-
-    console.log(item.Ratings, item.id)
 
     return (
         <>
