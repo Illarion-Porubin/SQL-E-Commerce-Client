@@ -116,8 +116,6 @@ interface PropsProduct {
 
 export const Cards: React.FC<PropsProduct> = ({ products }) => {
 
-    console.log(products)
-
     return (
         <div className={s.card}>
             <div className={s.card__content}>

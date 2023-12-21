@@ -2,14 +2,18 @@ import React, { useCallback } from "react";
 //////////////////////////Cloudinary//////////////////////////////
 import { AdvancedImage } from "@cloudinary/react";
 import { Cloudinary } from "@cloudinary/url-gen";
-import { selectAuthData } from "../../redux/selectos.tsx";
+import { selectAuthData, selectProductData } from "../../redux/selectos.tsx";
 import { useCustomSelector, useCustomDispatch } from "../../hooks/store.tsx";
 import { fetchAuthMe, fetchDeleteAvatar, fetchUpdateAvatar } from "../../redux/slices/authSlice.tsx";
+import { fetchUpdateProduct, updateProductUrl, } from "../../redux/slices/productSlice.tsx";
 import s from "./UploadWidget.module.scss";
+import axios from "axios";
+
 
 
 export const UploadWidget = ({ ...props }) => {
   const dispatch = useCustomDispatch();
+  const productData = useCustomSelector(selectProductData);
   const authState = useCustomSelector(selectAuthData);
   const cloudinaryRef = React.useRef();
   const widgetRef = React.useRef();
@@ -22,6 +26,13 @@ export const UploadWidget = ({ ...props }) => {
       cloudName: "dnd2lc6qw",
     },
   });
+
+  const deletePhoto = async (photoId) => {
+    await axios({
+      url: "/api/photo/" + photoId,
+      method: 'delete'
+    })
+  }
 
   React.useEffect(() => {
     if (!props.admin) {
@@ -60,13 +71,22 @@ export const UploadWidget = ({ ...props }) => {
         }
         if (props.admin && productUrl) {
           props.setUrl(productUrl)
+          // // если картинка не совпадает с картинкой в productData.product.img
+          // // сделай нормальную проверку
+          // if (productUrl !== productData.product.img) {
+          //   // удаляем старое фото по ключу в cloudinary и устанавливаем новое
+          //   deletePhoto((productData.product.img.slice(-24, -4)))
+          //   // делаем фетч запрос, находим товар в БД и переписываем url на новый
+          //   dispatch(fetchUpdateProduct({ id: productData.product.id, url: productUrl }))
+          // }
+          // dispatch(updateProductUrl(productUrl))
         }
       } catch (e) {
         console.log(error);
       }
     });
     widgetRef.current.open()
-  }, [dispatch, userAvatarId, authState?.data?.user?.email, props])
+  }, [])
 
   const defaultAvatar = "https://res.cloudinary.com/dnd2lc6qw/image/upload/v1700142769/ha19yqibgjmmxvnfszbr.png";
   const defaultProduct = "https://blockbusterbd.com/uploads/movies/posters/noimage.jpg";
@@ -103,6 +123,8 @@ export const UploadWidget = ({ ...props }) => {
       </>
     )
   }
+
+  console.log(productData)
 
   return (
     <>

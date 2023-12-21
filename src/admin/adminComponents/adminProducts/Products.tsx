@@ -16,13 +16,10 @@ export const ProductsContent: React.FC = () => {
     const [search, setSearch] = React.useState<string>(``)
     const [page, setPage] = React.useState<number>(1);
     const [modalActive, setModalActive] = React.useState<boolean>(false)
-    const [product, setProduct] = React.useState<any>();
     const [category, setCategory] = React.useState<string>('all');
     const products = useCustomSelector(selectProductData);
     const checkPage = products.data.length < 8;
     const debounce = useDebounce(search, 400);
-
-   
 
     React.useEffect(() => {
         if (debounce) {
@@ -37,16 +34,14 @@ export const ProductsContent: React.FC = () => {
         setPage(1)
     }, [category])
 
-    console.log(products)
-
     return (
         <>
-            <Modal setModalActive={setModalActive} modalActive={modalActive} product={product} setProduct={setProduct} />
+            <Modal setModalActive={setModalActive} modalActive={modalActive} />
             <>
                 <div className={s.products}>
-                    <Service setModalActive={setModalActive} modalActive={modalActive} setProduct={setProduct} setCategory={setCategory}/>
+                    <Service setModalActive={setModalActive} modalActive={modalActive} setCategory={setCategory}/>
                 </div>
-                <Cards products={products} key={'Cards'} setModalActive={setModalActive} setProduct={setProduct} />
+                <Cards products={products} key={'Cards'} setModalActive={setModalActive} />
                 <div className={s.paginate}>
                     <Paginate
                         key={'Paginate'}

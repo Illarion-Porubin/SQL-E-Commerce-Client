@@ -58,6 +58,7 @@ export interface ProductType {
   id?: number,
   desc?: string,
   img?: string,
+  url?: string,
   label?: string
   newprice?: string,
   oldprice?: string,

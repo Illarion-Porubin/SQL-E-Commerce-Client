@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Categories } from '../../components/categoriesComp/Categories';
-import { Heading } from '../../components/headingComp/heading';
+import { Heading } from '../../components/headingComp/Heading';
 import { Container } from '../../components/containerComp/Container';
 import { Cards } from '../../components/cardsComp/Cards';
 import { Paginate } from '../../components/paginateComp/Paginate';
@@ -18,7 +18,6 @@ export const Products: React.FC = () => {
 
     const debounce = useDebounce(search, 400);
     const products = useCustomSelector(selectProductData);
-
     const checkPage = products.data.length < 8;
 
     React.useEffect(() => {
@@ -40,8 +39,6 @@ export const Products: React.FC = () => {
         { label: 'new', title: 'New Arrivals' },
         { label: 'today', title: 'Today Deals' },
     ]
-
-    console.log(products, 'Products')
 
     return (
         <section>

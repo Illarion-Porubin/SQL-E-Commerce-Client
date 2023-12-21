@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { ProductCardType, ProductForm } from '../../types/types';
+import { ProductCardType, ProductForm, ProductType } from '../../types/types';
 import axios from "../../http/index"; ///for work 
 // import axios from "axios"; ///for tests"
 
@@ -15,7 +15,7 @@ export const fetchGetProducts = createAsyncThunk<ProductCardType[], undefined, {
 export const fetchGetProductsByLabel = createAsyncThunk<ProductCardType[], string, { rejectValue: string }>(
     "api/fetchGetProductsByLabel", async (paramsProducts, { rejectWithValue }) => {
         try {
-            const { data }: { data: ProductCardType[] } = await axios.get(`/api/products/label/${paramsProducts}`);
+            const { data }: { data: ProductCardType[] } = await axios.get(`/api/products/label/${paramsProducts}`, { withCredentials: true });
             if (!data) {
                 return rejectWithValue("Data undefined");
             }
@@ -80,7 +80,7 @@ export const fetchDeleteProduct = createAsyncThunk<ProductCardType[], { id: numb
     });
 
 export const fetchFindProductByID = createAsyncThunk<ProductCardType[], number, { rejectValue: string }>(
-    "api/fetchUpdateProduct", async (params, { rejectWithValue }) => {
+    "api/fetchFindProductByID", async (params, { rejectWithValue }) => {
         try {
             const { data }: { data: ProductCardType[] } = await axios.get(`/api/product/${params}`);
             if (data) {
@@ -88,7 +88,7 @@ export const fetchFindProductByID = createAsyncThunk<ProductCardType[], number, 
             }
             return rejectWithValue("Data undefined");
         } catch (error) {
-            return rejectWithValue("Can't fetchUpdateProduct");
+            return rejectWithValue("Can't fetchFindProductByID");
         }
     });
 
@@ -134,20 +134,34 @@ export const fetchDeletePhoto = createAsyncThunk<any, string, { rejectValue: str
 
 export interface productState {
     data: ProductCardType[],
+    product: null | ProductType,
     isLoading: "idle" | "loading" | "loaded" | "error";
     error: string | null,
 }
 
 const initialState: productState = {
     data: [],
+    product: null,
     isLoading: "idle",
     error: null
 }
 
-const productSlice = createSlice({
+export const productSlice = createSlice({
     name: 'product',
     initialState,
-    reducers: {},
+    reducers: {
+        addNewProduct(state, action) {
+            state.product = action.payload
+        },
+
+        deleteProduct(state, _) {
+            state.product = null
+        },
+
+        updateProductUrl(state, action) {
+            state.product = { ...state.product, url: action.payload }
+        }
+    },
     extraReducers: (builder) => {
         builder
             ///fetchGetProducts
@@ -260,9 +274,10 @@ const productSlice = createSlice({
             .addCase(fetchFindProductByID.rejected, (state) => {
                 state.data = [];
                 state.isLoading = "error";
-                state.error = "fetchUpdateProduct Error!";
+                state.error = "fetchFindProductByID Error!";
             })
     },
 })
 
+export const { addNewProduct, updateProductUrl, deleteProduct } = productSlice.actions;
 export default productSlice.reducer;

@@ -5,15 +5,15 @@ import { useCustomDispatch, useCustomSelector } from '../../../hooks/store';
 import { selectCategoriesData } from '../../../redux/selectos';
 import { fetchGetCategories } from '../../../redux/slices/categorySlyce';
 import { Category } from '../../../types/types';
+import { addNewProduct } from '../../../redux/slices/productSlice';
 
 interface Props {
     setModalActive: (value: boolean) => void,
     modalActive: boolean,
-    setProduct: (value: number | undefined) => void,
     setCategory: React.Dispatch<React.SetStateAction<string>>
 }
 
-export const Service: React.FC<Props> = ({ setModalActive, modalActive, setProduct, setCategory }) => {
+export const Service: React.FC<Props> = ({ setModalActive, modalActive, setCategory }) => {
     const dispatch = useCustomDispatch();
     const category = useCustomSelector(selectCategoriesData);
     const sortRef = React.useRef<HTMLDivElement>(null);
@@ -32,7 +32,7 @@ export const Service: React.FC<Props> = ({ setModalActive, modalActive, setProdu
     }
 
     const addProduct = (e: any) => {
-        setProduct(undefined)
+        dispatch(addNewProduct(null))
         setModalActive(!modalActive)
         e.stopPropagation()
     }

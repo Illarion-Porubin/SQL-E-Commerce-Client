@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Heading } from '../../components/headingComp/heading';
+import { Heading } from '../../components/headingComp/Heading';
 import { Categories } from '../../components/categoriesComp/Categories';
 import { Container } from '../../components/containerComp/Container';
 import { Cards } from '../../components/cardsComp/Cards';

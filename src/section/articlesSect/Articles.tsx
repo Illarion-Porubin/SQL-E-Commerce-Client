@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Heading } from '../../components/headingComp/heading';
+import { Heading } from '../../components/headingComp/Heading';
 import { Article } from '../../components/articlesComp/Article';
 import { Container } from '../../components/containerComp/Container';
 import { FooterNav } from '../../components/footerNavComp/FooterNav';

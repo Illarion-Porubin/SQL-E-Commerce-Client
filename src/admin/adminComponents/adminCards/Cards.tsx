@@ -1,20 +1,24 @@
 import * as React from 'react';
 import s from './Cards.module.scss';
 import ProductImage from '../../../asets/png/Furniture1.png';
-import { useCustomDispatch } from '../../../hooks/store';
+import { useCustomDispatch, useCustomSelector } from '../../../hooks/store';
 import { ProductCardType } from '../../../types/types';
 import { StarRating } from '../../../components/ratingComp/StarRating';
-import { fetchDeleteProduct, fetchDeletePhoto } from '../../../redux/slices/productSlice';
+import { fetchDeleteProduct, fetchDeletePhoto, addNewProduct } from '../../../redux/slices/productSlice';
+import { selectAuthData, selectProductData } from '../../../redux/selectos';
+import { productSlice } from '../../../redux/slices/productSlice';
 
 
 interface Props {
     item: ProductCardType,
     setModalActive: (value: boolean) => void,
-    setProduct: (value: any) => void,
 }
 
-export const CardContetn: React.FC<Props> = ({ item, setModalActive, setProduct }) => {
+export const CardContetn: React.FC<Props> = ({ item, setModalActive }) => {
     const dispatch = useCustomDispatch();
+    const productData = useCustomSelector(selectAuthData)
+
+
     const deleteProduct = () => {
         dispatch(fetchDeleteProduct({ id: item.id }))
         setTimeout(() => {
@@ -23,7 +27,9 @@ export const CardContetn: React.FC<Props> = ({ item, setModalActive, setProduct 
     }
 
     const changeProduct = () => {
-        setProduct(item)
+        dispatch(productSlice.actions.addNewProduct(item))
+        // console.log(productData.data)
+        // setProduct(item)
         setModalActive(true)
     }
 
@@ -76,11 +82,10 @@ interface PropsProduct {
         isLoading: "idle" | "loading" | "loaded" | "error";
     }
     setModalActive: (value: boolean) => void,
-    setProduct: (value: any) => void,
 }
 
 
-export const Cards: React.FC<PropsProduct> = ({ products, setModalActive, setProduct }) => {
+export const Cards: React.FC<PropsProduct> = ({ products, setModalActive }) => {
     return (
         <div className={s.card}>
             <div className={s.card__content}>
@@ -88,7 +93,7 @@ export const Cards: React.FC<PropsProduct> = ({ products, setModalActive, setPro
                     products.isLoading === "loaded" && products.data.length
                         ?
                         products.data.map((item: ProductCardType, i: number) => (
-                            <CardContetn item={item} key={item.desc + i} setModalActive={setModalActive} setProduct={setProduct} />
+                            <CardContetn item={item} key={item.desc + i} setModalActive={setModalActive} />
                         ))
                         :
                         null

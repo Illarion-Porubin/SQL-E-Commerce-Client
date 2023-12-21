@@ -63,7 +63,7 @@ export const ThirdPartyAuthorization = createAsyncThunk(
 export const fetchAuthMe = createAsyncThunk<UserTypes, void, { rejectValue: string }>(
   "api/fetchAuthMe", async (_, { rejectWithValue }) => {
     try {
-      const { data }: { data: UserTypes } = await axios.get("/api/me");
+      const { data }: { data: UserTypes } = await axios.get("/api/me", { withCredentials: true });
       if (!data) {
         return rejectWithValue("Server Error!");
       }
@@ -119,7 +119,7 @@ export const fetchUpdateInfo = createAsyncThunk<UserTypes, UpdateTypes, { reject
 //   }
 // );
 
-export const fetchUpdateAvatar = createAsyncThunk<UserTypes, {email: string, avatar: string}, { rejectValue: string }>(
+export const fetchUpdateAvatar = createAsyncThunk<UserTypes, { email: string, avatar: string }, { rejectValue: string }>(
   "api/fetchUpdateAvatar",
   async (params, { rejectWithValue }) => {
     try {

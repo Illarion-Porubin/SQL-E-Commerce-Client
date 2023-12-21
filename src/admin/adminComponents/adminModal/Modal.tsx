@@ -3,41 +3,39 @@ import s from './Modal.module.scss';
 import { UploadWidget } from '../../../components/upLoad/upLoadWidget';
 import { useCustomDispatch, useCustomSelector } from '../../../hooks/store';
 import { selectCategoriesData, selectProductData } from '../../../redux/selectos';
-import { Category, ProductForm, ProductType } from '../../../types/types';
-import { fetchAddProduct, fetchGetProducts, fetchUpdateProduct } from '../../../redux/slices/productSlice';
+import { Category, ProductCardType, ProductForm, ProductType } from '../../../types/types';
+import { fetchAddProduct, fetchGetProducts, fetchUpdateProduct, addNewProduct, deleteProduct } from '../../../redux/slices/productSlice';
 
 
 interface Props {
     setModalActive: (value: boolean) => void,
     modalActive: boolean,
-    product: any,
-    setProduct: (value: any) => void,
 }
-export const Modal: React.FC<Props> = ({ modalActive, setModalActive, product, setProduct }) => {
+export const Modal: React.FC<Props> = ({ modalActive, setModalActive }) => {
     const dispatch = useCustomDispatch()
     const [url, setUrl] = React.useState('');
+    const productData = useCustomSelector(selectProductData);
     const categorys = useCustomSelector(selectCategoriesData);
     const labls = ['Top', 'New', 'Hot', 'Hit', 'Best', 'Today'];
+    const [product, setProduct] = React.useState<null | undefined | ProductType>();
 
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const formData = new FormData(e.target as HTMLFormElement)
         const value = Object.fromEntries(formData.entries())
-        if (product.id) {
+        if (product?.id) {
             const formProduct: ProductForm = {
-                id: product.id,
+                id: product?.id,
                 desc: value.desc,
                 label: value.label,
-                img: product.img,
+                img: product?.img || '',
                 newprice: value.newPrice,
                 oldprice: value.oldPrice,
                 rating: value.rating,
                 CategoryId: value.category,
             }
-            console.log(formProduct)
-            dispatch(fetchUpdateProduct(formProduct))
-            dispatch(fetchGetProducts)
+            dispatch(addNewProduct(formProduct))
         } else {
             const newProduct = {
                 desc: value.desc,
@@ -54,12 +52,17 @@ export const Modal: React.FC<Props> = ({ modalActive, setModalActive, product, s
 
     const close = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         e.stopPropagation()
-        setUrl('')
         setTimeout(() => {
             setProduct(undefined)
         }, 300)
         setModalActive(false)
     }
+
+    if(modalActive && product === undefined){
+        setProduct(productData.product)
+    }
+    
+
 
     return (
         <>
@@ -76,11 +79,11 @@ export const Modal: React.FC<Props> = ({ modalActive, setModalActive, product, s
                             ))}
                         </select>
                     </div>
-                    <UploadWidget url={url || product?.img} setUrl={setUrl} admin={true} />
+                    <UploadWidget url={url || product?.img} setUrl={setUrl} admin={true}/>
                     <div className={s.modal__drop_category_list}>
                         <label htmlFor="add-category"></label>
                         <select name="category" id="add-category" required>
-                            <option value={product?.CategoryId || ''}>{categorys?.data[product?.CategoryId - 1]?.title || 'Выберите категорию'}</option>
+                            <option value={product?.CategoryId || ''}>{categorys?.data[product?.CategoryId ? product?.CategoryId - 1 : 0]?.title || 'Выберите категорию'}</option>
                             {categorys.data.map((item: Category) => (
                                 <option value={String(item.id)} key={item.id}>{item.title}</option>
                             ))}
@@ -120,17 +123,6 @@ export const Modal: React.FC<Props> = ({ modalActive, setModalActive, product, s
                             onChange={e => setProduct({ ...product, oldprice: e.target.value })}
                         />
                     </div>
-                    {/* <label htmlFor="add-rating"></label>
-                    <input className={s.modal__input}
-                        name='rating'
-                        id='add-rating'
-                        type="number"
-                        placeholder='Rating'
-                        min="1" max="5000"
-                        required
-                        value={product?.rating || ''}
-                        onChange={e => setProduct({ ...product, rating: e.target.value })}
-                    /> */}
                     <input className={s.modal__btn} type="submit" value='Сохранить' />
                 </form>
             </div>

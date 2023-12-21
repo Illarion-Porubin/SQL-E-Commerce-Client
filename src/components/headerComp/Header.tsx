@@ -18,10 +18,9 @@ export const HeaderContent: React.FC = () => {
     const auth = useCustomSelector(selectAuthData);
     const [mobMenu, setMobMenu] = React.useState<boolean>(false);
     const [search, setSearch] = React.useState<string>(``);
-    const userAvatar = `https://res.cloudinary.com/dnd2lc6qw/image/upload/f_auto/q_auto/${auth?.data?.user.avatar}?_a=BAJFJtWI0`;
-    const checkAvatar = auth?.data?.provider ? userAvatar : DefaultAvatar;
-    const isActivatedUser = auth.data?.user.isActivated;
-
+    const userAvatar = `https://res.cloudinary.com/dnd2lc6qw/image/upload/f_auto/q_auto/${auth?.data?.user?.avatar}?_a=BAJFJtWI0`;
+    const checkAvatar = auth?.data?.user?.avatar ? userAvatar : DefaultAvatar;
+    const isActivatedUser = auth.data?.user?.isActivated;
 
     const userLogout = () => {
         if (window.confirm(`Вы точно хотите выйти?`)) {
@@ -92,7 +91,7 @@ export const HeaderContent: React.FC = () => {
                                 </li>
                                 <li className={`${s.header__mobile_li} ${s.header__mobile_auth}`} >
                                     {
-                                        !!auth.data && isActivatedUser ?
+                                        !!isActivatedUser ?
                                             <Link className={s.header__mobile_link} to={'/'} onClick={() => userLogout()}>
                                                 Logout
                                             </Link>
@@ -141,7 +140,7 @@ export const HeaderContent: React.FC = () => {
                             <option value="Rus">Russian (RUS)</option>
                         </select>
                         {
-                            !!auth.data ?
+                            !!isActivatedUser ?
                                 <Link className={s.header__auth} to={'/'} onClick={() => userLogout()}>
                                     Logout
                                 </Link>

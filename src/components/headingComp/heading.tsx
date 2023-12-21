@@ -1,5 +1,5 @@
 import * as React from 'react';
-import s from './heading.module.scss';
+import s from './Heading.module.scss';
 
 type Props = {
     title: string
