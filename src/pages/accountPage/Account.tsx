@@ -181,8 +181,6 @@ export const AccauntComponent: React.FC = () => {
     //     filePicker.current?.click();
     // }
 
-    console.log(auth.isLoading)
-
     if (auth.isLoading === 'error') {
         return <Navigate to="/" />
     }

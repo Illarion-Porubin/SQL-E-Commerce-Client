@@ -27,9 +27,8 @@ export const CardContetn: React.FC<Props> = ({ item, setModalActive }) => {
     }
 
     const changeProduct = () => {
+        console.log(item)
         dispatch(productSlice.actions.addNewProduct(item))
-        // console.log(productData.data)
-        // setProduct(item)
         setModalActive(true)
     }
 
@@ -38,10 +37,12 @@ export const CardContetn: React.FC<Props> = ({ item, setModalActive }) => {
             <div className={s.card__item}>
                 <div className={s.card__item_wrap}>
                     <span className={s.card__news}>{item.label}</span>
-                    <img className={s.card__main_img} src={item.img ? item.img : ProductImage} alt="armchair" onClick={() => changeProduct()} />
-
+                    <img className={s.card__main_img} 
+                        src={item.img ? item.img : ProductImage} 
+                        alt="armchair"
+                        onClick={() => changeProduct()} 
+                    />
                     <div className={s.card__icons}>
-
                         <button className={s.card__icon_circle}
                             onClick={() => deleteProduct()}
                         >

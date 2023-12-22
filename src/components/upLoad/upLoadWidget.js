@@ -27,12 +27,6 @@ export const UploadWidget = ({ ...props }) => {
     },
   });
 
-  const deletePhoto = async (photoId) => {
-    await axios({
-      url: "/api/photo/" + photoId,
-      method: 'delete'
-    })
-  }
 
   React.useEffect(() => {
     if (!props.admin) {
@@ -71,15 +65,9 @@ export const UploadWidget = ({ ...props }) => {
         }
         if (props.admin && productUrl) {
           props.setUrl(productUrl)
-          // // если картинка не совпадает с картинкой в productData.product.img
-          // // сделай нормальную проверку
-          // if (productUrl !== productData.product.img) {
-          //   // удаляем старое фото по ключу в cloudinary и устанавливаем новое
-          //   deletePhoto((productData.product.img.slice(-24, -4)))
-          //   // делаем фетч запрос, находим товар в БД и переписываем url на новый
-          //   dispatch(fetchUpdateProduct({ id: productData.product.id, url: productUrl }))
-          // }
-          // dispatch(updateProductUrl(productUrl))
+          if (productUrl !== productData.product.img) {
+            // deletePhoto(productData.product.img.slice(-24, -4))
+          }
         }
       } catch (e) {
         console.log(error);
@@ -123,8 +111,6 @@ export const UploadWidget = ({ ...props }) => {
       </>
     )
   }
-
-  console.log(productData)
 
   return (
     <>

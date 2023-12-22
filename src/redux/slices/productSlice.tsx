@@ -276,6 +276,22 @@ export const productSlice = createSlice({
                 state.isLoading = "error";
                 state.error = "fetchFindProductByID Error!";
             })
+            //fetchUpdateProduct
+            .addCase(fetchUpdateProduct.pending, (state) => {
+                state.data = [];
+                state.isLoading = "loading";
+                state.error = null;
+            })
+            .addCase(fetchUpdateProduct.fulfilled, (state, action) => {
+                state.data = action.payload;
+                state.isLoading = "loaded";
+                state.error = null;
+            })
+            .addCase(fetchUpdateProduct.rejected, (state) => {
+                state.data = [];
+                state.isLoading = "error";
+                state.error = "fetchFindProductByID Error!";
+            })
     },
 })
 

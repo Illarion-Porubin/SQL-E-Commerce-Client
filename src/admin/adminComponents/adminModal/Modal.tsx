@@ -29,13 +29,13 @@ export const Modal: React.FC<Props> = ({ modalActive, setModalActive }) => {
                 id: product?.id,
                 desc: value.desc,
                 label: value.label,
-                img: product?.img || '',
+                img: url || (product?.img || ""),
                 newprice: value.newPrice,
                 oldprice: value.oldPrice,
                 rating: value.rating,
                 CategoryId: value.category,
-            }
-            dispatch(addNewProduct(formProduct))
+            }     
+            dispatch(fetchUpdateProduct(formProduct))
         } else {
             const newProduct = {
                 desc: value.desc,

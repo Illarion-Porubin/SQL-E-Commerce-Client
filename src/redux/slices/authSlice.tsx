@@ -3,19 +3,6 @@ import { UpdateTypes, UserTypes } from "../../types/types";
 import axios from "../../http/index"; ///for work 
 // import axios from "axios"; ///for tests"
 
-// export const fetchRegistration = createAsyncThunk<UserTypes, { username: FormDataEntryValue, email: FormDataEntryValue, password: FormDataEntryValue, phone: FormDataEntryValue }, { rejectValue: string }>(
-//   "api/fetchRegistration", async (params, { rejectWithValue }) => {
-//     try {
-//       const { data }: { data: UserTypes } = await axios.post("/api/registration", params);
-//       if (!data) {
-//         return rejectWithValue("Server Error!");
-//       }
-//       return data;
-//     } catch (error) {
-//       return rejectWithValue("Can't fetchRegistration");
-//     }
-//   });
-
 export const fetchRegistration = createAsyncThunk<string, { username: FormDataEntryValue, email: FormDataEntryValue, password: FormDataEntryValue, phone: FormDataEntryValue }, { rejectValue: string }>(
   "api/fetchRegistration", async (params, { rejectWithValue }) => {
     try {
@@ -78,7 +65,6 @@ export const fetchAuthMe = createAsyncThunk<UserTypes, void, { rejectValue: stri
 export const fetchUpdateInfo = createAsyncThunk<UserTypes, UpdateTypes, { rejectValue: string }>(
   "api/fetchUpdateInfo",
   async (params, { rejectWithValue }) => {
-    console.log(params, 'params<<<<<<<<<<<')
     try {
       const { data }: { data: UserTypes } = await axios.put("/api/update", params);
       if (!data) {
@@ -90,34 +76,6 @@ export const fetchUpdateInfo = createAsyncThunk<UserTypes, UpdateTypes, { reject
     }
   }
 );
-
-// export const fetchUploadAvatar = createAsyncThunk<UserTypes, FormData, { rejectValue: string }>(
-//   "api/fetchUploadAvatar", async (params, { rejectWithValue }) => {
-//     try {
-//       const { data }: { data: UserTypes } = await axios.post("/api/avatar", params);
-//       if (!data) {
-//         return rejectWithValue("Server Error!");
-//       }
-//       return data;
-//     } catch (error) {
-//       return rejectWithValue("Can't fetchUploadAvatar");
-//     }
-//   });
-
-// export const fetchDeleteAvatar = createAsyncThunk<UserTypes, undefined, { rejectValue: string }>(
-//   "api/fetchDeleteAvatar",
-//   async (_, { rejectWithValue }) => {
-//     try {
-//       const { data }: { data: UserTypes } = await axios.delete("/api/avatar/");
-//       if (!data) {
-//         return rejectWithValue("Server Error!");
-//       }
-//       return data;
-//     } catch (error) {
-//       return rejectWithValue("Can't fetchDeleteAvatar");
-//     }
-//   }
-// );
 
 export const fetchUpdateAvatar = createAsyncThunk<UserTypes, { email: string, avatar: string }, { rejectValue: string }>(
   "api/fetchUpdateAvatar",
@@ -169,25 +127,6 @@ export const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      ///fetchRegistration
-      // .addCase(fetchRegistration.pending, (state) => {
-      //   console.log('pending <<<')
-      //   state.data = null;
-      //   state.isLoading = "loading";
-      //   state.error = null;
-      // })
-      // .addCase(fetchRegistration.fulfilled, (state, action) => {
-      //   console.log(action.payload, '<<<')
-      //   state.data = action.payload;
-      //   state.isLoading = "loaded";
-      //   state.error = null;
-      // })
-      // .addCase(fetchRegistration.rejected, (state) => {
-      //   console.log('rejected <<<')
-      //   state.data = null;
-      //   state.isLoading = "error";
-      //   state.error = "fetchRegistration Error!";
-      // })
       ///ThirdPartyAuthorization
       .addCase(ThirdPartyAuthorization.pending, (state) => {
         state.data = null;
