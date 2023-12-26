@@ -93,7 +93,7 @@ export const fetchUpdateAvatar = createAsyncThunk<UserTypes, { email: string, av
 );
 
 export const fetchDeleteAvatar = createAsyncThunk<UserTypes, string, { rejectValue: string }>(
-  "api/fetchDeleteAvatar",
+  "api/fetchDeletePhoto",
   async (id, { rejectWithValue }) => {
     const { data }: { data: UserTypes } = await axios.delete("/api/photo/" + id);
     if (!data) {

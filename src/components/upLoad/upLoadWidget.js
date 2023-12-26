@@ -5,9 +5,7 @@ import { Cloudinary } from "@cloudinary/url-gen";
 import { selectAuthData, selectProductData } from "../../redux/selectos.tsx";
 import { useCustomSelector, useCustomDispatch } from "../../hooks/store.tsx";
 import { fetchAuthMe, fetchDeleteAvatar, fetchUpdateAvatar } from "../../redux/slices/authSlice.tsx";
-import { fetchUpdateProduct, updateProductUrl, } from "../../redux/slices/productSlice.tsx";
 import s from "./UploadWidget.module.scss";
-import axios from "axios";
 
 
 
@@ -65,9 +63,6 @@ export const UploadWidget = ({ ...props }) => {
         }
         if (props.admin && productUrl) {
           props.setUrl(productUrl)
-          if (productUrl !== productData.product.img) {
-            // deletePhoto(productData.product.img.slice(-24, -4))
-          }
         }
       } catch (e) {
         console.log(error);

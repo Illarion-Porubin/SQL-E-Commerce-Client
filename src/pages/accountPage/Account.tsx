@@ -3,7 +3,6 @@ import s from './Account.module.scss';
 import { Container } from '../../components/containerComp/Container';
 import { useCustomDispatch, useCustomSelector } from '../../hooks/store';
 import { Link, Navigate } from 'react-router-dom';
-// import { fetchAuthMe, fetchDeleteAvatar, fetchUpdateInfo, fetchUploadAvatar } from '../../redux/slices/authSlice';
 import { fetchUpdateInfo } from '../../redux/slices/authSlice';
 import { selectAuthData } from '../../redux/selectos';
 import { FormInput } from '../../components/formInputComp/FormInput';
@@ -42,7 +41,6 @@ export const AccauntComponent: React.FC = () => {
     // const checkAvatar = auth.data?.provider !== 'default' && auth.data?.user.avatar ? auth.data?.user.avatar : avatar;
     // const filePicker = React.useRef<HTMLInputElement>(null);
 
-    console.log(auth)
 
     React.useEffect(() => {
         if (auth.isLoading === "loaded" && auth.data) {

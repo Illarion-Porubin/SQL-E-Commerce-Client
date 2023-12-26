@@ -51,8 +51,9 @@ export const Modal: React.FC<Props> = ({ modalActive, setModalActive }) => {
     }
 
     const close = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-        e.stopPropagation()
+        e.stopPropagation() 
         setTimeout(() => {
+            setUrl('')
             setProduct(undefined)
         }, 300)
         setModalActive(false)
@@ -61,8 +62,6 @@ export const Modal: React.FC<Props> = ({ modalActive, setModalActive }) => {
     if(modalActive && product === undefined){
         setProduct(productData.product)
     }
-    
-
 
     return (
         <>
@@ -79,11 +78,12 @@ export const Modal: React.FC<Props> = ({ modalActive, setModalActive }) => {
                             ))}
                         </select>
                     </div>
+                    <p>только png формат</p>
                     <UploadWidget url={url || product?.img} setUrl={setUrl} admin={true}/>
                     <div className={s.modal__drop_category_list}>
                         <label htmlFor="add-category"></label>
                         <select name="category" id="add-category" required>
-                            <option value={product?.CategoryId || ''}>{categorys?.data[product?.CategoryId ? product?.CategoryId - 1 : 0]?.title || 'Выберите категорию'}</option>
+                            <option value={product?.CategoryId || ''}>{categorys?.data[product?.CategoryId ? (product?.CategoryId - 1) : -1]?.title || 'Выберите категорию'}</option>
                             {categorys.data.map((item: Category) => (
                                 <option value={String(item.id)} key={item.id}>{item.title}</option>
                             ))}

@@ -4,12 +4,20 @@ import { Link } from 'react-router-dom';
 import { Container } from '../../components/containerComp/Container';
 import { Products } from '../../admin/adminComponents/adminProducts/Products';
 import { Categories } from '../adminComponents/adminCategories/Categories';
+import { useCustomSelector } from '../../hooks/store';
+import { selectAuthData } from '../../redux/selectos';
 
 export const AdminContent: React.FC = () => {
-    const [section, setSection] = React.useState<string>('Admin')
+    const [section, setSection] = React.useState<string>('Admin');
+    const auth = useCustomSelector(selectAuthData)
 
     const changeSection = (value: string) => {
         setSection(value)
+    }
+
+
+    if(auth.isLoading === "error") {
+        window.location.href = "/"
     }
 
     return (
